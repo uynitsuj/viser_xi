@@ -349,9 +349,9 @@ viser-dev-checks
 definitions:</p>
 <ul class="simple">
 <li><p>On the server, these are defined as Python dataclasses in
-<code class="docutils literal notranslate"><span class="pre">~/viser/viser/_messages.py</span></code>.</p></li>
+<code class="docutils literal notranslate"><span class="pre">~/viser/src/viser/_messages.py</span></code>.</p></li>
 <li><p>On the client, these are defined as TypeScript interfaces in
-<code class="docutils literal notranslate"><span class="pre">~/viser/viser/client/src/WebsocketMessages.tsx</span></code>.</p></li>
+<code class="docutils literal notranslate"><span class="pre">~/viser/src/viser/client/src/WebsocketMessages.tsx</span></code>.</p></li>
 </ul>
 <p>Note that there is a 1:1 correspondence between the dataclasses message types
 and the TypeScript ones.</p>
@@ -381,14 +381,14 @@ connect to.</p></li>
 re-build the client automatically. This is okay for quick changes, but for
 faster iteration we can also launch a development version of the frontend, which
 will reflect changes we make to the client source files
-(<code class="docutils literal notranslate"><span class="pre">~/viser/viser/client/src</span></code>) without a full build. This requires a few more
+(<code class="docutils literal notranslate"><span class="pre">~/viser/src/viser/client/src</span></code>) without a full build. This requires a few more
 steps.</p>
 <p><strong>Installing dependencies.</strong></p>
 <ol class="arabic">
 <li><p><a class="reference external" href="https://nodejs.dev/en/download/package-manager">Install nodejs.</a></p></li>
 <li><p><a class="reference external" href="https://yarnpkg.com/getting-started/install">Install yarn.</a></p></li>
 <li><p>Install dependencies.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">viser</span><span class="o">/</span><span class="n">viser</span><span class="o">/</span><span class="n">client</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">viser</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">viser</span><span class="o">/</span><span class="n">client</span>
 <span class="n">yarn</span> <span class="n">install</span>
 </pre></div>
 </div>
@@ -396,11 +396,11 @@ steps.</p>
 </ol>
 <p><strong>Launching client.</strong></p>
 <p>To launch the client, we can run:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">viser</span><span class="o">/</span><span class="n">viser</span><span class="o">/</span><span class="n">client</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">viser</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">viser</span><span class="o">/</span><span class="n">client</span>
 <span class="n">yarn</span> <span class="n">start</span>
 </pre></div>
 </div>
-<p>from the <code class="docutils literal notranslate"><span class="pre">viser/viser/client</span></code> directory. After opening the client in a web
+<p>from the <code class="docutils literal notranslate"><span class="pre">viser/src/viser/client</span></code> directory. After opening the client in a web
 browser, the websocket server address typically needs to be updated in the
 “Server” tab.</p>
 <p><strong>Formatting.</strong></p>
