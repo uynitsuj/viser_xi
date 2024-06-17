@@ -708,6 +708,59 @@ automatically when assigned.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="viser.GuiPlotlyHandle">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">viser.</span></span><span class="sig-name descname"><span class="pre">GuiPlotlyHandle</span></span><a class="reference internal" href="../_modules/viser/_gui_handles/#GuiPlotlyHandle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.GuiPlotlyHandle" title="Link to this definition">#</a></dt>
+<dd><p>Use to update or remove markdown elements.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.GuiPlotlyHandle.figure">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">figure</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">go.Figure</span></em><a class="headerlink" href="#viser.GuiPlotlyHandle.figure" title="Link to this definition">#</a></dt>
+<dd><p>Current content of this markdown element. Synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.GuiPlotlyHandle.aspect">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">aspect</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#viser.GuiPlotlyHandle.aspect" title="Link to this definition">#</a></dt>
+<dd><p>Aspect ratio of the plotly figure, in the control panel.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.GuiPlotlyHandle.order">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">order</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#viser.GuiPlotlyHandle.order" title="Link to this definition">#</a></dt>
+<dd><p>Read-only order value, which dictates the position of the GUI element.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.GuiPlotlyHandle.visible">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">visible</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#viser.GuiPlotlyHandle.visible" title="Link to this definition">#</a></dt>
+<dd><p>Temporarily show or hide this GUI element from the visualizer. Synchronized
+automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.GuiPlotlyHandle.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/viser/_gui_handles/#GuiPlotlyHandle.__post_init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.GuiPlotlyHandle.__post_init__" title="Link to this definition">#</a></dt>
+<dd><p>We need to register ourself after construction for callbacks to work.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.GuiPlotlyHandle.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/viser/_gui_handles/#GuiPlotlyHandle.remove"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.GuiPlotlyHandle.remove" title="Link to this definition">#</a></dt>
+<dd><p>Permanently remove this markdown from the visualizer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="viser.GuiTabGroupHandle">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">viser.</span></span><span class="sig-name descname"><span class="pre">GuiTabGroupHandle</span></span><a class="reference internal" href="../_modules/viser/_gui_handles/#GuiTabGroupHandle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.GuiTabGroupHandle" title="Link to this definition">#</a></dt>
 <dd><p>Handle for a tab group. Call <a class="reference internal" href="#viser.GuiTabGroupHandle.add_tab" title="viser.GuiTabGroupHandle.add_tab"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_tab()</span></code></a> to add a tab.</p>
@@ -886,6 +939,15 @@ visualizer.</p>
 <li><a class="reference internal" href="#viser.GuiMarkdownHandle.visible"><code class="docutils literal notranslate"><span class="pre">GuiMarkdownHandle.visible</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiMarkdownHandle.__post_init__"><code class="docutils literal notranslate"><span class="pre">GuiMarkdownHandle.__post_init__()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiMarkdownHandle.remove"><code class="docutils literal notranslate"><span class="pre">GuiMarkdownHandle.remove()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#viser.GuiPlotlyHandle"><code class="docutils literal notranslate"><span class="pre">GuiPlotlyHandle</span></code></a><ul>
+<li><a class="reference internal" href="#viser.GuiPlotlyHandle.figure"><code class="docutils literal notranslate"><span class="pre">GuiPlotlyHandle.figure</span></code></a></li>
+<li><a class="reference internal" href="#viser.GuiPlotlyHandle.aspect"><code class="docutils literal notranslate"><span class="pre">GuiPlotlyHandle.aspect</span></code></a></li>
+<li><a class="reference internal" href="#viser.GuiPlotlyHandle.order"><code class="docutils literal notranslate"><span class="pre">GuiPlotlyHandle.order</span></code></a></li>
+<li><a class="reference internal" href="#viser.GuiPlotlyHandle.visible"><code class="docutils literal notranslate"><span class="pre">GuiPlotlyHandle.visible</span></code></a></li>
+<li><a class="reference internal" href="#viser.GuiPlotlyHandle.__post_init__"><code class="docutils literal notranslate"><span class="pre">GuiPlotlyHandle.__post_init__()</span></code></a></li>
+<li><a class="reference internal" href="#viser.GuiPlotlyHandle.remove"><code class="docutils literal notranslate"><span class="pre">GuiPlotlyHandle.remove()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#viser.GuiTabGroupHandle"><code class="docutils literal notranslate"><span class="pre">GuiTabGroupHandle</span></code></a><ul>
