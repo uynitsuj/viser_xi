@@ -318,7 +318,7 @@
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ThreadPoolExecutor</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">cast</span><span class="p">,</span> <span class="n">overload</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">cast</span><span class="p">,</span> <span class="n">overload</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">onp</span>
 <span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="p">(</span>
@@ -326,8 +326,6 @@
     <span class="n">LiteralString</span><span class="p">,</span>
     <span class="n">TypeAlias</span><span class="p">,</span>
     <span class="n">TypedDict</span><span class="p">,</span>
-    <span class="n">get_args</span><span class="p">,</span>
-    <span class="n">get_origin</span><span class="p">,</span>
     <span class="n">get_type_hints</span><span class="p">,</span>
 <span class="p">)</span>
 
@@ -438,49 +436,6 @@
     <span class="k">return</span> <span class="n">get_type_hints</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
 
 
-<span class="k">def</span> <span class="nf">cast_value</span><span class="p">(</span><span class="n">tp</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Cast a value to a type, or raise a TypeError if it cannot be cast.&quot;&quot;&quot;</span>
-    <span class="n">origin</span> <span class="o">=</span> <span class="n">get_origin</span><span class="p">(</span><span class="n">tp</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="p">(</span><span class="n">origin</span> <span class="ow">is</span> <span class="nb">tuple</span> <span class="ow">or</span> <span class="n">tp</span> <span class="ow">is</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">cast_value</span><span class="p">(</span><span class="n">tp</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
-
-    <span class="k">if</span> <span class="n">origin</span> <span class="ow">is</span> <span class="n">Literal</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">get_args</span><span class="p">(</span><span class="n">tp</span><span class="p">):</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">value_casted</span> <span class="o">=</span> <span class="n">cast_value</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">val</span><span class="p">),</span> <span class="n">value</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="n">value_casted</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="n">value_casted</span>
-            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                <span class="k">pass</span>
-            <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-                <span class="k">pass</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Value </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> is not in </span><span class="si">{</span><span class="n">get_args</span><span class="p">(</span><span class="n">tp</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">origin</span> <span class="ow">is</span> <span class="n">Union</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">get_args</span><span class="p">(</span><span class="n">tp</span><span class="p">):</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">cast_value</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                <span class="k">pass</span>
-            <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-                <span class="k">pass</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Value </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> is not in </span><span class="si">{</span><span class="n">tp</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">tp</span> <span class="ow">in</span> <span class="p">{</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">}:</span>
-        <span class="k">return</span> <span class="n">tp</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">is_dataclass</span><span class="p">(</span><span class="n">tp</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">tp</span><span class="p">(</span>
-            <span class="o">**</span><span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">cast_value</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">value</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">get_type_hints_cached</span><span class="p">(</span><span class="n">tp</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
-        <span class="p">)</span>
-
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">tp</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">value</span>
-
-    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot cast value </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> to type </span><span class="si">{</span><span class="n">tp</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-
 <span class="k">class</span> <span class="nc">_FileUploadState</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
     <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">mime_type</span><span class="p">:</span> <span class="nb">str</span>
@@ -555,10 +510,19 @@
             <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">handle_state</span><span class="p">,</span> <span class="n">prop_name</span><span class="p">)</span>
             <span class="n">current_value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">handle_state</span><span class="p">,</span> <span class="n">prop_name</span><span class="p">)</span>
 
-            <span class="c1"># Do some type casting. This is brittle, but necessary when we</span>
-            <span class="c1"># expect floats but the Javascript side gives us integers.</span>
+            <span class="c1"># Do some type casting. This is brittle, but necessary (1) when we</span>
+            <span class="c1"># expect floats but the Javascript side gives us integers or (2)</span>
+            <span class="c1"># when we expect tuples but the Javascript side gives us lists.</span>
             <span class="k">if</span> <span class="n">prop_name</span> <span class="o">==</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span>
-                <span class="n">prop_value</span> <span class="o">=</span> <span class="n">cast_value</span><span class="p">(</span><span class="n">handle_state</span><span class="o">.</span><span class="n">typ</span><span class="p">,</span> <span class="n">prop_value</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">handle_state</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+                    <span class="c1"># We currently assume all tuple types have length &gt;0, and</span>
+                    <span class="c1"># contents are all the same type.</span>
+                    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">handle_state</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+                    <span class="n">typ</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">handle_state</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="k">assert</span> <span class="nb">all</span><span class="p">([</span><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="n">typ</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">handle_state</span><span class="o">.</span><span class="n">value</span><span class="p">])</span>
+                    <span class="n">prop_value</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">([</span><span class="n">typ</span><span class="p">(</span><span class="n">new</span><span class="p">)</span> <span class="k">for</span> <span class="n">new</span> <span class="ow">in</span> <span class="n">prop_value</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">prop_value</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">handle_state</span><span class="o">.</span><span class="n">value</span><span class="p">)(</span><span class="n">prop_value</span><span class="p">)</span>
 
             <span class="c1"># Update handle property.</span>
             <span class="k">if</span> <span class="n">current_value</span> <span class="o">!=</span> <span class="n">prop_value</span><span class="p">:</span>
@@ -1844,7 +1808,6 @@
         <span class="n">handle_state</span> <span class="o">=</span> <span class="n">_GuiHandleState</span><span class="p">(</span>
             <span class="n">label</span><span class="o">=</span><span class="n">message</span><span class="o">.</span><span class="n">label</span><span class="p">,</span>
             <span class="n">message_type</span><span class="o">=</span><span class="nb">type</span><span class="p">(</span><span class="n">message</span><span class="p">),</span>
-            <span class="n">typ</span><span class="o">=</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">),</span>
             <span class="n">gui_api</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
             <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
             <span class="n">update_timestamp</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span>
