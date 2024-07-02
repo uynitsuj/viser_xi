@@ -260,7 +260,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples/05_camera_commands/">Camera commands</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/06_mesh/">Meshes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/07_record3d_visualizer/">Record3D visualizer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../examples/08_smpl_visualizer/">Visualizer for SMPL human body models. Requires a .npz model file.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/08_smpl_visualizer/">SMPL model visualizer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/09_urdf_visualizer/">Robot URDF visualizer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/10_realsense/">RealSense visualizer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/11_colmap_visualizer/">COLMAP visualizer</a></li>
@@ -321,8 +321,9 @@ the nodes.</p>
 <p>If we add a coordinate frame called <code class="docutils literal notranslate"><span class="pre">/base_link/shoulder/wrist</span></code>, it signifies
 three nodes: the <code class="docutils literal notranslate"><span class="pre">wrist</span></code> is a child of the <code class="docutils literal notranslate"><span class="pre">shoulder</span></code> which is a child of the
 <code class="docutils literal notranslate"><span class="pre">base_link</span></code>.</p>
-<p>If we set the transformation of a given node like <code class="docutils literal notranslate"><span class="pre">/shoulder</span></code>, both it and all
-of its children will move. Its parent, <code class="docutils literal notranslate"><span class="pre">/base_link</span></code>, will be unaffected.</p>
+<p>If we set the transformation of a given node like <code class="docutils literal notranslate"><span class="pre">/base_link/shoulder</span></code>, both
+it and its child <code class="docutils literal notranslate"><span class="pre">/base_link/shoulder/wrist</span></code> will move. Its parent,
+<code class="docutils literal notranslate"><span class="pre">/base_link</span></code>, will be unaffected.</p>
 </section>
 <section id="poses">
 <h2>Poses<a class="headerlink" href="#poses" title="Link to this heading">#</a></h2>
@@ -335,10 +336,11 @@ of its children will move. Its parent, <code class="docutils literal notranslate
 parent frame:</p>
 <!-- prettier-ignore-start --><div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
-\[p_\mathrm{parent} = \begin{bmatrix} R \mid t \end{bmatrix}p_\mathrm{local}\]</div>
+\[\begin{split}p_\mathrm{parent} = \begin{bmatrix} R &amp; t \end{bmatrix}\begin{bmatrix}p_\mathrm{local} \\ 1\end{bmatrix}\end{split}\]</div>
 </div>
 <!-- prettier-ignore-end --><p>where <code class="docutils literal notranslate"><span class="pre">wxyz</span></code> is the quaternion form of the <span class="math notranslate nohighlight">\(\mathrm{SO}(3)\)</span> matrix
-<span class="math notranslate nohighlight">\(R\)</span> and <code class="docutils literal notranslate"><span class="pre">position</span></code> is the translation term <span class="math notranslate nohighlight">\(t\)</span>.</p>
+<span class="math notranslate nohighlight">\(R\)</span> and <code class="docutils literal notranslate"><span class="pre">position</span></code> is the <span class="math notranslate nohighlight">\(\mathbb{R}^3\)</span> translation term
+<span class="math notranslate nohighlight">\(t\)</span>.</p>
 </section>
 <section id="world-coordinates">
 <h2>World coordinates<a class="headerlink" href="#world-coordinates" title="Link to this heading">#</a></h2>
@@ -348,8 +350,8 @@ overridden with <code class="xref py py-func docutils literal notranslate"><span
 </section>
 <section id="cameras">
 <h2>Cameras<a class="headerlink" href="#cameras" title="Link to this heading">#</a></h2>
-<p>All camera parameters exposed to the Python API use the COLMAP/OpenCV
-convention:</p>
+<p>In <code class="docutils literal notranslate"><span class="pre">viser</span></code>, all camera parameters exposed to the Python API use the
+COLMAP/OpenCV convention:</p>
 <ul class="simple">
 <li><p>Forward: +Z</p></li>
 <li><p>Up: -Y</p></li>
@@ -362,8 +364,7 @@ convention:</p>
 <li><p>Up: +Y</p></li>
 <li><p>Right: +X</p></li>
 </ul>
-<p>Note that conversion between the two is a simple 180 degree rotation around the
-X-axis.</p>
+<p>Conversion between the two is a simple 180 degree rotation around the local X-axis.</p>
 </section>
 </section>
 
