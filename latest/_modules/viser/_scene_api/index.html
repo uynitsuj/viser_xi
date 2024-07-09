@@ -275,6 +275,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../examples/21_set_up_direction/">Set Up Direction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../examples/22_games/">Games</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../examples/23_plotly/">Plotly.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/23_smpl_visualizer_skinned/">Visualizer for SMPL human body models. Requires a .npz model file.</a></li>
 </ul>
 
 </div>
@@ -327,6 +328,7 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">transforms</span> <span class="k">as</span> <span class="n">tf</span>
 <span class="kn">from</span> <span class="nn">._scene_handles</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">BatchedAxesHandle</span><span class="p">,</span>
+    <span class="n">BoneState</span><span class="p">,</span>
     <span class="n">CameraFrustumHandle</span><span class="p">,</span>
     <span class="n">FrameHandle</span><span class="p">,</span>
     <span class="n">GlbHandle</span><span class="p">,</span>
@@ -334,6 +336,8 @@
     <span class="n">ImageHandle</span><span class="p">,</span>
     <span class="n">LabelHandle</span><span class="p">,</span>
     <span class="n">MeshHandle</span><span class="p">,</span>
+    <span class="n">MeshSkinnedBoneHandle</span><span class="p">,</span>
+    <span class="n">MeshSkinnedHandle</span><span class="p">,</span>
     <span class="n">PointCloudHandle</span><span class="p">,</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">SceneNodePointerEvent</span><span class="p">,</span>
@@ -1052,6 +1056,130 @@
             <span class="p">)</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">PointCloudHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SceneApi.add_mesh_skinned">
+<a class="viewcode-back" href="../../../scene_api/#viser.SceneApi.add_mesh_skinned">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_mesh_skinned</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">vertices</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">faces</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">bone_wxyzs</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="o">...</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">bone_positions</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="o">...</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">skin_weights</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">color</span><span class="p">:</span> <span class="n">RgbTupleOrArray</span> <span class="o">=</span> <span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>
+        <span class="n">wireframe</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">opacity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">material</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;standard&quot;</span><span class="p">,</span> <span class="s2">&quot;toon3&quot;</span><span class="p">,</span> <span class="s2">&quot;toon5&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;standard&quot;</span><span class="p">,</span>
+        <span class="n">flat_shading</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">side</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;front&quot;</span><span class="p">,</span> <span class="s2">&quot;back&quot;</span><span class="p">,</span> <span class="s2">&quot;double&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;front&quot;</span><span class="p">,</span>
+        <span class="n">wxyz</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+        <span class="n">position</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+        <span class="n">visible</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MeshSkinnedHandle</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a skinned mesh to the scene, which we can deform using a set of</span>
+<span class="sd">        bone transformations.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name: A scene tree name. Names in the format of /parent/child can be used to</span>
+<span class="sd">                define a kinematic tree.</span>
+<span class="sd">            vertices: A numpy array of vertex positions. Should have shape (V, 3).</span>
+<span class="sd">            faces: A numpy array of faces, where each face is represented by indices of</span>
+<span class="sd">                vertices. Should have shape (F,)</span>
+<span class="sd">            bone_wxyzs: Nested tuple or array of initial bone orientations.</span>
+<span class="sd">            bone_positions: Nested tuple or array of initial bone positions.</span>
+<span class="sd">            skin_weights: A numpy array of skin weights. Should have shape (V, B) where B</span>
+<span class="sd">                is the number of bones. Only the top 4 bone weights for each</span>
+<span class="sd">                vertex will be used.</span>
+<span class="sd">            color: Color of the mesh as an RGB tuple.</span>
+<span class="sd">            wireframe: Boolean indicating if the mesh should be rendered as a wireframe.</span>
+<span class="sd">            opacity: Opacity of the mesh. None means opaque.</span>
+<span class="sd">            material: Material type of the mesh (&#39;standard&#39;, &#39;toon3&#39;, &#39;toon5&#39;).</span>
+<span class="sd">                This argument is ignored when wireframe=True.</span>
+<span class="sd">            flat_shading: Whether to do flat shading. This argument is ignored</span>
+<span class="sd">                when wireframe=True.</span>
+<span class="sd">            side: Side of the surface to render (&#39;front&#39;, &#39;back&#39;, &#39;double&#39;).</span>
+<span class="sd">            wxyz: Quaternion rotation to parent frame from local frame (R_pl).</span>
+<span class="sd">            position: Translation from parent frame to local frame (t_pl).</span>
+<span class="sd">            visible: Whether or not this mesh is initially visible.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Handle for manipulating scene node.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">wireframe</span> <span class="ow">and</span> <span class="n">material</span> <span class="o">!=</span> <span class="s2">&quot;standard&quot;</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Invalid combination of </span><span class="si">{</span><span class="n">wireframe</span><span class="si">=}</span><span class="s2"> and </span><span class="si">{</span><span class="n">material</span><span class="si">=}</span><span class="s2">. Material argument will be ignored.&quot;</span><span class="p">,</span>
+                <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">wireframe</span> <span class="ow">and</span> <span class="n">flat_shading</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Invalid combination of </span><span class="si">{</span><span class="n">wireframe</span><span class="si">=}</span><span class="s2"> and </span><span class="si">{</span><span class="n">flat_shading</span><span class="si">=}</span><span class="s2">. Flat shading argument will be ignored.&quot;</span><span class="p">,</span>
+                <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="n">num_bones</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">bone_wxyzs</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">skin_weights</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">vertices</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">num_bones</span><span class="p">)</span>
+
+        <span class="c1"># Take the four biggest indices.</span>
+        <span class="n">top4_skin_indices</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">skin_weights</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)[:,</span> <span class="o">-</span><span class="mi">4</span><span class="p">:]</span>
+        <span class="n">top4_skin_weights</span> <span class="o">=</span> <span class="n">skin_weights</span><span class="p">[</span>
+            <span class="n">onp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">vertices</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])[:,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">top4_skin_indices</span>
+        <span class="p">]</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="n">top4_skin_weights</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">top4_skin_indices</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">vertices</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">bone_wxyzs</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">bone_wxyzs</span><span class="p">)</span>
+        <span class="n">bone_positions</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">bone_positions</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">bone_wxyzs</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">num_bones</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">bone_positions</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">num_bones</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
+            <span class="n">_messages</span><span class="o">.</span><span class="n">SkinnedMeshMessage</span><span class="p">(</span>
+                <span class="n">name</span><span class="p">,</span>
+                <span class="n">vertices</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+                <span class="n">faces</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">uint32</span><span class="p">),</span>
+                <span class="c1"># (255, 255, 255) =&gt; 0xffffff, etc</span>
+                <span class="n">color</span><span class="o">=</span><span class="n">_encode_rgb</span><span class="p">(</span><span class="n">color</span><span class="p">),</span>
+                <span class="n">vertex_colors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">wireframe</span><span class="o">=</span><span class="n">wireframe</span><span class="p">,</span>
+                <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">,</span>
+                <span class="n">flat_shading</span><span class="o">=</span><span class="n">flat_shading</span><span class="p">,</span>
+                <span class="n">side</span><span class="o">=</span><span class="n">side</span><span class="p">,</span>
+                <span class="n">material</span><span class="o">=</span><span class="n">material</span><span class="p">,</span>
+                <span class="n">bone_wxyzs</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span>
+                    <span class="p">(</span>
+                        <span class="nb">float</span><span class="p">(</span><span class="n">wxyz</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                        <span class="nb">float</span><span class="p">(</span><span class="n">wxyz</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+                        <span class="nb">float</span><span class="p">(</span><span class="n">wxyz</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+                        <span class="nb">float</span><span class="p">(</span><span class="n">wxyz</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span>
+                    <span class="p">)</span>
+                    <span class="k">for</span> <span class="n">wxyz</span> <span class="ow">in</span> <span class="n">bone_wxyzs</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">bone_positions</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span>
+                    <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">xyz</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">xyz</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">xyz</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+                    <span class="k">for</span> <span class="n">xyz</span> <span class="ow">in</span> <span class="n">bone_positions</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">skin_indices</span><span class="o">=</span><span class="n">top4_skin_indices</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">uint16</span><span class="p">),</span>
+                <span class="n">skin_weights</span><span class="o">=</span><span class="n">top4_skin_weights</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">handle</span> <span class="o">=</span> <span class="n">MeshHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">MeshSkinnedHandle</span><span class="p">(</span>
+            <span class="n">handle</span><span class="o">.</span><span class="n">_impl</span><span class="p">,</span>
+            <span class="n">bones</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span>
+                <span class="n">MeshSkinnedBoneHandle</span><span class="p">(</span>
+                    <span class="n">_impl</span><span class="o">=</span><span class="n">BoneState</span><span class="p">(</span>
+                        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                        <span class="n">websock_interface</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="p">,</span>
+                        <span class="n">bone_index</span><span class="o">=</span><span class="n">i</span><span class="p">,</span>
+                        <span class="n">wxyz</span><span class="o">=</span><span class="n">bone_wxyzs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                        <span class="n">position</span><span class="o">=</span><span class="n">bone_positions</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_bones</span><span class="p">)</span>
+            <span class="p">),</span>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SceneApi.add_mesh_simple">

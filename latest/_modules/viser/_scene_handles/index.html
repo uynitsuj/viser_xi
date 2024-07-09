@@ -275,6 +275,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../examples/21_set_up_direction/">Set Up Direction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../examples/22_games/">Games</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../examples/23_plotly/">Plotly.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/23_smpl_visualizer_skinned/">Visualizer for SMPL human body models. Requires a .npz model file.</a></li>
 </ul>
 
 </div>
@@ -317,6 +318,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">onp</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">_messages</span>
+<span class="kn">from</span> <span class="nn">.infra._infra</span> <span class="kn">import</span> <span class="n">WebsockClientConnection</span><span class="p">,</span> <span class="n">WebsockServer</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">._gui_api</span> <span class="kn">import</span> <span class="n">GuiApi</span>
@@ -536,6 +538,75 @@
 <span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">MeshHandle</span><span class="p">(</span><span class="n">_ClickableSceneNodeHandle</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for mesh objects.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="MeshSkinnedHandle">
+<a class="viewcode-back" href="../../../scene_handles/#viser.MeshSkinnedHandle">[docs]</a>
+<span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
+<span class="k">class</span> <span class="nc">MeshSkinnedHandle</span><span class="p">(</span><span class="n">_ClickableSceneNodeHandle</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for skinned mesh objects.&quot;&quot;&quot;</span>
+
+    <span class="n">bones</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">MeshSkinnedBoneHandle</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Bones of the skinned mesh. These handles can be used for reading and</span>
+<span class="sd">    writing poses, which are defined relative to the mesh root.&quot;&quot;&quot;</span></div>
+
+
+
+<span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
+<span class="k">class</span> <span class="nc">BoneState</span><span class="p">:</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">websock_interface</span><span class="p">:</span> <span class="n">WebsockServer</span> <span class="o">|</span> <span class="n">WebsockClientConnection</span>
+    <span class="n">bone_index</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">wxyz</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span>
+    <span class="n">position</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span>
+
+
+<div class="viewcode-block" id="MeshSkinnedBoneHandle">
+<a class="viewcode-back" href="../../../scene_handles/#viser.MeshSkinnedBoneHandle">[docs]</a>
+<span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
+<span class="k">class</span> <span class="nc">MeshSkinnedBoneHandle</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for reading and writing the poses of bones in a skinned mesh.&quot;&quot;&quot;</span>
+
+    <span class="n">_impl</span><span class="p">:</span> <span class="n">BoneState</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">wxyz</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Orientation of the bone. This is the quaternion representation of the R</span>
+<span class="sd">        in `p_parent = [R | t] p_local`. Synchronized to clients automatically when assigned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">wxyz</span>
+
+    <span class="nd">@wxyz</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">wxyz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">._scene_api</span> <span class="kn">import</span> <span class="n">cast_vector</span>
+
+        <span class="n">wxyz_cast</span> <span class="o">=</span> <span class="n">cast_vector</span><span class="p">(</span><span class="n">wxyz</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">wxyz</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">wxyz</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
+            <span class="n">_messages</span><span class="o">.</span><span class="n">SetBoneOrientationMessage</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">bone_index</span><span class="p">,</span> <span class="n">wxyz_cast</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Position of the bone. This is equivalent to the t in</span>
+<span class="sd">        `p_parent = [R | t] p_local`. Synchronized to clients automatically when assigned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">position</span>
+
+    <span class="nd">@position</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">._scene_api</span> <span class="kn">import</span> <span class="n">cast_vector</span>
+
+        <span class="n">position_cast</span> <span class="o">=</span> <span class="n">cast_vector</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
+            <span class="n">_messages</span><span class="o">.</span><span class="n">SetBonePositionMessage</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">bone_index</span><span class="p">,</span> <span class="n">position_cast</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
 
 
 

@@ -274,6 +274,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples/21_set_up_direction/">Set Up Direction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/22_games/">Games</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/23_plotly/">Plotly.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/23_smpl_visualizer_skinned/">Visualizer for SMPL human body models. Requires a .npz model file.</a></li>
 </ul>
 
 </div>
@@ -431,6 +432,8 @@
         <li><a href="../gui_api/#viser.GuiApi.add_markdown">add_markdown() (viser.GuiApi method)</a>
 </li>
         <li><a href="../scene_api/#viser.SceneApi.add_mesh_simple">add_mesh_simple() (viser.SceneApi method)</a>
+</li>
+        <li><a href="../scene_api/#viser.SceneApi.add_mesh_skinned">add_mesh_skinned() (viser.SceneApi method)</a>
 </li>
         <li><a href="../scene_api/#viser.SceneApi.add_mesh_trimesh">add_mesh_trimesh() (viser.SceneApi method)</a>
 </li>
@@ -790,10 +793,10 @@
 </li>
         <li><a href="../icons/#viser.Icon.ARROW_BACK_UP_DOUBLE">ARROW_BACK_UP_DOUBLE (viser.Icon attribute)</a>
 </li>
-        <li><a href="../icons/#viser.Icon.ARROW_BADGE_DOWN">ARROW_BADGE_DOWN (viser.Icon attribute)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="../icons/#viser.Icon.ARROW_BADGE_DOWN">ARROW_BADGE_DOWN (viser.Icon attribute)</a>
+</li>
         <li><a href="../icons/#viser.Icon.ARROW_BADGE_DOWN_FILLED">ARROW_BADGE_DOWN_FILLED (viser.Icon attribute)</a>
 </li>
         <li><a href="../icons/#viser.Icon.ARROW_BADGE_LEFT">ARROW_BADGE_LEFT (viser.Icon attribute)</a>
@@ -1543,6 +1546,8 @@
         <li><a href="../icons/#viser.Icon.BONE">BONE (viser.Icon attribute)</a>
 </li>
         <li><a href="../icons/#viser.Icon.BONE_OFF">BONE_OFF (viser.Icon attribute)</a>
+</li>
+        <li><a href="../scene_handles/#viser.MeshSkinnedHandle.bones">bones (viser.MeshSkinnedHandle attribute)</a>
 </li>
         <li><a href="../icons/#viser.Icon.BONG">BONG (viser.Icon attribute)</a>
 </li>
@@ -6552,6 +6557,10 @@
 </li>
         <li><a href="../scene_handles/#viser.MeshHandle">MeshHandle (class in viser)</a>
 </li>
+        <li><a href="../scene_handles/#viser.MeshSkinnedBoneHandle">MeshSkinnedBoneHandle (class in viser)</a>
+</li>
+        <li><a href="../scene_handles/#viser.MeshSkinnedHandle">MeshSkinnedHandle (class in viser)</a>
+</li>
         <li><a href="../infrastructure/#viser.infra.Message">Message (class in viser.infra)</a>
 </li>
         <li><a href="../icons/#viser.Icon.MESSAGE">MESSAGE (viser.Icon attribute)</a>
@@ -6610,10 +6619,10 @@
 </li>
         <li><a href="../icons/#viser.Icon.MESSAGE_CIRCLE_2">MESSAGE_CIRCLE_2 (viser.Icon attribute)</a>
 </li>
-        <li><a href="../icons/#viser.Icon.MESSAGE_CIRCLE_2_FILLED">MESSAGE_CIRCLE_2_FILLED (viser.Icon attribute)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="../icons/#viser.Icon.MESSAGE_CIRCLE_2_FILLED">MESSAGE_CIRCLE_2_FILLED (viser.Icon attribute)</a>
+</li>
         <li><a href="../icons/#viser.Icon.MESSAGE_CIRCLE_BOLT">MESSAGE_CIRCLE_BOLT (viser.Icon attribute)</a>
 </li>
         <li><a href="../icons/#viser.Icon.MESSAGE_CIRCLE_CANCEL">MESSAGE_CIRCLE_CANCEL (viser.Icon attribute)</a>
@@ -7094,6 +7103,8 @@
 </li>
           <li><a href="../scene_handles/#viser.MeshHandle.on_click">(viser.MeshHandle method)</a>
 </li>
+          <li><a href="../scene_handles/#viser.MeshSkinnedHandle.on_click">(viser.MeshSkinnedHandle method)</a>
+</li>
           <li><a href="../scene_handles/#viser.TransformControlsHandle.on_click">(viser.TransformControlsHandle method)</a>
 </li>
         </ul></li>
@@ -7103,14 +7114,14 @@
           <li><a href="../server/#viser.ViserServer.on_client_connect">(viser.ViserServer method)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="../infrastructure/#viser.infra.WebsockServer.on_client_disconnect">on_client_disconnect() (viser.infra.WebsockServer method)</a>
 
         <ul>
           <li><a href="../server/#viser.ViserServer.on_client_disconnect">(viser.ViserServer method)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="../scene_api/#viser.SceneApi.on_pointer_callback_removed">on_pointer_callback_removed() (viser.SceneApi method)</a>
 </li>
         <li><a href="../scene_api/#viser.SceneApi.on_pointer_event">on_pointer_event() (viser.SceneApi method)</a>
@@ -7429,10 +7440,10 @@
 </li>
         <li><a href="../icons/#viser.Icon.PLANE_DEPARTURE">PLANE_DEPARTURE (viser.Icon attribute)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="../icons/#viser.Icon.PLANE_INFLIGHT">PLANE_INFLIGHT (viser.Icon attribute)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="../icons/#viser.Icon.PLANE_OFF">PLANE_OFF (viser.Icon attribute)</a>
 </li>
         <li><a href="../icons/#viser.Icon.PLANE_TILT">PLANE_TILT (viser.Icon attribute)</a>
@@ -7623,6 +7634,10 @@
           <li><a href="../scene_handles/#viser.LabelHandle.position">(viser.LabelHandle property)</a>
 </li>
           <li><a href="../scene_handles/#viser.MeshHandle.position">(viser.MeshHandle property)</a>
+</li>
+          <li><a href="../scene_handles/#viser.MeshSkinnedBoneHandle.position">(viser.MeshSkinnedBoneHandle property)</a>
+</li>
+          <li><a href="../scene_handles/#viser.MeshSkinnedHandle.position">(viser.MeshSkinnedHandle property)</a>
 </li>
           <li><a href="../scene_handles/#viser.PointCloudHandle.position">(viser.PointCloudHandle property)</a>
 </li>
@@ -7892,6 +7907,8 @@
 </li>
           <li><a href="../scene_handles/#viser.MeshHandle.remove">(viser.MeshHandle method)</a>
 </li>
+          <li><a href="../scene_handles/#viser.MeshSkinnedHandle.remove">(viser.MeshSkinnedHandle method)</a>
+</li>
           <li><a href="../scene_handles/#viser.PointCloudHandle.remove">(viser.PointCloudHandle method)</a>
 </li>
           <li><a href="../scene_handles/#viser.SceneNodeHandle.remove">(viser.SceneNodeHandle method)</a>
@@ -7905,10 +7922,10 @@
 </li>
         <li><a href="../icons/#viser.Icon.REPEAT_OFF">REPEAT_OFF (viser.Icon attribute)</a>
 </li>
-        <li><a href="../icons/#viser.Icon.REPEAT_ONCE">REPEAT_ONCE (viser.Icon attribute)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="../icons/#viser.Icon.REPEAT_ONCE">REPEAT_ONCE (viser.Icon attribute)</a>
+</li>
         <li><a href="../icons/#viser.Icon.REPLACE">REPLACE (viser.Icon attribute)</a>
 </li>
         <li><a href="../icons/#viser.Icon.REPLACE_FILLED">REPLACE_FILLED (viser.Icon attribute)</a>
@@ -9755,6 +9772,8 @@
 </li>
           <li><a href="../scene_handles/#viser.MeshHandle.visible">(viser.MeshHandle property)</a>
 </li>
+          <li><a href="../scene_handles/#viser.MeshSkinnedHandle.visible">(viser.MeshSkinnedHandle property)</a>
+</li>
           <li><a href="../scene_handles/#viser.PointCloudHandle.visible">(viser.PointCloudHandle property)</a>
 </li>
           <li><a href="../scene_handles/#viser.SceneNodeHandle.visible">(viser.SceneNodeHandle property)</a>
@@ -9900,10 +9919,10 @@
 </li>
         <li><a href="../icons/#viser.Icon.WIND">WIND (viser.Icon attribute)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="../icons/#viser.Icon.WIND_OFF">WIND_OFF (viser.Icon attribute)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="../icons/#viser.Icon.WINDMILL">WINDMILL (viser.Icon attribute)</a>
 </li>
         <li><a href="../icons/#viser.Icon.WINDMILL_FILLED">WINDMILL_FILLED (viser.Icon attribute)</a>
@@ -10010,6 +10029,10 @@
           <li><a href="../scene_handles/#viser.LabelHandle.wxyz">(viser.LabelHandle property)</a>
 </li>
           <li><a href="../scene_handles/#viser.MeshHandle.wxyz">(viser.MeshHandle property)</a>
+</li>
+          <li><a href="../scene_handles/#viser.MeshSkinnedBoneHandle.wxyz">(viser.MeshSkinnedBoneHandle property)</a>
+</li>
+          <li><a href="../scene_handles/#viser.MeshSkinnedHandle.wxyz">(viser.MeshSkinnedHandle property)</a>
 </li>
           <li><a href="../scene_handles/#viser.PointCloudHandle.wxyz">(viser.PointCloudHandle property)</a>
 </li>
