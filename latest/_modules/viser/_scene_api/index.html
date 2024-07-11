@@ -155,68 +155,93 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../">
-    
-    <div class="sidebar-logo-container" style="margin: .5rem 1em .5rem 0">
-        <img class="sidebar-logo only-light" src="../../../_static/logo.svg" alt="logo" />
-        <img class="sidebar-logo only-dark" src="../../../_static/logo.svg" alt="logo" />
-    </div>
-    <!-- <span class="sidebar-brand-text">viser</span> -->
+      <div class="sidebar-sticky"><a
+  class="sidebar-brand"
+  href="../../../"
+>
+  
+  <div class="sidebar-logo-container" style="margin: 0.5rem 1em 0.5rem 0">
+    <img
+      class="sidebar-logo only-light"
+      src="../../../_static/logo.svg"
+      alt="logo"
+    />
+    <img
+      class="sidebar-logo only-dark"
+      src="../../../_static/logo.svg"
+      alt="logo"
+    />
+  </div>
+  <!-- <span class="sidebar-brand-text">viser</span> -->
 
-    
+  
 </a>
 
 <!-- Dropdown for different versions of the viser docs. Slightly hacky. -->
-<div style="padding: 0 1em;">
-    <script>
-      var viserDocsVersionsPopulated = false;
+<div style="padding: 0 1em">
+  <script>
+    var viserDocsVersionsPopulated = false;
 
-      async function getViserVersionList() {
-        // This index.txt file is written by the docs.yml GitHub action.
-        // https://github.com/nerfstudio-project/viser/blob/main/.github/workflows/docs.yml
-        const response = await fetch(
-          "https://viser.studio/versions/index.txt",
-          { cache: "no-cache" }
-        );
-        return await response.text();
+    async function getViserVersionList() {
+      // This index.txt file is written by the docs.yml GitHub action.
+      // https://github.com/nerfstudio-project/viser/blob/main/.github/workflows/docs.yml
+      const response = await fetch("https://viser.studio/versions/index.txt", {
+        cache: "no-cache",
+      });
+      return await response.text();
+    }
+    async function viserDocsPopulateVersionDropDown() {
+      // Load the version list lazily...
+      if (viserDocsVersionsPopulated) {
+        return;
       }
-      async function viserDocsPopulateVersionDropDown () {
-        // Load the version list lazily...
-        if (viserDocsVersionsPopulated) {
-          return;
-        }
-        viserDocsVersionsPopulated = true;
+      viserDocsVersionsPopulated = true;
 
-        console.log("Populating docs version list!")
-        const versions = (await getViserVersionList()).trim().split("\n").reverse();
-        console.log(versions);
-        let htmlString = "<ul style='margin: 0.5rem 0 0 0'>";
-        htmlString += `<li><a href="https://viser.studio/latest">latest</a></li>`;
-        for (let version of versions) {
-          htmlString += `<li><a href="https://viser.studio/versions/${version}">${version}</a></li>`;
-        }
-
-        htmlString += "</ul>";
-        document.getElementById("viser-version-dropdown").innerHTML = htmlString;
+      console.log("Populating docs version list!");
+      const versions = (await getViserVersionList())
+        .trim()
+        .split("\n")
+        .reverse();
+      console.log(versions);
+      let htmlString = "<ul style='margin: 0.5rem 0 0 0'>";
+      htmlString += `<li><a href="https://viser.studio/latest">latest</a></li>`;
+      for (let version of versions) {
+        htmlString += `<li><a href="https://viser.studio/versions/${version}">${version}</a></li>`;
       }
-    </script>
-    <details
-        style="padding: 0.5rem; background: var(--color-background-primary); border-radius: 0.5rem; border: 1px solid var(--color-sidebar-background-border);"
-        ontoggle="viserDocsPopulateVersionDropDown()"
-    >
-    <summary style="cursor: pointer;"><strong>Version:</strong> <em>latest</em></summary>
-      <div id="viser-version-dropdown"></div>
-    </details>
-    <!-- End dropdown -->
+
+      htmlString += "</ul>";
+      document.getElementById("viser-version-dropdown").innerHTML = htmlString;
+    }
+  </script>
+  <details
+    style="
+      padding: 0.5rem;
+      background: var(--color-background-primary);
+      border-radius: 0.5rem;
+      border: 1px solid var(--color-sidebar-background-border);
+    "
+    ontoggle="viserDocsPopulateVersionDropDown()"
+  >
+    <summary style="cursor: pointer">
+      <strong>Version:</strong> <em>latest</em>
+    </summary>
+    <div id="viser-version-dropdown"></div>
+  </details>
+  <!-- End dropdown -->
 </div>
 
 <div style="text-align: left; padding: 1em">
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <a class="github-button" href="https://github.com/nerfstudio-project/viser"
-        data-color-scheme="no-preference: light; light: light; dark: light;" data-size="large" data-show-count="true"
-        aria-label="Download buttons/github-buttons on GitHub">
-        Github
-    </a>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <a
+    class="github-button"
+    href="https://github.com/nerfstudio-project/viser"
+    data-color-scheme="no-preference: light; light: light; dark: light;"
+    data-size="large"
+    data-show-count="true"
+    aria-label="Download buttons/github-buttons on GitHub"
+  >
+    Github
+  </a>
 </div><form class="sidebar-search-container" method="get" action="../../../search/" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
@@ -331,6 +356,7 @@
     <span class="n">BoneState</span><span class="p">,</span>
     <span class="n">CameraFrustumHandle</span><span class="p">,</span>
     <span class="n">FrameHandle</span><span class="p">,</span>
+    <span class="n">GaussianSplatHandle</span><span class="p">,</span>
     <span class="n">GlbHandle</span><span class="p">,</span>
     <span class="n">Gui3dContainerHandle</span><span class="p">,</span>
     <span class="n">ImageHandle</span><span class="p">,</span>
@@ -1289,6 +1315,71 @@
                 <span class="n">visible</span><span class="o">=</span><span class="n">visible</span><span class="p">,</span>
             <span class="p">)</span></div>
 
+
+    <span class="k">def</span> <span class="nf">_add_gaussian_splats</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">centers</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">covariances</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">rgbs</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">opacities</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">wxyz</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+        <span class="n">position</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+        <span class="n">visible</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GaussianSplatHandle</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a model to render using Gaussian Splatting. Does not yet support</span>
+<span class="sd">        spherical harmonics.</span>
+
+<span class="sd">        **Work-in-progress.** This feature is experimental and still under</span>
+<span class="sd">        development. It may be changed or removed.</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            name: Scene node name.</span>
+<span class="sd">            centers: Centers of Gaussians. (N, 3).</span>
+<span class="sd">            covariances: Second moment for each Gaussian. (N, 3, 3).</span>
+<span class="sd">            rgbs: Color for each Gaussian. (N, 3).</span>
+<span class="sd">            opacities: Opacity for each Gaussian. (N, 1).</span>
+<span class="sd">            wxyz: R_parent_local transformation.</span>
+<span class="sd">            position: t_parent_local transformation.</span>
+<span class="sd">            visibile: Initial visibility of scene node.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Scene node handle.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num_gaussians</span> <span class="o">=</span> <span class="n">centers</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="n">centers</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">num_gaussians</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">rgbs</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">num_gaussians</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">opacities</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">num_gaussians</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">covariances</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">num_gaussians</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+        <span class="c1"># Get cholesky factor of covariance.</span>
+        <span class="n">cov_cholesky_triu</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">onp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">covariances</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span> <span class="o">+</span> <span class="n">onp</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e-7</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># tril =&gt; triu</span>
+            <span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">))[:,</span> <span class="n">onp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">])]</span>
+        <span class="p">)</span>
+        <span class="n">buffer</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="c1"># First texelFetch.</span>
+                <span class="n">centers</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">uint8</span><span class="p">),</span>
+                <span class="n">onp</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_gaussians</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">onp</span><span class="o">.</span><span class="n">uint8</span><span class="p">),</span>
+                <span class="c1"># Second texelFetch.</span>
+                <span class="n">cov_cholesky_triu</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">float16</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">uint8</span><span class="p">),</span>
+                <span class="n">_colors_to_uint8</span><span class="p">(</span><span class="n">rgbs</span><span class="p">),</span>
+                <span class="n">_colors_to_uint8</span><span class="p">(</span><span class="n">opacities</span><span class="p">),</span>
+            <span class="p">],</span>
+            <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">buffer</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">num_gaussians</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
+            <span class="n">_messages</span><span class="o">.</span><span class="n">GaussianSplatsMessage</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">buffer</span><span class="o">=</span><span class="n">buffer</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">node_handle</span> <span class="o">=</span> <span class="n">GaussianSplatHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">node_handle</span>
 
 <div class="viewcode-block" id="SceneApi.add_box">
 <a class="viewcode-back" href="../../../scene_api/#viser.SceneApi.add_box">[docs]</a>

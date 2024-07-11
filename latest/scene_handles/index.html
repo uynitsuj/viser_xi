@@ -156,68 +156,93 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand" href="../">
-    
-    <div class="sidebar-logo-container" style="margin: .5rem 1em .5rem 0">
-        <img class="sidebar-logo only-light" src="../_static/logo.svg" alt="logo" />
-        <img class="sidebar-logo only-dark" src="../_static/logo.svg" alt="logo" />
-    </div>
-    <!-- <span class="sidebar-brand-text">viser</span> -->
+      <div class="sidebar-sticky"><a
+  class="sidebar-brand"
+  href="../"
+>
+  
+  <div class="sidebar-logo-container" style="margin: 0.5rem 1em 0.5rem 0">
+    <img
+      class="sidebar-logo only-light"
+      src="../_static/logo.svg"
+      alt="logo"
+    />
+    <img
+      class="sidebar-logo only-dark"
+      src="../_static/logo.svg"
+      alt="logo"
+    />
+  </div>
+  <!-- <span class="sidebar-brand-text">viser</span> -->
 
-    
+  
 </a>
 
 <!-- Dropdown for different versions of the viser docs. Slightly hacky. -->
-<div style="padding: 0 1em;">
-    <script>
-      var viserDocsVersionsPopulated = false;
+<div style="padding: 0 1em">
+  <script>
+    var viserDocsVersionsPopulated = false;
 
-      async function getViserVersionList() {
-        // This index.txt file is written by the docs.yml GitHub action.
-        // https://github.com/nerfstudio-project/viser/blob/main/.github/workflows/docs.yml
-        const response = await fetch(
-          "https://viser.studio/versions/index.txt",
-          { cache: "no-cache" }
-        );
-        return await response.text();
+    async function getViserVersionList() {
+      // This index.txt file is written by the docs.yml GitHub action.
+      // https://github.com/nerfstudio-project/viser/blob/main/.github/workflows/docs.yml
+      const response = await fetch("https://viser.studio/versions/index.txt", {
+        cache: "no-cache",
+      });
+      return await response.text();
+    }
+    async function viserDocsPopulateVersionDropDown() {
+      // Load the version list lazily...
+      if (viserDocsVersionsPopulated) {
+        return;
       }
-      async function viserDocsPopulateVersionDropDown () {
-        // Load the version list lazily...
-        if (viserDocsVersionsPopulated) {
-          return;
-        }
-        viserDocsVersionsPopulated = true;
+      viserDocsVersionsPopulated = true;
 
-        console.log("Populating docs version list!")
-        const versions = (await getViserVersionList()).trim().split("\n").reverse();
-        console.log(versions);
-        let htmlString = "<ul style='margin: 0.5rem 0 0 0'>";
-        htmlString += `<li><a href="https://viser.studio/latest">latest</a></li>`;
-        for (let version of versions) {
-          htmlString += `<li><a href="https://viser.studio/versions/${version}">${version}</a></li>`;
-        }
-
-        htmlString += "</ul>";
-        document.getElementById("viser-version-dropdown").innerHTML = htmlString;
+      console.log("Populating docs version list!");
+      const versions = (await getViserVersionList())
+        .trim()
+        .split("\n")
+        .reverse();
+      console.log(versions);
+      let htmlString = "<ul style='margin: 0.5rem 0 0 0'>";
+      htmlString += `<li><a href="https://viser.studio/latest">latest</a></li>`;
+      for (let version of versions) {
+        htmlString += `<li><a href="https://viser.studio/versions/${version}">${version}</a></li>`;
       }
-    </script>
-    <details
-        style="padding: 0.5rem; background: var(--color-background-primary); border-radius: 0.5rem; border: 1px solid var(--color-sidebar-background-border);"
-        ontoggle="viserDocsPopulateVersionDropDown()"
-    >
-    <summary style="cursor: pointer;"><strong>Version:</strong> <em>latest</em></summary>
-      <div id="viser-version-dropdown"></div>
-    </details>
-    <!-- End dropdown -->
+
+      htmlString += "</ul>";
+      document.getElementById("viser-version-dropdown").innerHTML = htmlString;
+    }
+  </script>
+  <details
+    style="
+      padding: 0.5rem;
+      background: var(--color-background-primary);
+      border-radius: 0.5rem;
+      border: 1px solid var(--color-sidebar-background-border);
+    "
+    ontoggle="viserDocsPopulateVersionDropDown()"
+  >
+    <summary style="cursor: pointer">
+      <strong>Version:</strong> <em>latest</em>
+    </summary>
+    <div id="viser-version-dropdown"></div>
+  </details>
+  <!-- End dropdown -->
 </div>
 
 <div style="text-align: left; padding: 1em">
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <a class="github-button" href="https://github.com/nerfstudio-project/viser"
-        data-color-scheme="no-preference: light; light: light; dark: light;" data-size="large" data-show-count="true"
-        aria-label="Download buttons/github-buttons on GitHub">
-        Github
-    </a>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <a
+    class="github-button"
+    href="https://github.com/nerfstudio-project/viser"
+    data-color-scheme="no-preference: light; light: light; dark: light;"
+    data-size="large"
+    data-show-count="true"
+    aria-label="Download buttons/github-buttons on GitHub"
+  >
+    Github
+  </a>
 </div><form class="sidebar-search-container" method="get" action="../search/" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
@@ -945,6 +970,61 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="viser.GaussianSplatHandle">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">viser.</span></span><span class="sig-name descname"><span class="pre">GaussianSplatHandle</span></span><a class="reference internal" href="../_modules/viser/_scene_handles/#GaussianSplatHandle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.GaussianSplatHandle" title="Link to this definition">#</a></dt>
+<dd><p>Handle for Gaussian splatting objects.</p>
+<p><strong>Work-in-progress.</strong> Gaussian rendering is still under development.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.GaussianSplatHandle.on_click">
+<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TSceneNodeHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TSceneNodeHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.GaussianSplatHandle.on_click" title="Link to this definition">#</a></dt>
+<dd><p>Attach a callback for when a scene node is clicked.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> (<em>TSceneNodeHandle</em>) – </p></li>
+<li><p><strong>func</strong> (<em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a><em>[</em><em>TSceneNodeHandle</em><em>]</em><em>]</em><em>, </em><em>None</em><em>]</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Callable</em>[[<a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a>[<em>TSceneNodeHandle</em>]], None]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.GaussianSplatHandle.position">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#viser.GaussianSplatHandle.position" title="Link to this definition">#</a></dt>
+<dd><p>Position of the scene node. This is equivalent to the t in
+<code class="docutils literal notranslate"><span class="pre">p_parent</span> <span class="pre">=</span> <span class="pre">[R</span> <span class="pre">|</span> <span class="pre">t]</span> <span class="pre">p_local</span></code>. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.GaussianSplatHandle.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.GaussianSplatHandle.remove" title="Link to this definition">#</a></dt>
+<dd><p>Remove the node from the scene.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.GaussianSplatHandle.visible">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">visible</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#viser.GaussianSplatHandle.visible" title="Link to this definition">#</a></dt>
+<dd><p>Whether the scene node is visible or not. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.GaussianSplatHandle.wxyz">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wxyz</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#viser.GaussianSplatHandle.wxyz" title="Link to this definition">#</a></dt>
+<dd><p>Orientation of the scene node. This is the quaternion representation of the R
+in <code class="docutils literal notranslate"><span class="pre">p_parent</span> <span class="pre">=</span> <span class="pre">[R</span> <span class="pre">|</span> <span class="pre">t]</span> <span class="pre">p_local</span></code>. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+</dd></dl>
+
 <!-- prettier-ignore-end --></section>
 
         </article>
@@ -1108,6 +1188,14 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 <li><a class="reference internal" href="#viser.TransformControlsHandle.wxyz"><code class="docutils literal notranslate"><span class="pre">TransformControlsHandle.wxyz</span></code></a></li>
 <li><a class="reference internal" href="#viser.TransformControlsHandle.update_timestamp"><code class="docutils literal notranslate"><span class="pre">TransformControlsHandle.update_timestamp</span></code></a></li>
 <li><a class="reference internal" href="#viser.TransformControlsHandle.on_update"><code class="docutils literal notranslate"><span class="pre">TransformControlsHandle.on_update()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#viser.GaussianSplatHandle"><code class="docutils literal notranslate"><span class="pre">GaussianSplatHandle</span></code></a><ul>
+<li><a class="reference internal" href="#viser.GaussianSplatHandle.on_click"><code class="docutils literal notranslate"><span class="pre">GaussianSplatHandle.on_click()</span></code></a></li>
+<li><a class="reference internal" href="#viser.GaussianSplatHandle.position"><code class="docutils literal notranslate"><span class="pre">GaussianSplatHandle.position</span></code></a></li>
+<li><a class="reference internal" href="#viser.GaussianSplatHandle.remove"><code class="docutils literal notranslate"><span class="pre">GaussianSplatHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.GaussianSplatHandle.visible"><code class="docutils literal notranslate"><span class="pre">GaussianSplatHandle.visible</span></code></a></li>
+<li><a class="reference internal" href="#viser.GaussianSplatHandle.wxyz"><code class="docutils literal notranslate"><span class="pre">GaussianSplatHandle.wxyz</span></code></a></li>
 </ul>
 </li>
 </ul>
