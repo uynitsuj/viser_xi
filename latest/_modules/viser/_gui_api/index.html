@@ -681,6 +681,13 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set container ID associated with the current thread.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_target_container_from_thread_id</span><span class="p">[</span><span class="n">threading</span><span class="o">.</span><span class="n">get_ident</span><span class="p">()]</span> <span class="o">=</span> <span class="n">container_id</span>
 
+<div class="viewcode-block" id="GuiApi.reset">
+<a class="viewcode-back" href="../../../gui_api/#viser.GuiApi.reset">[docs]</a>
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset the GUI.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span><span class="n">_messages</span><span class="o">.</span><span class="n">ResetGuiMessage</span><span class="p">())</span></div>
+
+
 <div class="viewcode-block" id="GuiApi.set_panel_label">
 <a class="viewcode-back" href="../../../gui_api/#viser.GuiApi.set_panel_label">[docs]</a>
     <span class="k">def</span> <span class="nf">set_panel_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
