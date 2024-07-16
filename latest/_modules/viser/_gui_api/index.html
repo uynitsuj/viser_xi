@@ -369,6 +369,7 @@
     <span class="n">GuiMarkdownHandle</span><span class="p">,</span>
     <span class="n">GuiModalHandle</span><span class="p">,</span>
     <span class="n">GuiPlotlyHandle</span><span class="p">,</span>
+    <span class="n">GuiProgressBarHandle</span><span class="p">,</span>
     <span class="n">GuiTabGroupHandle</span><span class="p">,</span>
     <span class="n">GuiUploadButtonHandle</span><span class="p">,</span>
     <span class="n">SupportsRemoveProtocol</span><span class="p">,</span>
@@ -394,6 +395,22 @@
 <span class="n">TLiteralString</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;TLiteralString&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">LiteralString</span><span class="p">)</span>
 <span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span>
 <span class="n">LengthTenStrTuple</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+<span class="n">Color</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span>
+    <span class="s2">&quot;dark&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;gray&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pink&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;grape&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;violet&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;indigo&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;blue&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;cyan&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;green&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lime&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;yellow&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;orange&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;teal&quot;</span><span class="p">,</span>
+<span class="p">]</span>
 
 
 <span class="k">def</span> <span class="nf">_hex_from_hls</span><span class="p">(</span><span class="n">h</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -999,23 +1016,7 @@
         <span class="n">disabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">visible</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">hint</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">color</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span>
-            <span class="s2">&quot;dark&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;gray&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;red&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;pink&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;grape&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;violet&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;indigo&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;blue&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;cyan&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;green&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;lime&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;yellow&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;orange&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;teal&quot;</span><span class="p">,</span>
-        <span class="p">]</span>
-        <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">color</span><span class="p">:</span> <span class="n">Color</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">icon</span><span class="p">:</span> <span class="n">IconName</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">order</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GuiButtonHandle</span><span class="p">:</span>
@@ -1066,23 +1067,7 @@
         <span class="n">disabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">visible</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">hint</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">color</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span>
-            <span class="s2">&quot;dark&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;gray&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;red&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;pink&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;grape&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;violet&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;indigo&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;blue&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;cyan&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;green&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;lime&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;yellow&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;orange&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;teal&quot;</span><span class="p">,</span>
-        <span class="p">]</span>
-        <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">color</span><span class="p">:</span> <span class="n">Color</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">icon</span><span class="p">:</span> <span class="n">IconName</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">mime_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;*/*&quot;</span><span class="p">,</span>
         <span class="n">order</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -1561,6 +1546,52 @@
             <span class="p">)</span><span class="o">.</span><span class="n">_impl</span><span class="p">,</span>
             <span class="n">_impl_options</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">options</span><span class="p">),</span>
         <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GuiApi.add_progress_bar">
+<a class="viewcode-back" href="../../../gui_api/#viser.GuiApi.add_progress_bar">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_progress_bar</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">visible</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">animated</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">color</span><span class="p">:</span> <span class="n">Color</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">order</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GuiProgressBarHandle</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a progress bar to the GUI.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            value: Value of the progress bar. (0 - 100)</span>
+<span class="sd">            visible: Whether the progress bar is visible.</span>
+<span class="sd">            animated: Whether the progress bar is in a loading state (animated, striped).</span>
+<span class="sd">            color: The color of the progress bar.</span>
+<span class="sd">            order: Optional ordering, smallest values will be displayed first.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A handle that can be used to interact with the GUI element.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">value</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">value</span> <span class="o">&lt;=</span> <span class="mi">100</span>
+        <span class="n">handle</span> <span class="o">=</span> <span class="n">GuiProgressBarHandle</span><span class="p">(</span>
+            <span class="n">_gui_api</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">_id</span><span class="o">=</span><span class="n">_make_unique_id</span><span class="p">(),</span>
+            <span class="n">_visible</span><span class="o">=</span><span class="n">visible</span><span class="p">,</span>
+            <span class="n">_animated</span><span class="o">=</span><span class="n">animated</span><span class="p">,</span>
+            <span class="n">_parent_container_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_id</span><span class="p">(),</span>
+            <span class="n">_order</span><span class="o">=</span><span class="n">_apply_default_order</span><span class="p">(</span><span class="n">order</span><span class="p">),</span>
+            <span class="n">_value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
+            <span class="n">_messages</span><span class="o">.</span><span class="n">GuiAddProgressBarMessage</span><span class="p">(</span>
+                <span class="n">order</span><span class="o">=</span><span class="n">handle</span><span class="o">.</span><span class="n">_order</span><span class="p">,</span>
+                <span class="nb">id</span><span class="o">=</span><span class="n">handle</span><span class="o">.</span><span class="n">_id</span><span class="p">,</span>
+                <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">animated</span><span class="o">=</span><span class="n">animated</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+                <span class="n">container_id</span><span class="o">=</span><span class="n">handle</span><span class="o">.</span><span class="n">_parent_container_id</span><span class="p">,</span>
+                <span class="n">visible</span><span class="o">=</span><span class="n">visible</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">handle</span></div>
 
 
 <div class="viewcode-block" id="GuiApi.add_slider">
