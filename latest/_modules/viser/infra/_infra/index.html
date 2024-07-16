@@ -351,7 +351,7 @@
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">NewType</span><span class="p">,</span> <span class="n">TypeVar</span>
 
-<span class="kn">import</span> <span class="nn">msgpack</span>
+<span class="kn">import</span> <span class="nn">msgspec</span>
 <span class="kn">import</span> <span class="nn">rich</span>
 <span class="kn">import</span> <span class="nn">websockets.connection</span>
 <span class="kn">import</span> <span class="nn">websockets.datastructures</span>
@@ -411,7 +411,7 @@
     <span class="k">def</span> <span class="nf">end_and_serialize</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;End the recording and serialize contents. Returns the recording as</span>
 <span class="sd">        bytes, which should generally be written to a file.&quot;&quot;&quot;</span>
-        <span class="n">packed_bytes</span> <span class="o">=</span> <span class="n">msgpack</span><span class="o">.</span><span class="n">packb</span><span class="p">(</span>
+        <span class="n">packed_bytes</span> <span class="o">=</span> <span class="n">msgspec</span><span class="o">.</span><span class="n">msgpack</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
             <span class="p">{</span>
                 <span class="s2">&quot;loopStartIndex&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loop_start_index</span><span class="p">,</span>
                 <span class="s2">&quot;durationSeconds&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time</span><span class="p">,</span>
@@ -885,14 +885,14 @@
     <span class="k">while</span> <span class="ow">not</span> <span class="n">buffer</span><span class="o">.</span><span class="n">done</span><span class="p">:</span>
         <span class="n">outgoing</span> <span class="o">=</span> <span class="k">await</span> <span class="n">window_generator</span><span class="o">.</span><span class="fm">__anext__</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">client_api_version</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">serialized</span> <span class="o">=</span> <span class="n">msgpack</span><span class="o">.</span><span class="n">packb</span><span class="p">(</span>
+            <span class="n">serialized</span> <span class="o">=</span> <span class="n">msgspec</span><span class="o">.</span><span class="n">msgpack</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
                 <span class="nb">tuple</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">as_serializable_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">outgoing</span><span class="p">)</span>
             <span class="p">)</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">serialized</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span>
             <span class="k">await</span> <span class="n">websocket</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">client_api_version</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">outgoing</span><span class="p">:</span>
-                <span class="n">serialized</span> <span class="o">=</span> <span class="n">msgpack</span><span class="o">.</span><span class="n">packb</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">as_serializable_dict</span><span class="p">())</span>
+                <span class="n">serialized</span> <span class="o">=</span> <span class="n">msgspec</span><span class="o">.</span><span class="n">msgpack</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">as_serializable_dict</span><span class="p">())</span>
                 <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">serialized</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span>
                 <span class="k">await</span> <span class="n">websocket</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
