@@ -454,7 +454,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Interface for adding 3D primitives to the scene.</span>
 
 <span class="sd">    Used by both our global server object, for sharing the same GUI elements</span>
-<span class="sd">    with all clients, and by invidividual client handles.&quot;&quot;&quot;</span>
+<span class="sd">    with all clients, and by individual client handles.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -1327,8 +1327,7 @@
         <span class="n">position</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
         <span class="n">visible</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GaussianSplatHandle</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a model to render using Gaussian Splatting. Does not yet support</span>
-<span class="sd">        spherical harmonics.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a model to render using Gaussian Splatting.</span>
 
 <span class="sd">        **Work-in-progress.** This feature is experimental and still under</span>
 <span class="sd">        development. It may be changed or removed.</span>
@@ -1352,7 +1351,8 @@
         <span class="k">assert</span> <span class="n">opacities</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">num_gaussians</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">covariances</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">num_gaussians</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 
-        <span class="c1"># Get cholesky factor of covariance.</span>
+        <span class="c1"># Get cholesky factor of covariance. This helps retain precision when</span>
+        <span class="c1"># we convert to float16.</span>
         <span class="n">cov_cholesky_triu</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">onp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">covariances</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span> <span class="o">+</span> <span class="n">onp</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e-7</span><span class="p">)</span>
             <span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># tril =&gt; triu</span>
