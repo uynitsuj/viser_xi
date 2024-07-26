@@ -355,15 +355,15 @@
 <span class="linenos"> 14</span>            <span class="n">initial_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
 <span class="linenos"> 15</span>            <span class="n">disabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="linenos"> 16</span>        <span class="p">)</span>
-<span class="linenos"> 17</span>
-<span class="linenos"> 18</span>        <span class="n">gui_slider</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">add_slider</span><span class="p">(</span>
-<span class="linenos"> 19</span>            <span class="s2">&quot;Slider&quot;</span><span class="p">,</span>
-<span class="linenos"> 20</span>            <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-<span class="linenos"> 21</span>            <span class="nb">max</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-<span class="linenos"> 22</span>            <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-<span class="linenos"> 23</span>            <span class="n">initial_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-<span class="linenos"> 24</span>            <span class="n">disabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<span class="linenos"> 25</span>        <span class="p">)</span>
+<span class="linenos"> 17</span>        <span class="n">gui_slider</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">add_slider</span><span class="p">(</span>
+<span class="linenos"> 18</span>            <span class="s2">&quot;Slider&quot;</span><span class="p">,</span>
+<span class="linenos"> 19</span>            <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="linenos"> 20</span>            <span class="nb">max</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+<span class="linenos"> 21</span>            <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="linenos"> 22</span>            <span class="n">initial_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="linenos"> 23</span>            <span class="n">disabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="linenos"> 24</span>        <span class="p">)</span>
+<span class="linenos"> 25</span>        <span class="n">gui_progress</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">add_progress_bar</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="n">animated</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="linenos"> 26</span>
 <span class="linenos"> 27</span>    <span class="k">with</span> <span class="n">server</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">add_folder</span><span class="p">(</span><span class="s2">&quot;Editable&quot;</span><span class="p">):</span>
 <span class="linenos"> 28</span>        <span class="n">gui_vector2</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">add_vector2</span><span class="p">(</span>
@@ -445,25 +445,27 @@
 <span class="linenos">104</span>            <span class="n">point_shape</span><span class="o">=</span><span class="s2">&quot;circle&quot;</span><span class="p">,</span>
 <span class="linenos">105</span>        <span class="p">)</span>
 <span class="linenos">106</span>
-<span class="linenos">107</span>        <span class="c1"># We can use `.visible` and `.disabled` to toggle GUI elements.</span>
-<span class="linenos">108</span>        <span class="n">gui_text</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">gui_checkbox_hide</span><span class="o">.</span><span class="n">value</span>
-<span class="linenos">109</span>        <span class="n">gui_button</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">gui_checkbox_hide</span><span class="o">.</span><span class="n">value</span>
-<span class="linenos">110</span>        <span class="n">gui_rgb</span><span class="o">.</span><span class="n">disabled</span> <span class="o">=</span> <span class="n">gui_checkbox_disable</span><span class="o">.</span><span class="n">value</span>
-<span class="linenos">111</span>        <span class="n">gui_button</span><span class="o">.</span><span class="n">disabled</span> <span class="o">=</span> <span class="n">gui_checkbox_disable</span><span class="o">.</span><span class="n">value</span>
-<span class="linenos">112</span>        <span class="n">gui_upload_button</span><span class="o">.</span><span class="n">disabled</span> <span class="o">=</span> <span class="n">gui_checkbox_disable</span><span class="o">.</span><span class="n">value</span>
-<span class="linenos">113</span>
-<span class="linenos">114</span>        <span class="c1"># Update the number of handles in the multi-slider.</span>
-<span class="linenos">115</span>        <span class="k">if</span> <span class="n">gui_slider_positions</span><span class="o">.</span><span class="n">value</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">gui_multi_slider</span><span class="o">.</span><span class="n">value</span><span class="p">):</span>
-<span class="linenos">116</span>            <span class="n">gui_multi_slider</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span>
-<span class="linenos">117</span>                <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">gui_slider_positions</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">onp</span><span class="o">.</span><span class="n">int64</span>
-<span class="linenos">118</span>            <span class="p">)</span>
-<span class="linenos">119</span>
-<span class="linenos">120</span>        <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
-<span class="linenos">121</span>        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
-<span class="linenos">122</span>
-<span class="linenos">123</span>
-<span class="linenos">124</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-<span class="linenos">125</span>    <span class="n">main</span><span class="p">()</span>
+<span class="linenos">107</span>        <span class="n">gui_progress</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">((</span><span class="n">counter</span> <span class="o">%</span> <span class="mi">100</span><span class="p">))</span>
+<span class="linenos">108</span>
+<span class="linenos">109</span>        <span class="c1"># We can use `.visible` and `.disabled` to toggle GUI elements.</span>
+<span class="linenos">110</span>        <span class="n">gui_text</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">gui_checkbox_hide</span><span class="o">.</span><span class="n">value</span>
+<span class="linenos">111</span>        <span class="n">gui_button</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">gui_checkbox_hide</span><span class="o">.</span><span class="n">value</span>
+<span class="linenos">112</span>        <span class="n">gui_rgb</span><span class="o">.</span><span class="n">disabled</span> <span class="o">=</span> <span class="n">gui_checkbox_disable</span><span class="o">.</span><span class="n">value</span>
+<span class="linenos">113</span>        <span class="n">gui_button</span><span class="o">.</span><span class="n">disabled</span> <span class="o">=</span> <span class="n">gui_checkbox_disable</span><span class="o">.</span><span class="n">value</span>
+<span class="linenos">114</span>        <span class="n">gui_upload_button</span><span class="o">.</span><span class="n">disabled</span> <span class="o">=</span> <span class="n">gui_checkbox_disable</span><span class="o">.</span><span class="n">value</span>
+<span class="linenos">115</span>
+<span class="linenos">116</span>        <span class="c1"># Update the number of handles in the multi-slider.</span>
+<span class="linenos">117</span>        <span class="k">if</span> <span class="n">gui_slider_positions</span><span class="o">.</span><span class="n">value</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">gui_multi_slider</span><span class="o">.</span><span class="n">value</span><span class="p">):</span>
+<span class="linenos">118</span>            <span class="n">gui_multi_slider</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span>
+<span class="linenos">119</span>                <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">gui_slider_positions</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">onp</span><span class="o">.</span><span class="n">int64</span>
+<span class="linenos">120</span>            <span class="p">)</span>
+<span class="linenos">121</span>
+<span class="linenos">122</span>        <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="linenos">123</span>        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="linenos">124</span>
+<span class="linenos">125</span>
+<span class="linenos">126</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">127</span>    <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
