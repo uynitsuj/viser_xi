@@ -337,10 +337,10 @@
           <h1>Source code for viser._gui_handles</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
+<span class="kn">import</span> <span class="nn">base64</span>
 <span class="kn">import</span> <span class="nn">dataclasses</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">urllib.parse</span>
 <span class="kn">import</span> <span class="nn">uuid</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
@@ -353,7 +353,7 @@
 <span class="kn">from</span> <span class="nn">._icons</span> <span class="kn">import</span> <span class="n">svg_from_icon</span>
 <span class="kn">from</span> <span class="nn">._icons_enum</span> <span class="kn">import</span> <span class="n">IconName</span>
 <span class="kn">from</span> <span class="nn">._messages</span> <span class="kn">import</span> <span class="n">GuiCloseModalMessage</span><span class="p">,</span> <span class="n">GuiRemoveMessage</span><span class="p">,</span> <span class="n">GuiUpdateMessage</span><span class="p">,</span> <span class="n">Message</span>
-<span class="kn">from</span> <span class="nn">._scene_api</span> <span class="kn">import</span> <span class="n">_encode_image_base64</span>
+<span class="kn">from</span> <span class="nn">._scene_api</span> <span class="kn">import</span> <span class="n">_encode_image_binary</span>
 <span class="kn">from</span> <span class="nn">.infra</span> <span class="kn">import</span> <span class="n">ClientId</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
@@ -919,9 +919,9 @@
         <span class="n">image_root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">image</span> <span class="o">=</span> <span class="n">iio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">image_root</span> <span class="o">/</span> <span class="n">url</span><span class="p">)</span>
-        <span class="n">data_uri</span> <span class="o">=</span> <span class="n">_encode_image_base64</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="s2">&quot;png&quot;</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_uri</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;data:</span><span class="si">{</span><span class="n">data_uri</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">;base64,</span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">media_type</span><span class="p">,</span> <span class="n">binary</span> <span class="o">=</span> <span class="n">_encode_image_binary</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="s2">&quot;png&quot;</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">binary</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;data:</span><span class="si">{</span><span class="n">media_type</span><span class="si">}</span><span class="s2">;base64,</span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="k">except</span> <span class="p">(</span><span class="ne">IOError</span><span class="p">,</span> <span class="ne">FileNotFoundError</span><span class="p">):</span>
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;Failed to read image </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">, with image_root set to </span><span class="si">{</span><span class="n">image_root</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">,</span>
