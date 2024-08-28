@@ -369,7 +369,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Origin of 3D ray corresponding to this click, in world coordinates.&quot;&quot;&quot;</span>
     <span class="n">ray_direction</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Direction of 3D ray corresponding to this click, in world coordinates.&quot;&quot;&quot;</span>
-    <span class="n">screen_pos</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span>
+    <span class="n">screen_pos</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="o">...</span><span class="p">]</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Screen position of the click on the screen (OpenCV image coordinates, 0 to 1).</span>
 <span class="sd">    (0, 0) is the upper-left corner, (1, 1) is the bottom-right corner.</span>
 <span class="sd">    For a box selection, this includes the min- and max- corners of the box.&quot;&quot;&quot;</span>
@@ -506,7 +506,12 @@
     <span class="n">ray_origin</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Origin of 3D ray corresponding to this click, in world coordinates.&quot;&quot;&quot;</span>
     <span class="n">ray_direction</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Direction of 3D ray corresponding to this click, in world coordinates.&quot;&quot;&quot;</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Direction of 3D ray corresponding to this click, in world coordinates.&quot;&quot;&quot;</span>
+    <span class="n">screen_pos</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Screen position of the click on the screen (OpenCV image coordinates, 0 to 1).</span>
+<span class="sd">    (0, 0) is the upper-left corner, (1, 1) is the bottom-right corner.&quot;&quot;&quot;</span>
+    <span class="n">instance_index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Instance ID of the clicked object, if applicable. Currently this is `None` for all objects except for the output of :meth:`SceneApi.add_batched_axes()`.&quot;&quot;&quot;</span></div>
 
 
 

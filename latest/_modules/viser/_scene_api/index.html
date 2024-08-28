@@ -840,8 +840,8 @@
 
 <span class="sd">        For cases where we want to visualize many coordinate frames, like</span>
 <span class="sd">        trajectories containing thousands or tens of thousands of frames,</span>
-<span class="sd">        batching and calling `add_batched_axes()` may be a better choice than calling</span>
-<span class="sd">        `add_frame()` in a loop.</span>
+<span class="sd">        batching and calling :meth:`add_batched_axes()` may be a better choice</span>
+<span class="sd">        than calling :meth:`add_frame()` in a loop.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            name: A scene tree name. Names in the format of /parent/child can be used to</span>
@@ -886,10 +886,11 @@
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BatchedAxesHandle</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Visualize batched sets of coordinate frame axes.</span>
 
-<span class="sd">        The functionality of `add_batched_axes()` overlaps significantly with</span>
-<span class="sd">        `add_frame()` when `show_axes=True`. The primary difference is that</span>
-<span class="sd">        `add_batched_axes()` supports multiple axes via the `wxyzs_batched`</span>
-<span class="sd">        (shape Nx4) and `positions_batched` (shape Nx3) arguments.</span>
+<span class="sd">        The functionality of :meth:`add_batched_axes()` overlaps significantly</span>
+<span class="sd">        with :meth:`add_frame()` when `show_axes=True`. The primary difference</span>
+<span class="sd">        is that :meth:`add_batched_axes()` supports multiple axes via the</span>
+<span class="sd">        `wxyzs_batched` (shape Nx4) and `positions_batched` (shape Nx3)</span>
+<span class="sd">        arguments.</span>
 
 <span class="sd">        Axes that are batched and rendered via a single call to</span>
 <span class="sd">        `add_batched_axes()` are instanced on the client; this will be much</span>
@@ -1722,6 +1723,8 @@
                 <span class="n">target</span><span class="o">=</span><span class="n">handle</span><span class="p">,</span>
                 <span class="n">ray_origin</span><span class="o">=</span><span class="n">message</span><span class="o">.</span><span class="n">ray_origin</span><span class="p">,</span>
                 <span class="n">ray_direction</span><span class="o">=</span><span class="n">message</span><span class="o">.</span><span class="n">ray_direction</span><span class="p">,</span>
+                <span class="n">screen_pos</span><span class="o">=</span><span class="n">message</span><span class="o">.</span><span class="n">screen_pos</span><span class="p">,</span>
+                <span class="n">instance_index</span><span class="o">=</span><span class="n">message</span><span class="o">.</span><span class="n">instance_index</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">cb</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
 

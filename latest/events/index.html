@@ -376,7 +376,7 @@ when events like clicks or GUI updates are triggered.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="viser.ScenePointerEvent.screen_pos">
-<span class="sig-name descname"><span class="pre">screen_pos</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#viser.ScenePointerEvent.screen_pos" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">screen_pos</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#viser.ScenePointerEvent.screen_pos" title="Link to this definition">#</a></dt>
 <dd><p>Screen position of the click on the screen (OpenCV image coordinates, 0 to 1).
 (0, 0) is the upper-left corner, (1, 1) is the bottom-right corner.
 For a box selection, this includes the min- and max- corners of the box.</p>
@@ -428,6 +428,19 @@ For a box selection, this includes the min- and max- corners of the box.</p>
 <dt class="sig sig-object py" id="viser.SceneNodePointerEvent.ray_direction">
 <span class="sig-name descname"><span class="pre">ray_direction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#viser.SceneNodePointerEvent.ray_direction" title="Link to this definition">#</a></dt>
 <dd><p>Direction of 3D ray corresponding to this click, in world coordinates.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.SceneNodePointerEvent.screen_pos">
+<span class="sig-name descname"><span class="pre">screen_pos</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#viser.SceneNodePointerEvent.screen_pos" title="Link to this definition">#</a></dt>
+<dd><p>Screen position of the click on the screen (OpenCV image coordinates, 0 to 1).
+(0, 0) is the upper-left corner, (1, 1) is the bottom-right corner.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.SceneNodePointerEvent.instance_index">
+<span class="sig-name descname"><span class="pre">instance_index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#viser.SceneNodePointerEvent.instance_index" title="Link to this definition">#</a></dt>
+<dd><p>Instance ID of the clicked object, if applicable. Currently this is <code class="docutils literal notranslate"><span class="pre">None</span></code> for all objects except for the output of <a class="reference internal" href="../scene_api/#viser.SceneApi.add_batched_axes" title="viser.SceneApi.add_batched_axes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SceneApi.add_batched_axes()</span></code></a>.</p>
 </dd></dl>
 
 </dd></dl>
@@ -539,6 +552,8 @@ For a box selection, this includes the min- and max- corners of the box.</p>
 <li><a class="reference internal" href="#viser.SceneNodePointerEvent.target"><code class="docutils literal notranslate"><span class="pre">SceneNodePointerEvent.target</span></code></a></li>
 <li><a class="reference internal" href="#viser.SceneNodePointerEvent.ray_origin"><code class="docutils literal notranslate"><span class="pre">SceneNodePointerEvent.ray_origin</span></code></a></li>
 <li><a class="reference internal" href="#viser.SceneNodePointerEvent.ray_direction"><code class="docutils literal notranslate"><span class="pre">SceneNodePointerEvent.ray_direction</span></code></a></li>
+<li><a class="reference internal" href="#viser.SceneNodePointerEvent.screen_pos"><code class="docutils literal notranslate"><span class="pre">SceneNodePointerEvent.screen_pos</span></code></a></li>
+<li><a class="reference internal" href="#viser.SceneNodePointerEvent.instance_index"><code class="docutils literal notranslate"><span class="pre">SceneNodePointerEvent.instance_index</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#viser.GuiEvent"><code class="docutils literal notranslate"><span class="pre">GuiEvent</span></code></a><ul>
