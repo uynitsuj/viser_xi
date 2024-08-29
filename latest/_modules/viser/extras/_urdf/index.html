@@ -405,6 +405,7 @@
             <span class="p">)</span>
 
         <span class="c1"># Add the URDF&#39;s meshes/geometry to viser.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_meshes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">viser</span><span class="o">.</span><span class="n">SceneNodeHandle</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">link_name</span><span class="p">,</span> <span class="n">mesh</span> <span class="ow">in</span> <span class="n">urdf</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">trimesh</span><span class="o">.</span><span class="n">Trimesh</span><span class="p">)</span>
             <span class="n">T_parent_child</span> <span class="o">=</span> <span class="n">urdf</span><span class="o">.</span><span class="n">get_transform</span><span class="p">(</span>
@@ -422,23 +423,27 @@
             <span class="n">mesh</span><span class="o">.</span><span class="n">apply_transform</span><span class="p">(</span><span class="n">T_parent_child</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">mesh_color_override</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">target</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">add_mesh_trimesh</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">mesh</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_meshes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">add_mesh_trimesh</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">mesh</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">target</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">add_mesh_simple</span><span class="p">(</span>
-                    <span class="n">name</span><span class="p">,</span>
-                    <span class="n">mesh</span><span class="o">.</span><span class="n">vertices</span><span class="p">,</span>
-                    <span class="n">mesh</span><span class="o">.</span><span class="n">faces</span><span class="p">,</span>
-                    <span class="n">color</span><span class="o">=</span><span class="n">mesh_color_override</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_meshes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">target</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">add_mesh_simple</span><span class="p">(</span>
+                        <span class="n">name</span><span class="p">,</span>
+                        <span class="n">mesh</span><span class="o">.</span><span class="n">vertices</span><span class="p">,</span>
+                        <span class="n">mesh</span><span class="o">.</span><span class="n">faces</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="n">mesh_color_override</span><span class="p">,</span>
+                    <span class="p">)</span>
                 <span class="p">)</span>
 
 <div class="viewcode-block" id="ViserUrdf.remove">
 <a class="viewcode-back" href="../../../../extras/#viser.extras.ViserUrdf.remove">[docs]</a>
     <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove URDF from scene.&quot;&quot;&quot;</span>
-        <span class="c1"># Remove all frames from the scene. Meshes are children, so they will</span>
-        <span class="c1"># be deleted automatically.</span>
+        <span class="c1"># Some of this will be redundant, since children are removed when</span>
+        <span class="c1"># parents are removed.</span>
         <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_joint_frames</span><span class="p">:</span>
-            <span class="n">frame</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span></div>
+            <span class="n">frame</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">mesh</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_meshes</span><span class="p">:</span>
+            <span class="n">mesh</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="ViserUrdf.update_cfg">
