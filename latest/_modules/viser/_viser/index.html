@@ -357,7 +357,8 @@
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">_client_autobuild</span><span class="p">,</span> <span class="n">_messages</span><span class="p">,</span> <span class="n">infra</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">transforms</span> <span class="k">as</span> <span class="n">tf</span>
-<span class="kn">from</span> <span class="nn">._gui_api</span> <span class="kn">import</span> <span class="n">GuiApi</span>
+<span class="kn">from</span> <span class="nn">._gui_api</span> <span class="kn">import</span> <span class="n">Color</span><span class="p">,</span> <span class="n">GuiApi</span><span class="p">,</span> <span class="n">_make_unique_id</span>
+<span class="kn">from</span> <span class="nn">._notification_handle</span> <span class="kn">import</span> <span class="n">NotificationHandle</span><span class="p">,</span> <span class="n">_NotificationHandleState</span>
 <span class="kn">from</span> <span class="nn">._scene_api</span> <span class="kn">import</span> <span class="n">SceneApi</span><span class="p">,</span> <span class="n">cast_vector</span>
 <span class="kn">from</span> <span class="nn">._tunnel</span> <span class="kn">import</span> <span class="n">ViserTunnel</span>
 <span class="kn">from</span> <span class="nn">.infra._infra</span> <span class="kn">import</span> <span class="n">RecordHandle</span>
@@ -716,8 +717,6 @@
         <span class="k">if</span> <span class="n">mime_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">mime_type</span> <span class="o">=</span> <span class="s2">&quot;application/octet-stream&quot;</span>
 
-        <span class="kn">from</span> <span class="nn">._gui_api</span> <span class="kn">import</span> <span class="n">_make_unique_id</span>
-
         <span class="n">parts</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">content</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">chunk_size</span> <span class="p">:</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">chunk_size</span><span class="p">]</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="o">/</span> <span class="n">chunk_size</span><span class="p">)))</span>
@@ -744,6 +743,50 @@
                 <span class="p">)</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ClientHandle.add_notification">
+<a class="viewcode-back" href="../../../client_handles/#viser.ClientHandle.add_notification">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_notification</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">title</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">body</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">loading</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">with_close_button</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">auto_close</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">color</span><span class="p">:</span> <span class="n">Color</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NotificationHandle</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a notification to the client&#39;s interface.</span>
+
+<span class="sd">        This method creates a new notification that will be displayed at the</span>
+<span class="sd">        top left corner of the client&#39;s viewer. Notifications are useful for</span>
+<span class="sd">        providing alerts or status updates to users.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            title: Title to display on the notification.</span>
+<span class="sd">            body: Message to display on the notification body.</span>
+<span class="sd">            loading: Whether the notification shows loading icon.</span>
+<span class="sd">            with_close_button: Whether the notification can be manually closed.</span>
+<span class="sd">            auto_close: Time in ms before the notification automatically closes;</span>
+<span class="sd">                        otherwise False such that the notification never closes on its own.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A handle that can be used to interact with the GUI element.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">handle</span> <span class="o">=</span> <span class="n">NotificationHandle</span><span class="p">(</span>
+            <span class="n">_NotificationHandleState</span><span class="p">(</span>
+                <span class="n">websock_interface</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_websock_connection</span><span class="p">,</span>
+                <span class="nb">id</span><span class="o">=</span><span class="n">_make_unique_id</span><span class="p">(),</span>
+                <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+                <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span>
+                <span class="n">loading</span><span class="o">=</span><span class="n">loading</span><span class="p">,</span>
+                <span class="n">with_close_button</span><span class="o">=</span><span class="n">with_close_button</span><span class="p">,</span>
+                <span class="n">auto_close</span><span class="o">=</span><span class="n">auto_close</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">handle</span><span class="o">.</span><span class="n">_sync_with_client</span><span class="p">(</span><span class="n">first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">handle</span></div>
 </div>
 
 
