@@ -12,10 +12,10 @@
         gtag('js', new Date());
         gtag('config', 'G-RRGY51J5ZH');
     </script>
-    <link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="Visualizer for SMPL human body models. Requires a .npz model file." href="../23_smpl_visualizer_skinned/" /><link rel="prev" title="Games" href="../22_games/" />
+    <link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="Notifications" href="../24_notification/" /><link rel="prev" title="Games" href="../22_games/" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>Plotly. - viser</title>
+        <title>Plotly - viser</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b20cc3f5" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=5976cbfc" />
@@ -291,17 +291,17 @@
 <li class="toctree-l1"><a class="reference internal" href="../11_colmap_visualizer/">COLMAP visualizer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../12_click_meshes/">Mesh click events</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../13_theming/">Theming</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../14_markdown/">Markdown Demonstration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../15_gui_in_scene/">3D GUI Elements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../14_markdown/">Markdown demonstration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../15_gui_in_scene/">3D GUI elements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../16_modal/">Modal basics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../17_background_composite/">Depth compositing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../18_splines/">Splines</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../19_get_renders/">Get Renders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../19_get_renders/">Get renders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../20_scene_pointer/">Scene pointer events.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../21_set_up_direction/">Set Up Direction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../21_set_up_direction/">Set up direction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../22_games/">Games</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Plotly.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../23_smpl_visualizer_skinned/">Visualizer for SMPL human body models. Requires a .npz model file.</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Plotly</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../24_notification/">Notifications</a></li>
 </ul>
 
 </div>
@@ -337,76 +337,77 @@
         </div>
         <article role="main">
           <section id="plotly">
-<h1>Plotly.<a class="headerlink" href="#plotly" title="Link to this heading">#</a></h1>
+<h1>Plotly<a class="headerlink" href="#plotly" title="Link to this heading">#</a></h1>
 <p>Examples of visualizing plotly plots in Viser.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">time</span>
 <span class="linenos"> 2</span>
 <span class="linenos"> 3</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">onp</span>
 <span class="linenos"> 4</span><span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
 <span class="linenos"> 5</span><span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
-<span class="linenos"> 6</span><span class="kn">import</span> <span class="nn">viser</span>
-<span class="linenos"> 7</span><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
-<span class="linenos"> 8</span>
+<span class="linenos"> 6</span><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="kn">import</span> <span class="nn">viser</span>
 <span class="linenos"> 9</span>
-<span class="linenos">10</span><span class="k">def</span> <span class="nf">create_sinusoidal_wave</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">:</span>
-<span class="linenos">11</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sinusoidal wave plot, starting at time t.&quot;&quot;&quot;</span>
-<span class="linenos">12</span>    <span class="n">x_data</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">6</span> <span class="o">*</span> <span class="n">onp</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
-<span class="linenos">13</span>    <span class="n">y_data</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x_data</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span>
-<span class="linenos">14</span>
-<span class="linenos">15</span>    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
-<span class="linenos">16</span>        <span class="n">x</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">x_data</span><span class="p">),</span>
-<span class="linenos">17</span>        <span class="n">y</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">y_data</span><span class="p">),</span>
-<span class="linenos">18</span>        <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="s2">&quot;sin(x)&quot;</span><span class="p">},</span>
-<span class="linenos">19</span>        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Sinusoidal Wave&quot;</span><span class="p">,</span>
-<span class="linenos">20</span>    <span class="p">)</span>
-<span class="linenos">21</span>
-<span class="linenos">22</span>    <span class="c1"># this sets the margins to be tight around the title.</span>
-<span class="linenos">23</span>    <span class="n">fig</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">automargin</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># type: ignore</span>
-<span class="linenos">24</span>    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
-<span class="linenos">25</span>        <span class="n">margin</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">20</span><span class="p">),</span>
-<span class="linenos">26</span>    <span class="p">)</span>  <span class="c1"># Reduce plot margins.</span>
-<span class="linenos">27</span>
-<span class="linenos">28</span>    <span class="k">return</span> <span class="n">fig</span>
-<span class="linenos">29</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="k">def</span> <span class="nf">create_sinusoidal_wave</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">:</span>
+<span class="linenos">12</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a sinusoidal wave plot, starting at time t.&quot;&quot;&quot;</span>
+<span class="linenos">13</span>    <span class="n">x_data</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">6</span> <span class="o">*</span> <span class="n">onp</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="linenos">14</span>    <span class="n">y_data</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x_data</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span>    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
+<span class="linenos">17</span>        <span class="n">x</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">x_data</span><span class="p">),</span>
+<span class="linenos">18</span>        <span class="n">y</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">y_data</span><span class="p">),</span>
+<span class="linenos">19</span>        <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="s2">&quot;sin(x)&quot;</span><span class="p">},</span>
+<span class="linenos">20</span>        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Sinusoidal Wave&quot;</span><span class="p">,</span>
+<span class="linenos">21</span>    <span class="p">)</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span>    <span class="c1"># this sets the margins to be tight around the title.</span>
+<span class="linenos">24</span>    <span class="n">fig</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">automargin</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># type: ignore</span>
+<span class="linenos">25</span>    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+<span class="linenos">26</span>        <span class="n">margin</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">20</span><span class="p">),</span>
+<span class="linenos">27</span>    <span class="p">)</span>  <span class="c1"># Reduce plot margins.</span>
+<span class="linenos">28</span>
+<span class="linenos">29</span>    <span class="k">return</span> <span class="n">fig</span>
 <span class="linenos">30</span>
-<span class="linenos">31</span><span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="linenos">32</span>    <span class="n">server</span> <span class="o">=</span> <span class="n">viser</span><span class="o">.</span><span class="n">ViserServer</span><span class="p">()</span>
-<span class="linenos">33</span>
-<span class="linenos">34</span>    <span class="c1"># Plot type 1: Line plot.</span>
-<span class="linenos">35</span>    <span class="n">line_plot_time</span> <span class="o">=</span> <span class="mf">0.0</span>
-<span class="linenos">36</span>    <span class="n">line_plot</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">add_plotly</span><span class="p">(</span><span class="n">figure</span><span class="o">=</span><span class="n">create_sinusoidal_wave</span><span class="p">(</span><span class="n">line_plot_time</span><span class="p">))</span>
-<span class="linenos">37</span>
-<span class="linenos">38</span>    <span class="c1"># Plot type 2: Image plot.</span>
-<span class="linenos">39</span>    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;assets/Cal_logo.png&quot;</span><span class="p">))</span>
-<span class="linenos">40</span>    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
-<span class="linenos">41</span>        <span class="n">margin</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">20</span><span class="p">),</span>
-<span class="linenos">42</span>    <span class="p">)</span>
-<span class="linenos">43</span>    <span class="n">server</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">add_plotly</span><span class="p">(</span><span class="n">figure</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
-<span class="linenos">44</span>
-<span class="linenos">45</span>    <span class="c1"># Plot type 3: 3D Scatter plot.</span>
-<span class="linenos">46</span>    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter_3d</span><span class="p">(</span>
-<span class="linenos">47</span>        <span class="n">px</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">iris</span><span class="p">(),</span>
-<span class="linenos">48</span>        <span class="n">x</span><span class="o">=</span><span class="s2">&quot;sepal_length&quot;</span><span class="p">,</span>
-<span class="linenos">49</span>        <span class="n">y</span><span class="o">=</span><span class="s2">&quot;sepal_width&quot;</span><span class="p">,</span>
-<span class="linenos">50</span>        <span class="n">z</span><span class="o">=</span><span class="s2">&quot;petal_width&quot;</span><span class="p">,</span>
-<span class="linenos">51</span>        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;species&quot;</span><span class="p">,</span>
-<span class="linenos">52</span>    <span class="p">)</span>
-<span class="linenos">53</span>    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">legend</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">yanchor</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="n">xanchor</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mf">0.01</span><span class="p">))</span>
-<span class="linenos">54</span>    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
-<span class="linenos">55</span>        <span class="n">margin</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">20</span><span class="p">),</span>
-<span class="linenos">56</span>    <span class="p">)</span>
-<span class="linenos">57</span>    <span class="n">server</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">add_plotly</span><span class="p">(</span><span class="n">figure</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
-<span class="linenos">58</span>
-<span class="linenos">59</span>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-<span class="linenos">60</span>        <span class="c1"># Update the line plot.</span>
-<span class="linenos">61</span>        <span class="n">line_plot_time</span> <span class="o">+=</span> <span class="mf">0.1</span>
-<span class="linenos">62</span>        <span class="n">line_plot</span><span class="o">.</span><span class="n">figure</span> <span class="o">=</span> <span class="n">create_sinusoidal_wave</span><span class="p">(</span><span class="n">line_plot_time</span><span class="p">)</span>
-<span class="linenos">63</span>
-<span class="linenos">64</span>        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
-<span class="linenos">65</span>
+<span class="linenos">31</span>
+<span class="linenos">32</span><span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">33</span>    <span class="n">server</span> <span class="o">=</span> <span class="n">viser</span><span class="o">.</span><span class="n">ViserServer</span><span class="p">()</span>
+<span class="linenos">34</span>
+<span class="linenos">35</span>    <span class="c1"># Plot type 1: Line plot.</span>
+<span class="linenos">36</span>    <span class="n">line_plot_time</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="linenos">37</span>    <span class="n">line_plot</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">add_plotly</span><span class="p">(</span><span class="n">figure</span><span class="o">=</span><span class="n">create_sinusoidal_wave</span><span class="p">(</span><span class="n">line_plot_time</span><span class="p">))</span>
+<span class="linenos">38</span>
+<span class="linenos">39</span>    <span class="c1"># Plot type 2: Image plot.</span>
+<span class="linenos">40</span>    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;assets/Cal_logo.png&quot;</span><span class="p">))</span>
+<span class="linenos">41</span>    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+<span class="linenos">42</span>        <span class="n">margin</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">20</span><span class="p">),</span>
+<span class="linenos">43</span>    <span class="p">)</span>
+<span class="linenos">44</span>    <span class="n">server</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">add_plotly</span><span class="p">(</span><span class="n">figure</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="linenos">45</span>
+<span class="linenos">46</span>    <span class="c1"># Plot type 3: 3D Scatter plot.</span>
+<span class="linenos">47</span>    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter_3d</span><span class="p">(</span>
+<span class="linenos">48</span>        <span class="n">px</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">iris</span><span class="p">(),</span>
+<span class="linenos">49</span>        <span class="n">x</span><span class="o">=</span><span class="s2">&quot;sepal_length&quot;</span><span class="p">,</span>
+<span class="linenos">50</span>        <span class="n">y</span><span class="o">=</span><span class="s2">&quot;sepal_width&quot;</span><span class="p">,</span>
+<span class="linenos">51</span>        <span class="n">z</span><span class="o">=</span><span class="s2">&quot;petal_width&quot;</span><span class="p">,</span>
+<span class="linenos">52</span>        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;species&quot;</span><span class="p">,</span>
+<span class="linenos">53</span>    <span class="p">)</span>
+<span class="linenos">54</span>    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">legend</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">yanchor</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="n">xanchor</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mf">0.01</span><span class="p">))</span>
+<span class="linenos">55</span>    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+<span class="linenos">56</span>        <span class="n">margin</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">20</span><span class="p">),</span>
+<span class="linenos">57</span>    <span class="p">)</span>
+<span class="linenos">58</span>    <span class="n">server</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">add_plotly</span><span class="p">(</span><span class="n">figure</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="linenos">59</span>
+<span class="linenos">60</span>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<span class="linenos">61</span>        <span class="c1"># Update the line plot.</span>
+<span class="linenos">62</span>        <span class="n">line_plot_time</span> <span class="o">+=</span> <span class="mf">0.1</span>
+<span class="linenos">63</span>        <span class="n">line_plot</span><span class="o">.</span><span class="n">figure</span> <span class="o">=</span> <span class="n">create_sinusoidal_wave</span><span class="p">(</span><span class="n">line_plot_time</span><span class="p">)</span>
+<span class="linenos">64</span>
+<span class="linenos">65</span>        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
 <span class="linenos">66</span>
-<span class="linenos">67</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-<span class="linenos">68</span>    <span class="n">main</span><span class="p">()</span>
+<span class="linenos">67</span>
+<span class="linenos">68</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">69</span>    <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
@@ -416,12 +417,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../23_smpl_visualizer_skinned/">
+          <a class="next-page" href="../24_notification/">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Visualizer for SMPL human body models. Requires a .npz model file.</div>
+                <div class="title">Notifications</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
