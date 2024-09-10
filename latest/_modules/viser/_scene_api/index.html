@@ -346,7 +346,6 @@
 
 <span class="kn">import</span> <span class="nn">imageio.v3</span> <span class="k">as</span> <span class="nn">iio</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">onp</span>
-<span class="kn">import</span> <span class="nn">numpy.typing</span> <span class="k">as</span> <span class="nn">onpt</span>
 <span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">ParamSpec</span><span class="p">,</span> <span class="n">TypeAlias</span><span class="p">,</span> <span class="n">assert_never</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">_messages</span>
@@ -358,6 +357,7 @@
     <span class="n">FrameHandle</span><span class="p">,</span>
     <span class="n">GaussianSplatHandle</span><span class="p">,</span>
     <span class="n">GlbHandle</span><span class="p">,</span>
+    <span class="n">GridHandle</span><span class="p">,</span>
     <span class="n">Gui3dContainerHandle</span><span class="p">,</span>
     <span class="n">ImageHandle</span><span class="p">,</span>
     <span class="n">LabelHandle</span><span class="p">,</span>
@@ -368,9 +368,11 @@
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">SceneNodePointerEvent</span><span class="p">,</span>
     <span class="n">ScenePointerEvent</span><span class="p">,</span>
+    <span class="n">SplineCatmullRomHandle</span><span class="p">,</span>
+    <span class="n">SplineCubicBezierHandle</span><span class="p">,</span>
     <span class="n">TransformControlsHandle</span><span class="p">,</span>
-    <span class="n">_SceneNodeHandleState</span><span class="p">,</span>
     <span class="n">_TransformControlsState</span><span class="p">,</span>
+    <span class="n">colors_to_uint8</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
@@ -383,31 +385,20 @@
 <span class="n">P</span> <span class="o">=</span> <span class="n">ParamSpec</span><span class="p">(</span><span class="s2">&quot;P&quot;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_colors_to_uint8</span><span class="p">(</span><span class="n">colors</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">onpt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">onp</span><span class="o">.</span><span class="n">uint8</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert intensity values to uint8. We assume the range [0,1] for floats, and</span>
-<span class="sd">    [0,255] for integers. Accepts any shape.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">colors</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">onp</span><span class="o">.</span><span class="n">uint8</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">onp</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">colors</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">onp</span><span class="o">.</span><span class="n">floating</span><span class="p">):</span>
-            <span class="n">colors</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">colors</span> <span class="o">*</span> <span class="mf">255.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">onp</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">colors</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">onp</span><span class="o">.</span><span class="n">integer</span><span class="p">):</span>
-            <span class="n">colors</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">colors</span>
-
-
 <span class="n">RgbTupleOrArray</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span>
     <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span>
 <span class="p">]</span>
 
 
-<span class="k">def</span> <span class="nf">_encode_rgb</span><span class="p">(</span><span class="n">rgb</span><span class="p">:</span> <span class="n">RgbTupleOrArray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">_encode_rgb</span><span class="p">(</span><span class="n">rgb</span><span class="p">:</span> <span class="n">RgbTupleOrArray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rgb</span><span class="p">,</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
         <span class="k">assert</span> <span class="n">rgb</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">3</span><span class="p">,)</span>
     <span class="n">rgb_fixed</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
-        <span class="n">value</span> <span class="k">if</span> <span class="n">onp</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="n">onp</span><span class="o">.</span><span class="n">integer</span><span class="p">)</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span> <span class="o">*</span> <span class="mi">255</span><span class="p">)</span>
+        <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">if</span> <span class="n">onp</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="n">onp</span><span class="o">.</span><span class="n">integer</span><span class="p">)</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span> <span class="o">*</span> <span class="mi">255</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">rgb</span>
     <span class="p">)</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">rgb_fixed</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
-    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">rgb_fixed</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">256</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">rgb_fixed</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">+</span> <span class="n">rgb_fixed</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">rgb_fixed</span>  <span class="c1"># type: ignore</span>
 
 
 <span class="k">def</span> <span class="nf">_encode_image_binary</span><span class="p">(</span>
@@ -416,7 +407,7 @@
     <span class="n">jpeg_quality</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;image/png&quot;</span><span class="p">,</span> <span class="s2">&quot;image/jpeg&quot;</span><span class="p">],</span> <span class="nb">bytes</span><span class="p">]:</span>
     <span class="n">media_type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;image/png&quot;</span><span class="p">,</span> <span class="s2">&quot;image/jpeg&quot;</span><span class="p">]</span>
-    <span class="n">image</span> <span class="o">=</span> <span class="n">_colors_to_uint8</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">colors_to_uint8</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
     <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span> <span class="k">as</span> <span class="n">data_buffer</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">format</span> <span class="o">==</span> <span class="s2">&quot;png&quot;</span><span class="p">:</span>
             <span class="n">media_type</span> <span class="o">=</span> <span class="s2">&quot;image/png&quot;</span>
@@ -471,20 +462,6 @@
         <span class="p">)</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Interface for sending and listening to messages.&quot;&quot;&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">world_axes</span><span class="p">:</span> <span class="n">FrameHandle</span> <span class="o">=</span> <span class="n">FrameHandle</span><span class="p">(</span>
-            <span class="n">_SceneNodeHandleState</span><span class="p">(</span>
-                <span class="s2">&quot;/WorldAxes&quot;</span><span class="p">,</span>
-                <span class="bp">self</span><span class="p">,</span>
-                <span class="n">wxyz</span><span class="o">=</span><span class="n">onp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]),</span>
-                <span class="n">position</span><span class="o">=</span><span class="n">onp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
-            <span class="p">)</span>
-        <span class="p">)</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle for the world axes, which are created by default.&quot;&quot;&quot;</span>
-
-        <span class="c1"># Hide world axes on initialization.</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">owner</span><span class="p">,</span> <span class="n">ViserServer</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">world_axes</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">_handle_from_transform_controls_name</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span>
             <span class="nb">str</span><span class="p">,</span> <span class="n">TransformControlsHandle</span>
         <span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
@@ -493,6 +470,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_scene_pointer_cb</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">ScenePointerEvent</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_scene_pointer_done_cb</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_scene_pointer_event_type</span><span class="p">:</span> <span class="n">_messages</span><span class="o">.</span><span class="n">ScenePointerEventType</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Set up world axes handle.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">world_axes</span><span class="p">:</span> <span class="n">FrameHandle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_frame</span><span class="p">(</span>
+            <span class="s2">&quot;/WorldAxes&quot;</span><span class="p">,</span>
+            <span class="n">axes_radius</span><span class="o">=</span><span class="mf">0.0125</span><span class="p">,</span>
+        <span class="p">)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle for the world axes, which are created by default.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">owner</span><span class="p">,</span> <span class="n">ViserServer</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">world_axes</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">register_handler</span><span class="p">(</span>
             <span class="n">_messages</span><span class="o">.</span><span class="n">TransformControlsUpdateMessage</span><span class="p">,</span>
@@ -631,10 +617,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Handle for manipulating scene node.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
-            <span class="n">_messages</span><span class="o">.</span><span class="n">GlbMessage</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">glb_data</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="n">GlbHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">GlbMessage</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">_messages</span><span class="o">.</span><span class="n">GlbProps</span><span class="p">(</span><span class="n">glb_data</span><span class="p">,</span> <span class="n">scale</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">GlbHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SceneApi.add_spline_catmull_rom">
@@ -652,7 +636,7 @@
         <span class="n">wxyz</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
         <span class="n">position</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
         <span class="n">visible</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SceneNodeHandle</span><span class="p">:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SplineCatmullRomHandle</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a spline to the scene using Catmull-Rom interpolation.</span>
 
 <span class="sd">        This method creates a spline based on a set of positions and interpolates</span>
@@ -680,9 +664,9 @@
             <span class="n">positions</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="n">positions</span><span class="p">))</span>  <span class="c1"># type: ignore</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">3</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
-            <span class="n">_messages</span><span class="o">.</span><span class="n">CatmullRomSplineMessage</span><span class="p">(</span>
-                <span class="n">name</span><span class="p">,</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">CatmullRomSplineMessage</span><span class="p">(</span>
+            <span class="n">name</span><span class="p">,</span>
+            <span class="n">_messages</span><span class="o">.</span><span class="n">CatmullRomSplineProps</span><span class="p">(</span>
                 <span class="n">positions</span><span class="p">,</span>
                 <span class="n">curve_type</span><span class="p">,</span>
                 <span class="n">tension</span><span class="p">,</span>
@@ -690,9 +674,11 @@
                 <span class="n">line_width</span><span class="p">,</span>
                 <span class="n">_encode_rgb</span><span class="p">(</span><span class="n">color</span><span class="p">),</span>
                 <span class="n">segments</span><span class="o">=</span><span class="n">segments</span><span class="p">,</span>
-            <span class="p">)</span>
+            <span class="p">),</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">SceneNodeHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">SplineCatmullRomHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SceneApi.add_spline_cubic_bezier">
@@ -702,13 +688,13 @@
         <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">positions</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="o">...</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
         <span class="n">control_points</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="o">...</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
-        <span class="n">line_width</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">line_width</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
         <span class="n">color</span><span class="p">:</span> <span class="n">RgbTupleOrArray</span> <span class="o">=</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
         <span class="n">segments</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">wxyz</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
         <span class="n">position</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
         <span class="n">visible</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SceneNodeHandle</span><span class="p">:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SplineCubicBezierHandle</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a spline to the scene using Cubic Bezier interpolation.</span>
 
 <span class="sd">        This method allows for the creation of a cubic Bezier spline based on given</span>
@@ -741,17 +727,19 @@
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">control_points</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">control_points</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
-            <span class="n">_messages</span><span class="o">.</span><span class="n">CubicBezierSplineMessage</span><span class="p">(</span>
-                <span class="n">name</span><span class="p">,</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">CubicBezierSplineMessage</span><span class="p">(</span>
+            <span class="n">name</span><span class="p">,</span>
+            <span class="n">_messages</span><span class="o">.</span><span class="n">CubicBezierSplineProps</span><span class="p">(</span>
                 <span class="n">positions</span><span class="p">,</span>
                 <span class="n">control_points</span><span class="p">,</span>
                 <span class="n">line_width</span><span class="p">,</span>
                 <span class="n">_encode_rgb</span><span class="p">(</span><span class="n">color</span><span class="p">),</span>
                 <span class="n">segments</span><span class="o">=</span><span class="n">segments</span><span class="p">,</span>
-            <span class="p">)</span>
+            <span class="p">),</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">SceneNodeHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">SplineCubicBezierHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SceneApi.add_camera_frustum">
@@ -805,19 +793,18 @@
             <span class="n">media_type</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="n">binary</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
-            <span class="n">_messages</span><span class="o">.</span><span class="n">CameraFrustumMessage</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">CameraFrustumMessage</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">CameraFrustumProps</span><span class="p">(</span>
                 <span class="n">fov</span><span class="o">=</span><span class="n">fov</span><span class="p">,</span>
                 <span class="n">aspect</span><span class="o">=</span><span class="n">aspect</span><span class="p">,</span>
                 <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span>
-                <span class="c1"># (255, 255, 255) =&gt; 0xffffff, etc</span>
                 <span class="n">color</span><span class="o">=</span><span class="n">_encode_rgb</span><span class="p">(</span><span class="n">color</span><span class="p">),</span>
                 <span class="n">image_media_type</span><span class="o">=</span><span class="n">media_type</span><span class="p">,</span>
                 <span class="n">image_binary</span><span class="o">=</span><span class="n">binary</span><span class="p">,</span>
-            <span class="p">)</span>
+            <span class="p">),</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">CameraFrustumHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">CameraFrustumHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SceneApi.add_frame">
@@ -860,16 +847,16 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">origin_radius</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">origin_radius</span> <span class="o">=</span> <span class="n">axes_radius</span> <span class="o">*</span> <span class="mi">2</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
-            <span class="n">_messages</span><span class="o">.</span><span class="n">FrameMessage</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">FrameMessage</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">FrameProps</span><span class="p">(</span>
                 <span class="n">show_axes</span><span class="o">=</span><span class="n">show_axes</span><span class="p">,</span>
                 <span class="n">axes_length</span><span class="o">=</span><span class="n">axes_length</span><span class="p">,</span>
                 <span class="n">axes_radius</span><span class="o">=</span><span class="n">axes_radius</span><span class="p">,</span>
                 <span class="n">origin_radius</span><span class="o">=</span><span class="n">origin_radius</span><span class="p">,</span>
-            <span class="p">)</span>
+            <span class="p">),</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">FrameHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">FrameHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SceneApi.add_batched_axes">
@@ -919,16 +906,17 @@
         <span class="n">num_axes</span> <span class="o">=</span> <span class="n">batched_wxyzs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">assert</span> <span class="n">batched_wxyzs</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">num_axes</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">batched_positions</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">num_axes</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
-            <span class="n">_messages</span><span class="o">.</span><span class="n">BatchedAxesMessage</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
-                <span class="n">wxyzs_batched</span><span class="o">=</span><span class="n">batched_wxyzs</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
-                <span class="n">positions_batched</span><span class="o">=</span><span class="n">batched_positions</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
-                <span class="n">axes_length</span><span class="o">=</span><span class="n">axes_length</span><span class="p">,</span>
-                <span class="n">axes_radius</span><span class="o">=</span><span class="n">axes_radius</span><span class="p">,</span>
-            <span class="p">)</span>
+        <span class="n">props</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">BatchedAxesProps</span><span class="p">(</span>
+            <span class="n">wxyzs_batched</span><span class="o">=</span><span class="n">batched_wxyzs</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+            <span class="n">positions_batched</span><span class="o">=</span><span class="n">batched_positions</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+            <span class="n">axes_length</span><span class="o">=</span><span class="n">axes_length</span><span class="p">,</span>
+            <span class="n">axes_radius</span><span class="o">=</span><span class="n">axes_radius</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">BatchedAxesHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">BatchedAxesMessage</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">props</span><span class="o">=</span><span class="n">props</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">BatchedAxesHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SceneApi.add_grid">
@@ -950,7 +938,7 @@
         <span class="n">wxyz</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
         <span class="n">position</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
         <span class="n">visible</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SceneNodeHandle</span><span class="p">:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GridHandle</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a 2D grid to the scene.</span>
 
 <span class="sd">        This can be useful as a size, orientation, or ground plane reference.</span>
@@ -975,9 +963,9 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Handle for manipulating scene node.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
-            <span class="n">_messages</span><span class="o">.</span><span class="n">GridMessage</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">GridMessage</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GridProps</span><span class="p">(</span>
                 <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
                 <span class="n">height</span><span class="o">=</span><span class="n">height</span><span class="p">,</span>
                 <span class="n">width_segments</span><span class="o">=</span><span class="n">width_segments</span><span class="p">,</span>
@@ -989,9 +977,9 @@
                 <span class="n">section_color</span><span class="o">=</span><span class="n">_encode_rgb</span><span class="p">(</span><span class="n">section_color</span><span class="p">),</span>
                 <span class="n">section_thickness</span><span class="o">=</span><span class="n">section_thickness</span><span class="p">,</span>
                 <span class="n">section_size</span><span class="o">=</span><span class="n">section_size</span><span class="p">,</span>
-            <span class="p">)</span>
+            <span class="p">),</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">SceneNodeHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">GridHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SceneApi.add_label">
@@ -1019,8 +1007,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Handle for manipulating scene node.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span><span class="n">_messages</span><span class="o">.</span><span class="n">LabelMessage</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">LabelHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="o">=</span><span class="n">visible</span><span class="p">)</span></div>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">LabelMessage</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">_messages</span><span class="o">.</span><span class="n">LabelProps</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">LabelHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="o">=</span><span class="n">visible</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SceneApi.add_point_cloud">
@@ -1053,7 +1041,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Handle for manipulating scene node.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">colors_cast</span> <span class="o">=</span> <span class="n">_colors_to_uint8</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">colors</span><span class="p">))</span>
+        <span class="n">colors_cast</span> <span class="o">=</span> <span class="n">colors_to_uint8</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">colors</span><span class="p">))</span>
         <span class="k">assert</span> <span class="p">(</span>
             <span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">points</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span>
         <span class="p">),</span> <span class="s2">&quot;Shape of points should be (N, 3).&quot;</span>
@@ -1065,9 +1053,9 @@
         <span class="k">if</span> <span class="n">colors_cast</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">3</span><span class="p">,):</span>
             <span class="n">colors_cast</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">colors_cast</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:],</span> <span class="n">reps</span><span class="o">=</span><span class="p">(</span><span class="n">points</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
-            <span class="n">_messages</span><span class="o">.</span><span class="n">PointCloudMessage</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">PointCloudMessage</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">PointCloudProps</span><span class="p">(</span>
                 <span class="n">points</span><span class="o">=</span><span class="n">points</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
                 <span class="n">colors</span><span class="o">=</span><span class="n">colors_cast</span><span class="p">,</span>
                 <span class="n">point_size</span><span class="o">=</span><span class="n">point_size</span><span class="p">,</span>
@@ -1078,9 +1066,9 @@
                     <span class="s2">&quot;rounded&quot;</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">,</span>
                     <span class="s2">&quot;sparkle&quot;</span><span class="p">:</span> <span class="mf">0.6</span><span class="p">,</span>
                 <span class="p">}[</span><span class="n">point_shape</span><span class="p">],</span>
-            <span class="p">)</span>
+            <span class="p">),</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">PointCloudHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">PointCloudHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SceneApi.add_mesh_skinned">
@@ -1159,12 +1147,11 @@
         <span class="n">bone_positions</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">bone_positions</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">bone_wxyzs</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">num_bones</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">bone_positions</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">num_bones</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
-            <span class="n">_messages</span><span class="o">.</span><span class="n">SkinnedMeshMessage</span><span class="p">(</span>
-                <span class="n">name</span><span class="p">,</span>
-                <span class="n">vertices</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
-                <span class="n">faces</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">uint32</span><span class="p">),</span>
-                <span class="c1"># (255, 255, 255) =&gt; 0xffffff, etc</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">SkinnedMeshMessage</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">SkinnedMeshProps</span><span class="p">(</span>
+                <span class="n">vertices</span><span class="o">=</span><span class="n">vertices</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+                <span class="n">faces</span><span class="o">=</span><span class="n">faces</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">uint32</span><span class="p">),</span>
                 <span class="n">color</span><span class="o">=</span><span class="n">_encode_rgb</span><span class="p">(</span><span class="n">color</span><span class="p">),</span>
                 <span class="n">vertex_colors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                 <span class="n">wireframe</span><span class="o">=</span><span class="n">wireframe</span><span class="p">,</span>
@@ -1187,9 +1174,9 @@
                 <span class="p">),</span>
                 <span class="n">skin_indices</span><span class="o">=</span><span class="n">top4_skin_indices</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">uint16</span><span class="p">),</span>
                 <span class="n">skin_weights</span><span class="o">=</span><span class="n">top4_skin_weights</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
-            <span class="p">)</span>
+            <span class="p">),</span>
         <span class="p">)</span>
-        <span class="n">handle</span> <span class="o">=</span> <span class="n">MeshHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span>
+        <span class="n">handle</span> <span class="o">=</span> <span class="n">MeshHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">MeshSkinnedHandle</span><span class="p">(</span>
             <span class="n">handle</span><span class="o">.</span><span class="n">_impl</span><span class="p">,</span>
             <span class="n">bones</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span>
@@ -1257,13 +1244,11 @@
                 <span class="sa">f</span><span class="s2">&quot;Invalid combination of </span><span class="si">{</span><span class="n">wireframe</span><span class="si">=}</span><span class="s2"> and </span><span class="si">{</span><span class="n">flat_shading</span><span class="si">=}</span><span class="s2">. Flat shading argument will be ignored.&quot;</span><span class="p">,</span>
                 <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
             <span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
-            <span class="n">_messages</span><span class="o">.</span><span class="n">MeshMessage</span><span class="p">(</span>
-                <span class="n">name</span><span class="p">,</span>
-                <span class="n">vertices</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
-                <span class="n">faces</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">uint32</span><span class="p">),</span>
-                <span class="c1"># (255, 255, 255) =&gt; 0xffffff, etc</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">MeshMessage</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">MeshProps</span><span class="p">(</span>
+                <span class="n">vertices</span><span class="o">=</span><span class="n">vertices</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+                <span class="n">faces</span><span class="o">=</span><span class="n">faces</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">uint32</span><span class="p">),</span>
                 <span class="n">color</span><span class="o">=</span><span class="n">_encode_rgb</span><span class="p">(</span><span class="n">color</span><span class="p">),</span>
                 <span class="n">vertex_colors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                 <span class="n">wireframe</span><span class="o">=</span><span class="n">wireframe</span><span class="p">,</span>
@@ -1271,9 +1256,9 @@
                 <span class="n">flat_shading</span><span class="o">=</span><span class="n">flat_shading</span><span class="p">,</span>
                 <span class="n">side</span><span class="o">=</span><span class="n">side</span><span class="p">,</span>
                 <span class="n">material</span><span class="o">=</span><span class="n">material</span><span class="p">,</span>
-            <span class="p">)</span>
+            <span class="p">),</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">MeshHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">MeshHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SceneApi.add_mesh_trimesh">
@@ -1368,20 +1353,22 @@
                 <span class="c1"># - xyz (96 bits): upper-triangular Cholesky factor of covariance.</span>
                 <span class="n">cov_cholesky_triu</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">float16</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">uint8</span><span class="p">),</span>
                 <span class="c1"># - w (32 bits): rgba.</span>
-                <span class="n">_colors_to_uint8</span><span class="p">(</span><span class="n">rgbs</span><span class="p">),</span>
-                <span class="n">_colors_to_uint8</span><span class="p">(</span><span class="n">opacities</span><span class="p">),</span>
+                <span class="n">colors_to_uint8</span><span class="p">(</span><span class="n">rgbs</span><span class="p">),</span>
+                <span class="n">colors_to_uint8</span><span class="p">(</span><span class="n">opacities</span><span class="p">),</span>
             <span class="p">],</span>
             <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
         <span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">buffer</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">num_gaussians</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
-            <span class="n">_messages</span><span class="o">.</span><span class="n">GaussianSplatsMessage</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">GaussianSplatsMessage</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GaussianSplatsProps</span><span class="p">(</span>
                 <span class="n">buffer</span><span class="o">=</span><span class="n">buffer</span><span class="p">,</span>
-            <span class="p">)</span>
+            <span class="p">),</span>
         <span class="p">)</span>
-        <span class="n">node_handle</span> <span class="o">=</span> <span class="n">GaussianSplatHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span>
+        <span class="n">node_handle</span> <span class="o">=</span> <span class="n">GaussianSplatHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">node_handle</span>
 
 <div class="viewcode-block" id="SceneApi.add_box">
@@ -1550,20 +1537,19 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Handle for manipulating scene node.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="n">media_type</span><span class="p">,</span> <span class="n">binary</span> <span class="o">=</span> <span class="n">_encode_image_binary</span><span class="p">(</span>
             <span class="n">image</span><span class="p">,</span> <span class="nb">format</span><span class="p">,</span> <span class="n">jpeg_quality</span><span class="o">=</span><span class="n">jpeg_quality</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
-            <span class="n">_messages</span><span class="o">.</span><span class="n">ImageMessage</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">ImageMessage</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">ImageProps</span><span class="p">(</span>
                 <span class="n">media_type</span><span class="o">=</span><span class="n">media_type</span><span class="p">,</span>
                 <span class="n">data</span><span class="o">=</span><span class="n">binary</span><span class="p">,</span>
                 <span class="n">render_width</span><span class="o">=</span><span class="n">render_width</span><span class="p">,</span>
                 <span class="n">render_height</span><span class="o">=</span><span class="n">render_height</span><span class="p">,</span>
-            <span class="p">)</span>
+            <span class="p">),</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">ImageHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">ImageHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SceneApi.add_transform_controls">
@@ -1618,9 +1604,9 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Handle for manipulating (and reading state of) scene node.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
-            <span class="n">_messages</span><span class="o">.</span><span class="n">TransformControlsMessage</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">TransformControlsMessage</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">TransformControlsProps</span><span class="p">(</span>
                 <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span>
                 <span class="n">line_width</span><span class="o">=</span><span class="n">line_width</span><span class="p">,</span>
                 <span class="n">fixed</span><span class="o">=</span><span class="n">fixed</span><span class="p">,</span>
@@ -1633,7 +1619,7 @@
                 <span class="n">rotation_limits</span><span class="o">=</span><span class="n">rotation_limits</span><span class="p">,</span>
                 <span class="n">depth_test</span><span class="o">=</span><span class="n">depth_test</span><span class="p">,</span>
                 <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">,</span>
-            <span class="p">)</span>
+            <span class="p">),</span>
         <span class="p">)</span>
 
         <span class="k">def</span> <span class="nf">sync_cb</span><span class="p">(</span><span class="n">client_id</span><span class="p">:</span> <span class="n">ClientId</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">TransformControlsHandle</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -1651,7 +1637,9 @@
             <span class="n">message_position</span><span class="o">.</span><span class="n">excluded_self_client</span> <span class="o">=</span> <span class="n">client_id</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span><span class="n">message_position</span><span class="p">)</span>
 
-        <span class="n">node_handle</span> <span class="o">=</span> <span class="n">SceneNodeHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span>
+        <span class="n">node_handle</span> <span class="o">=</span> <span class="n">SceneNodeHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span>
+        <span class="p">)</span>
         <span class="n">state_aux</span> <span class="o">=</span> <span class="n">_TransformControlsState</span><span class="p">(</span>
             <span class="n">last_updated</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span>
             <span class="n">update_cb</span><span class="o">=</span><span class="p">[],</span>
@@ -1888,14 +1876,16 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_handle_from_node_name</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
 
         <span class="n">container_id</span> <span class="o">=</span> <span class="n">_make_unique_id</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
-            <span class="n">_messages</span><span class="o">.</span><span class="n">Gui3DMessage</span><span class="p">(</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">Gui3DMessage</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">Gui3DProps</span><span class="p">(</span>
                 <span class="n">order</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span>
-                <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
                 <span class="n">container_id</span><span class="o">=</span><span class="n">container_id</span><span class="p">,</span>
-            <span class="p">)</span>
+            <span class="p">),</span>
         <span class="p">)</span>
-        <span class="n">node_handle</span> <span class="o">=</span> <span class="n">SceneNodeHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="o">=</span><span class="n">visible</span><span class="p">)</span>
+        <span class="n">node_handle</span> <span class="o">=</span> <span class="n">SceneNodeHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="o">=</span><span class="n">visible</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">Gui3dContainerHandle</span><span class="p">(</span><span class="n">node_handle</span><span class="o">.</span><span class="n">_impl</span><span class="p">,</span> <span class="n">gui_api</span><span class="p">,</span> <span class="n">container_id</span><span class="p">)</span></div>
 </div>
 

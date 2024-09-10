@@ -421,14 +421,14 @@
         <span class="n">args</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="n">typ</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
         <span class="k">return</span> <span class="s2">&quot;{ [key: &quot;</span> <span class="o">+</span> <span class="n">_get_ts_type</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;]: &quot;</span> <span class="o">+</span> <span class="n">_get_ts_type</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; }&quot;</span>
-    <span class="k">elif</span> <span class="n">is_typeddict</span><span class="p">(</span><span class="n">typ</span><span class="p">):</span>
+    <span class="k">elif</span> <span class="n">is_typeddict</span><span class="p">(</span><span class="n">typ</span><span class="p">)</span> <span class="ow">or</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">is_dataclass</span><span class="p">(</span><span class="n">typ</span><span class="p">):</span>
         <span class="n">hints</span> <span class="o">=</span> <span class="n">get_type_hints</span><span class="p">(</span><span class="n">typ</span><span class="p">)</span>
         <span class="n">optional_keys</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">typ</span><span class="p">,</span> <span class="s2">&quot;__optional_keys__&quot;</span><span class="p">,</span> <span class="p">[])</span>
 
         <span class="k">def</span> <span class="nf">fmt</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
             <span class="n">val</span> <span class="o">=</span> <span class="n">hints</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
             <span class="n">optional</span> <span class="o">=</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">optional_keys</span>
-            <span class="k">if</span> <span class="n">get_origin</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="ow">is</span> <span class="n">NotRequired</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">is_typeddict</span><span class="p">(</span><span class="n">typ</span><span class="p">)</span> <span class="ow">and</span> <span class="n">get_origin</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="ow">is</span> <span class="n">NotRequired</span><span class="p">:</span>
                 <span class="n">val</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="n">val</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">ret</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39;</span><span class="si">{</span><span class="s1">&#39;?&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">optional</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="n">_get_ts_type</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">ret</span>
@@ -501,7 +501,17 @@
             <span class="n">out_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  | </span><span class="si">{</span><span class="n">cls_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">out_lines</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">out_lines</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;;&quot;</span>
 
-    <span class="n">interfaces</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_lines</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="k">for</span> <span class="n">tag</span><span class="p">,</span> <span class="n">cls_names</span> <span class="ow">in</span> <span class="n">tag_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">out_lines</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="sa">f</span><span class="s2">&quot;const typeSet</span><span class="si">{</span><span class="n">tag</span><span class="si">}</span><span class="s2"> = new Set([&#39;&quot;</span> <span class="o">+</span> <span class="s2">&quot;&#39;, &#39;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cls_names</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&#39;]);&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;export function is</span><span class="si">{</span><span class="n">tag</span><span class="si">}</span><span class="s2">(message: Message): message is </span><span class="si">{</span><span class="n">tag</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot; {&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;    return typeSet</span><span class="si">{</span><span class="n">tag</span><span class="si">}</span><span class="s2">.has(message.type);&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;}&quot;</span><span class="p">,</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="n">generated_typescript</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_lines</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
 
     <span class="c1"># Add header and return.</span>
     <span class="k">return</span> <span class="p">(</span>
@@ -515,7 +525,7 @@
                 <span class="s2">&quot;&quot;</span><span class="p">,</span>
             <span class="p">]</span>
         <span class="p">)</span>
-        <span class="o">+</span> <span class="n">interfaces</span>
+        <span class="o">+</span> <span class="n">generated_typescript</span>
     <span class="p">)</span></div>
 
 </pre></div>
