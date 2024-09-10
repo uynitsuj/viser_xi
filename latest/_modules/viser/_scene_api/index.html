@@ -302,6 +302,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../examples/23_plotly/">Plotly</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../examples/24_notification/">Notifications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../examples/25_smpl_visualizer_skinned/">SMPL visualizer (Skinned Mesh)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/26_lighting/">Lights</a></li>
 </ul>
 
 </div>
@@ -351,25 +352,31 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">_messages</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">transforms</span> <span class="k">as</span> <span class="n">tf</span>
 <span class="kn">from</span> <span class="nn">._scene_handles</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AmbientLightHandle</span><span class="p">,</span>
     <span class="n">BatchedAxesHandle</span><span class="p">,</span>
     <span class="n">BoneState</span><span class="p">,</span>
     <span class="n">CameraFrustumHandle</span><span class="p">,</span>
+    <span class="n">DirectionalLightHandle</span><span class="p">,</span>
     <span class="n">FrameHandle</span><span class="p">,</span>
     <span class="n">GaussianSplatHandle</span><span class="p">,</span>
     <span class="n">GlbHandle</span><span class="p">,</span>
     <span class="n">GridHandle</span><span class="p">,</span>
     <span class="n">Gui3dContainerHandle</span><span class="p">,</span>
+    <span class="n">HemisphereLightHandle</span><span class="p">,</span>
     <span class="n">ImageHandle</span><span class="p">,</span>
     <span class="n">LabelHandle</span><span class="p">,</span>
     <span class="n">MeshHandle</span><span class="p">,</span>
     <span class="n">MeshSkinnedBoneHandle</span><span class="p">,</span>
     <span class="n">MeshSkinnedHandle</span><span class="p">,</span>
     <span class="n">PointCloudHandle</span><span class="p">,</span>
+    <span class="n">PointLightHandle</span><span class="p">,</span>
+    <span class="n">RectAreaLightHandle</span><span class="p">,</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">SceneNodePointerEvent</span><span class="p">,</span>
     <span class="n">ScenePointerEvent</span><span class="p">,</span>
     <span class="n">SplineCatmullRomHandle</span><span class="p">,</span>
     <span class="n">SplineCubicBezierHandle</span><span class="p">,</span>
+    <span class="n">SpotLightHandle</span><span class="p">,</span>
     <span class="n">TransformControlsHandle</span><span class="p">,</span>
     <span class="n">_TransformControlsState</span><span class="p">,</span>
     <span class="n">colors_to_uint8</span><span class="p">,</span>
@@ -586,13 +593,312 @@
         <span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="SceneApi.add_light_directional">
+<a class="viewcode-back" href="../../../scene_api/#viser.SceneApi.add_light_directional">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_light_directional</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">color</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>
+        <span class="n">intensity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">wxyz</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+        <span class="n">position</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+        <span class="n">visible</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DirectionalLightHandle</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a directional light to the scene.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name: A scene tree name. Names in the format of /parent/child can be used to</span>
+<span class="sd">                define a kinematic tree.</span>
+<span class="sd">            color: Color of the light.</span>
+<span class="sd">            intensity: Light&#39;s strength/intensity.</span>
+<span class="sd">            wxyz: Quaternion rotation to parent frame from local frame (R_pl).</span>
+<span class="sd">            position: Translation to parent frame from local frame (t_pl).</span>
+<span class="sd">            visible: Whether or not this scene node is initially visible.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Handle for manipulating scene node.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">DirectionalLightMessage</span><span class="p">(</span>
+            <span class="n">name</span><span class="p">,</span> <span class="n">_messages</span><span class="o">.</span><span class="n">DirectionalLightProps</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">intensity</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">DirectionalLightHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SceneApi.add_light_ambient">
+<a class="viewcode-back" href="../../../scene_api/#viser.SceneApi.add_light_ambient">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_light_ambient</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">color</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>
+        <span class="n">intensity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">wxyz</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+        <span class="n">position</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+        <span class="n">visible</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AmbientLightHandle</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add an ambient light to the scene.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name: A scene tree name. Names in the format of /parent/child can be used to</span>
+<span class="sd">                define a kinematic tree.</span>
+<span class="sd">            color: Color of the light.</span>
+<span class="sd">            intensity: Light&#39;s strength/intensity.</span>
+<span class="sd">            wxyz: Quaternion rotation to parent frame from local frame (R_pl).</span>
+<span class="sd">            position: Translation to parent frame from local frame (t_pl).</span>
+<span class="sd">            visible: Whether or not this scene node is initially visible.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Handle for manipulating scene node.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">AmbientLightMessage</span><span class="p">(</span>
+            <span class="n">name</span><span class="p">,</span> <span class="n">_messages</span><span class="o">.</span><span class="n">AmbientLightProps</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">intensity</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">AmbientLightHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SceneApi.add_light_hemisphere">
+<a class="viewcode-back" href="../../../scene_api/#viser.SceneApi.add_light_hemisphere">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_light_hemisphere</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">sky_color</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>
+        <span class="n">ground_color</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>
+        <span class="n">intensity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">wxyz</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+        <span class="n">position</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+        <span class="n">visible</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HemisphereLightHandle</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a hemisphere light to the scene.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name: A scene tree name. Names in the format of /parent/child can be used to</span>
+<span class="sd">                define a kinematic tree.</span>
+<span class="sd">            skyColor: The light&#39;s sky color.</span>
+<span class="sd">            groundColor: The light&#39;s ground color.</span>
+<span class="sd">            intensity: Light&#39;s strength/intensity.</span>
+<span class="sd">            wxyz: Quaternion rotation to parent frame from local frame (R_pl).</span>
+<span class="sd">            position: Translation to parent frame from local frame (t_pl).</span>
+<span class="sd">            visible: Whether or not this scene node is initially visible.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Handle for manipulating scene node.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">HemisphereLightMessage</span><span class="p">(</span>
+            <span class="n">name</span><span class="p">,</span> <span class="n">_messages</span><span class="o">.</span><span class="n">HemisphereLightProps</span><span class="p">(</span><span class="n">sky_color</span><span class="p">,</span> <span class="n">ground_color</span><span class="p">,</span> <span class="n">intensity</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">HemisphereLightHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SceneApi.add_light_point">
+<a class="viewcode-back" href="../../../scene_api/#viser.SceneApi.add_light_point">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_light_point</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">color</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>
+        <span class="n">intensity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">decay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span>
+        <span class="n">wxyz</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+        <span class="n">position</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+        <span class="n">visible</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PointLightHandle</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a point light to the scene.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name: A scene tree name. Names in the format of /parent/child can be used to</span>
+<span class="sd">                define a kinematic tree.</span>
+<span class="sd">            color: Color of the light.</span>
+<span class="sd">            intensity: Light&#39;s strength/intensity.</span>
+<span class="sd">            distance: Maximum distance of light.</span>
+<span class="sd">            decay: The amount the light dims along the distance of the light.</span>
+<span class="sd">            wxyz: Quaternion rotation to parent frame from local frame (R_pl).</span>
+<span class="sd">            position: Translation to parent frame from local frame (t_pl).</span>
+<span class="sd">            visible: Whether or not this scene node is initially visible.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Handle for manipulating scene node.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">PointLightMessage</span><span class="p">(</span>
+            <span class="n">name</span><span class="p">,</span>
+            <span class="n">_messages</span><span class="o">.</span><span class="n">PointLightProps</span><span class="p">(</span>
+                <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+                <span class="n">intensity</span><span class="o">=</span><span class="n">intensity</span><span class="p">,</span>
+                <span class="n">distance</span><span class="o">=</span><span class="n">distance</span><span class="p">,</span>
+                <span class="n">decay</span><span class="o">=</span><span class="n">decay</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">PointLightHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SceneApi.add_light_rectarea">
+<a class="viewcode-back" href="../../../scene_api/#viser.SceneApi.add_light_rectarea">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_light_rectarea</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">color</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>
+        <span class="n">intensity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">width</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span>
+        <span class="n">height</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span>
+        <span class="n">wxyz</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+        <span class="n">position</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+        <span class="n">visible</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RectAreaLightHandle</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a rectangular area light to the scene.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name: A scene tree name. Names in the format of /parent/child can be used to</span>
+<span class="sd">                define a kinematic tree.</span>
+<span class="sd">            color: Color of the light.</span>
+<span class="sd">            intensity: Light&#39;s strength/intensity.</span>
+<span class="sd">            width: THe width of the light.</span>
+<span class="sd">            height: The height of the light.</span>
+<span class="sd">            wxyz: Quaternion rotation to parent frame from local frame (R_pl).</span>
+<span class="sd">            position: Translation to parent frame from local frame (t_pl).</span>
+<span class="sd">            visible: Whether or not this scene node is initially visible.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Handle for manipulating scene node.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">RectAreaLightMessage</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">RectAreaLightProps</span><span class="p">(</span>
+                <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+                <span class="n">intensity</span><span class="o">=</span><span class="n">intensity</span><span class="p">,</span>
+                <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
+                <span class="n">height</span><span class="o">=</span><span class="n">height</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">RectAreaLightHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SceneApi.add_light_spot">
+<a class="viewcode-back" href="../../../scene_api/#viser.SceneApi.add_light_spot">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_light_spot</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">color</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>
+        <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">angle</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="n">penumbra</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">decay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span>
+        <span class="n">intensity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">wxyz</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+        <span class="n">position</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+        <span class="n">visible</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpotLightHandle</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a spot light to the scene.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name: A scene tree name. Names in the format of /parent/child can be used to</span>
+<span class="sd">                define a kinematic tree.</span>
+<span class="sd">            color: Color of the light.</span>
+<span class="sd">            distance: Maximum distance of light.</span>
+<span class="sd">            angle: Maximum extent of the spotlight, in radians, from its direction.</span>
+<span class="sd">                Should be no more than Math.PI/2.</span>
+<span class="sd">            penumbra: Percent of the spotlight cone that is attenuated due to penumbra.</span>
+<span class="sd">                Between 0 and 1.</span>
+<span class="sd">            decay: The amount the light dims along the distance of the light.</span>
+<span class="sd">            intensity: Light&#39;s strength/intensity.</span>
+<span class="sd">            wxyz: Quaternion rotation to parent frame from local frame (R_pl).</span>
+<span class="sd">            position: Translation to parent frame from local frame (t_pl).</span>
+<span class="sd">            visible: Whether or not this scene node is initially visible.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Handle for manipulating scene node.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">SpotLightMessage</span><span class="p">(</span>
+            <span class="n">name</span><span class="p">,</span>
+            <span class="n">_messages</span><span class="o">.</span><span class="n">SpotLightProps</span><span class="p">(</span>
+                <span class="n">color</span><span class="p">,</span> <span class="n">intensity</span><span class="p">,</span> <span class="n">distance</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">penumbra</span><span class="p">,</span> <span class="n">decay</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">SpotLightHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SceneApi.set_environment_map">
+<a class="viewcode-back" href="../../../scene_api/#viser.SceneApi.set_environment_map">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_environment_map</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">hdri</span><span class="p">:</span> <span class="kc">None</span>
+        <span class="o">|</span> <span class="n">Literal</span><span class="p">[</span>
+            <span class="s2">&quot;apartment&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;city&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;dawn&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;forest&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;lobby&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;night&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;park&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;studio&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;sunset&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;warehouse&quot;</span><span class="p">,</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;warehouse&quot;</span><span class="p">,</span>
+        <span class="n">background</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">background_blurriness</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">background_intensity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">background_rotation</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+        <span class="n">environment_intensity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">environment_rotation</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the environment map for the scene. This will set some lights and background.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            hdri: Preset HDRI environment to use.</span>
+<span class="sd">            background: Show or hide the environment map in the background.</span>
+<span class="sd">            background_blurriness: Blur factor of the environment map background (0-1).</span>
+<span class="sd">            background_intensity: Intensity of the background.</span>
+<span class="sd">            background_rotation: Rotation of the background in radians.</span>
+<span class="sd">            environment_intensity: Intensity of the environment lighting.</span>
+<span class="sd">            environment_rotation: Rotation of the environment lighting in radians.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
+            <span class="n">_messages</span><span class="o">.</span><span class="n">EnvironmentMapMessage</span><span class="p">(</span>
+                <span class="n">hdri</span><span class="o">=</span><span class="n">hdri</span><span class="p">,</span>
+                <span class="n">background</span><span class="o">=</span><span class="n">background</span><span class="p">,</span>
+                <span class="n">background_blurriness</span><span class="o">=</span><span class="n">background_blurriness</span><span class="p">,</span>
+                <span class="n">background_intensity</span><span class="o">=</span><span class="n">background_intensity</span><span class="p">,</span>
+                <span class="n">background_rotation</span><span class="o">=</span><span class="n">background_rotation</span><span class="p">,</span>
+                <span class="n">environment_intensity</span><span class="o">=</span><span class="n">environment_intensity</span><span class="p">,</span>
+                <span class="n">environment_rotation</span><span class="o">=</span><span class="n">environment_rotation</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SceneApi.enable_default_lights">
+<a class="viewcode-back" href="../../../scene_api/#viser.SceneApi.enable_default_lights">[docs]</a>
+    <span class="k">def</span> <span class="nf">enable_default_lights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Enable/disable the default lights in the scene. If not otherwise</span>
+<span class="sd">        specified, default lighting will be enabled.</span>
+
+<span class="sd">        This does not affect lighting from the environment map. To turn these off,</span>
+<span class="sd">        see :meth:`SceneApi.set_environment_map()`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            enabled: True if user wants default lighting. False is user does</span>
+<span class="sd">                not want default lighting.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span><span class="n">_messages</span><span class="o">.</span><span class="n">EnableLightsMessage</span><span class="p">(</span><span class="n">enabled</span><span class="p">))</span></div>
+
+
 <div class="viewcode-block" id="SceneApi.add_glb">
 <a class="viewcode-back" href="../../../scene_api/#viser.SceneApi.add_glb">[docs]</a>
     <span class="k">def</span> <span class="nf">add_glb</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">glb_data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span>
-        <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">scale</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
         <span class="n">wxyz</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
         <span class="n">position</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
         <span class="n">visible</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>

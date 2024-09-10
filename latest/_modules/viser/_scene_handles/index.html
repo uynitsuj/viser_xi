@@ -302,6 +302,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../examples/23_plotly/">Plotly</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../examples/24_notification/">Notifications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../examples/25_smpl_visualizer_skinned/">SMPL visualizer (Skinned Mesh)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/26_lighting/">Lights</a></li>
 </ul>
 
 </div>
@@ -626,6 +627,78 @@
     <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">CameraFrustumProps</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for camera frustums.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="DirectionalLightHandle">
+<a class="viewcode-back" href="../../../scene_handles/#viser.DirectionalLightHandle">[docs]</a>
+<span class="k">class</span> <span class="nc">DirectionalLightHandle</span><span class="p">(</span>
+    <span class="n">SceneNodeHandle</span><span class="p">,</span>
+    <span class="n">_messages</span><span class="o">.</span><span class="n">DirectionalLightProps</span><span class="p">,</span>
+    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">DirectionalLightProps</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for directional lights.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AmbientLightHandle">
+<a class="viewcode-back" href="../../../scene_handles/#viser.AmbientLightHandle">[docs]</a>
+<span class="k">class</span> <span class="nc">AmbientLightHandle</span><span class="p">(</span>
+    <span class="n">SceneNodeHandle</span><span class="p">,</span>
+    <span class="n">_messages</span><span class="o">.</span><span class="n">AmbientLightProps</span><span class="p">,</span>
+    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">AmbientLightProps</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for ambient lights.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="HemisphereLightHandle">
+<a class="viewcode-back" href="../../../scene_handles/#viser.HemisphereLightHandle">[docs]</a>
+<span class="k">class</span> <span class="nc">HemisphereLightHandle</span><span class="p">(</span>
+    <span class="n">SceneNodeHandle</span><span class="p">,</span>
+    <span class="n">_messages</span><span class="o">.</span><span class="n">HemisphereLightProps</span><span class="p">,</span>
+    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">HemisphereLightProps</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for hemisphere lights.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="PointLightHandle">
+<a class="viewcode-back" href="../../../scene_handles/#viser.PointLightHandle">[docs]</a>
+<span class="k">class</span> <span class="nc">PointLightHandle</span><span class="p">(</span>
+    <span class="n">SceneNodeHandle</span><span class="p">,</span>
+    <span class="n">_messages</span><span class="o">.</span><span class="n">PointLightProps</span><span class="p">,</span>
+    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">PointLightProps</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for point lights.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="RectAreaLightHandle">
+<a class="viewcode-back" href="../../../scene_handles/#viser.RectAreaLightHandle">[docs]</a>
+<span class="k">class</span> <span class="nc">RectAreaLightHandle</span><span class="p">(</span>
+    <span class="n">SceneNodeHandle</span><span class="p">,</span>
+    <span class="n">_messages</span><span class="o">.</span><span class="n">RectAreaLightProps</span><span class="p">,</span>
+    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">RectAreaLightProps</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for rectangular area lights.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="SpotLightHandle">
+<a class="viewcode-back" href="../../../scene_handles/#viser.SpotLightHandle">[docs]</a>
+<span class="k">class</span> <span class="nc">SpotLightHandle</span><span class="p">(</span>
+    <span class="n">SceneNodeHandle</span><span class="p">,</span>
+    <span class="n">_messages</span><span class="o">.</span><span class="n">SpotLightProps</span><span class="p">,</span>
+    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">SpotLightProps</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for spot lights.&quot;&quot;&quot;</span></div>
 
 
 

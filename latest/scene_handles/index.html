@@ -303,6 +303,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../examples/23_plotly/">Plotly</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/24_notification/">Notifications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/25_smpl_visualizer_skinned/">SMPL visualizer (Skinned Mesh)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/26_lighting/">Lights</a></li>
 </ul>
 
 </div>
@@ -1487,6 +1488,390 @@ factor of covariance matrices.</p>
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="viser.DirectionalLightHandle">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">viser.</span></span><span class="sig-name descname"><span class="pre">DirectionalLightHandle</span></span><a class="reference internal" href="../_modules/viser/_scene_handles/#DirectionalLightHandle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.DirectionalLightHandle" title="Link to this definition">#</a></dt>
+<dd><p>Handle for directional lights.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.DirectionalLightHandle.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#viser.DirectionalLightHandle.name" title="Link to this definition">#</a></dt>
+<dd><p>Read-only name of the scene node.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.DirectionalLightHandle.position">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#viser.DirectionalLightHandle.position" title="Link to this definition">#</a></dt>
+<dd><p>Position of the scene node. This is equivalent to the t in
+<code class="docutils literal notranslate"><span class="pre">p_parent</span> <span class="pre">=</span> <span class="pre">[R</span> <span class="pre">|</span> <span class="pre">t]</span> <span class="pre">p_local</span></code>. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.DirectionalLightHandle.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.DirectionalLightHandle.remove" title="Link to this definition">#</a></dt>
+<dd><p>Remove the node from the scene.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.DirectionalLightHandle.visible">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">visible</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#viser.DirectionalLightHandle.visible" title="Link to this definition">#</a></dt>
+<dd><p>Whether the scene node is visible or not. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.DirectionalLightHandle.wxyz">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wxyz</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#viser.DirectionalLightHandle.wxyz" title="Link to this definition">#</a></dt>
+<dd><p>Orientation of the scene node. This is the quaternion representation of the R
+in <code class="docutils literal notranslate"><span class="pre">p_parent</span> <span class="pre">=</span> <span class="pre">[R</span> <span class="pre">|</span> <span class="pre">t]</span> <span class="pre">p_local</span></code>. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.DirectionalLightHandle.color">
+<span class="sig-name descname"><span class="pre">color</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#viser.DirectionalLightHandle.color" title="Link to this definition">#</a></dt>
+<dd><p>Color of the directional light. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.DirectionalLightHandle.intensity">
+<span class="sig-name descname"><span class="pre">intensity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#viser.DirectionalLightHandle.intensity" title="Link to this definition">#</a></dt>
+<dd><p>Intensity of the directional light. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="viser.AmbientLightHandle">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">viser.</span></span><span class="sig-name descname"><span class="pre">AmbientLightHandle</span></span><a class="reference internal" href="../_modules/viser/_scene_handles/#AmbientLightHandle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.AmbientLightHandle" title="Link to this definition">#</a></dt>
+<dd><p>Handle for ambient lights.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.AmbientLightHandle.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#viser.AmbientLightHandle.name" title="Link to this definition">#</a></dt>
+<dd><p>Read-only name of the scene node.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.AmbientLightHandle.position">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#viser.AmbientLightHandle.position" title="Link to this definition">#</a></dt>
+<dd><p>Position of the scene node. This is equivalent to the t in
+<code class="docutils literal notranslate"><span class="pre">p_parent</span> <span class="pre">=</span> <span class="pre">[R</span> <span class="pre">|</span> <span class="pre">t]</span> <span class="pre">p_local</span></code>. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.AmbientLightHandle.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.AmbientLightHandle.remove" title="Link to this definition">#</a></dt>
+<dd><p>Remove the node from the scene.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.AmbientLightHandle.visible">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">visible</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#viser.AmbientLightHandle.visible" title="Link to this definition">#</a></dt>
+<dd><p>Whether the scene node is visible or not. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.AmbientLightHandle.wxyz">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wxyz</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#viser.AmbientLightHandle.wxyz" title="Link to this definition">#</a></dt>
+<dd><p>Orientation of the scene node. This is the quaternion representation of the R
+in <code class="docutils literal notranslate"><span class="pre">p_parent</span> <span class="pre">=</span> <span class="pre">[R</span> <span class="pre">|</span> <span class="pre">t]</span> <span class="pre">p_local</span></code>. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.AmbientLightHandle.color">
+<span class="sig-name descname"><span class="pre">color</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#viser.AmbientLightHandle.color" title="Link to this definition">#</a></dt>
+<dd><p>Color of the ambient light. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.AmbientLightHandle.intensity">
+<span class="sig-name descname"><span class="pre">intensity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#viser.AmbientLightHandle.intensity" title="Link to this definition">#</a></dt>
+<dd><p>Intensity of the ambient light. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="viser.HemisphereLightHandle">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">viser.</span></span><span class="sig-name descname"><span class="pre">HemisphereLightHandle</span></span><a class="reference internal" href="../_modules/viser/_scene_handles/#HemisphereLightHandle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.HemisphereLightHandle" title="Link to this definition">#</a></dt>
+<dd><p>Handle for hemisphere lights.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.HemisphereLightHandle.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#viser.HemisphereLightHandle.name" title="Link to this definition">#</a></dt>
+<dd><p>Read-only name of the scene node.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.HemisphereLightHandle.position">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#viser.HemisphereLightHandle.position" title="Link to this definition">#</a></dt>
+<dd><p>Position of the scene node. This is equivalent to the t in
+<code class="docutils literal notranslate"><span class="pre">p_parent</span> <span class="pre">=</span> <span class="pre">[R</span> <span class="pre">|</span> <span class="pre">t]</span> <span class="pre">p_local</span></code>. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.HemisphereLightHandle.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.HemisphereLightHandle.remove" title="Link to this definition">#</a></dt>
+<dd><p>Remove the node from the scene.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.HemisphereLightHandle.visible">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">visible</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#viser.HemisphereLightHandle.visible" title="Link to this definition">#</a></dt>
+<dd><p>Whether the scene node is visible or not. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.HemisphereLightHandle.wxyz">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wxyz</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#viser.HemisphereLightHandle.wxyz" title="Link to this definition">#</a></dt>
+<dd><p>Orientation of the scene node. This is the quaternion representation of the R
+in <code class="docutils literal notranslate"><span class="pre">p_parent</span> <span class="pre">=</span> <span class="pre">[R</span> <span class="pre">|</span> <span class="pre">t]</span> <span class="pre">p_local</span></code>. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.HemisphereLightHandle.sky_color">
+<span class="sig-name descname"><span class="pre">sky_color</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#viser.HemisphereLightHandle.sky_color" title="Link to this definition">#</a></dt>
+<dd><p>Sky color of the hemisphere light. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.HemisphereLightHandle.ground_color">
+<span class="sig-name descname"><span class="pre">ground_color</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#viser.HemisphereLightHandle.ground_color" title="Link to this definition">#</a></dt>
+<dd><p>Ground color of the hemisphere light. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.HemisphereLightHandle.intensity">
+<span class="sig-name descname"><span class="pre">intensity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#viser.HemisphereLightHandle.intensity" title="Link to this definition">#</a></dt>
+<dd><p>Intensity of the hemisphere light. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="viser.PointLightHandle">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">viser.</span></span><span class="sig-name descname"><span class="pre">PointLightHandle</span></span><a class="reference internal" href="../_modules/viser/_scene_handles/#PointLightHandle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.PointLightHandle" title="Link to this definition">#</a></dt>
+<dd><p>Handle for point lights.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.PointLightHandle.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#viser.PointLightHandle.name" title="Link to this definition">#</a></dt>
+<dd><p>Read-only name of the scene node.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.PointLightHandle.position">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#viser.PointLightHandle.position" title="Link to this definition">#</a></dt>
+<dd><p>Position of the scene node. This is equivalent to the t in
+<code class="docutils literal notranslate"><span class="pre">p_parent</span> <span class="pre">=</span> <span class="pre">[R</span> <span class="pre">|</span> <span class="pre">t]</span> <span class="pre">p_local</span></code>. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.PointLightHandle.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.PointLightHandle.remove" title="Link to this definition">#</a></dt>
+<dd><p>Remove the node from the scene.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.PointLightHandle.visible">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">visible</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#viser.PointLightHandle.visible" title="Link to this definition">#</a></dt>
+<dd><p>Whether the scene node is visible or not. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.PointLightHandle.wxyz">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wxyz</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#viser.PointLightHandle.wxyz" title="Link to this definition">#</a></dt>
+<dd><p>Orientation of the scene node. This is the quaternion representation of the R
+in <code class="docutils literal notranslate"><span class="pre">p_parent</span> <span class="pre">=</span> <span class="pre">[R</span> <span class="pre">|</span> <span class="pre">t]</span> <span class="pre">p_local</span></code>. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.PointLightHandle.color">
+<span class="sig-name descname"><span class="pre">color</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#viser.PointLightHandle.color" title="Link to this definition">#</a></dt>
+<dd><p>Color of the point light. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.PointLightHandle.intensity">
+<span class="sig-name descname"><span class="pre">intensity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#viser.PointLightHandle.intensity" title="Link to this definition">#</a></dt>
+<dd><p>Intensity of the point light. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.PointLightHandle.distance">
+<span class="sig-name descname"><span class="pre">distance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#viser.PointLightHandle.distance" title="Link to this definition">#</a></dt>
+<dd><p>Distance of the point light. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.PointLightHandle.decay">
+<span class="sig-name descname"><span class="pre">decay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#viser.PointLightHandle.decay" title="Link to this definition">#</a></dt>
+<dd><p>Decay of the point light. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="viser.RectAreaLightHandle">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">viser.</span></span><span class="sig-name descname"><span class="pre">RectAreaLightHandle</span></span><a class="reference internal" href="../_modules/viser/_scene_handles/#RectAreaLightHandle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.RectAreaLightHandle" title="Link to this definition">#</a></dt>
+<dd><p>Handle for rectangular area lights.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.RectAreaLightHandle.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#viser.RectAreaLightHandle.name" title="Link to this definition">#</a></dt>
+<dd><p>Read-only name of the scene node.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.RectAreaLightHandle.position">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#viser.RectAreaLightHandle.position" title="Link to this definition">#</a></dt>
+<dd><p>Position of the scene node. This is equivalent to the t in
+<code class="docutils literal notranslate"><span class="pre">p_parent</span> <span class="pre">=</span> <span class="pre">[R</span> <span class="pre">|</span> <span class="pre">t]</span> <span class="pre">p_local</span></code>. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.RectAreaLightHandle.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.RectAreaLightHandle.remove" title="Link to this definition">#</a></dt>
+<dd><p>Remove the node from the scene.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.RectAreaLightHandle.visible">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">visible</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#viser.RectAreaLightHandle.visible" title="Link to this definition">#</a></dt>
+<dd><p>Whether the scene node is visible or not. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.RectAreaLightHandle.wxyz">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wxyz</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#viser.RectAreaLightHandle.wxyz" title="Link to this definition">#</a></dt>
+<dd><p>Orientation of the scene node. This is the quaternion representation of the R
+in <code class="docutils literal notranslate"><span class="pre">p_parent</span> <span class="pre">=</span> <span class="pre">[R</span> <span class="pre">|</span> <span class="pre">t]</span> <span class="pre">p_local</span></code>. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.RectAreaLightHandle.color">
+<span class="sig-name descname"><span class="pre">color</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#viser.RectAreaLightHandle.color" title="Link to this definition">#</a></dt>
+<dd><p>Color of the rectangular area light. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.RectAreaLightHandle.intensity">
+<span class="sig-name descname"><span class="pre">intensity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#viser.RectAreaLightHandle.intensity" title="Link to this definition">#</a></dt>
+<dd><p>Intensity of the rectangular area light. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.RectAreaLightHandle.width">
+<span class="sig-name descname"><span class="pre">width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#viser.RectAreaLightHandle.width" title="Link to this definition">#</a></dt>
+<dd><p>Width of the rectangular area light. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.RectAreaLightHandle.height">
+<span class="sig-name descname"><span class="pre">height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#viser.RectAreaLightHandle.height" title="Link to this definition">#</a></dt>
+<dd><p>Height of the rectangular area light. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="viser.SpotLightHandle">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">viser.</span></span><span class="sig-name descname"><span class="pre">SpotLightHandle</span></span><a class="reference internal" href="../_modules/viser/_scene_handles/#SpotLightHandle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.SpotLightHandle" title="Link to this definition">#</a></dt>
+<dd><p>Handle for spot lights.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.SpotLightHandle.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#viser.SpotLightHandle.name" title="Link to this definition">#</a></dt>
+<dd><p>Read-only name of the scene node.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.SpotLightHandle.position">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#viser.SpotLightHandle.position" title="Link to this definition">#</a></dt>
+<dd><p>Position of the scene node. This is equivalent to the t in
+<code class="docutils literal notranslate"><span class="pre">p_parent</span> <span class="pre">=</span> <span class="pre">[R</span> <span class="pre">|</span> <span class="pre">t]</span> <span class="pre">p_local</span></code>. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.SpotLightHandle.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.SpotLightHandle.remove" title="Link to this definition">#</a></dt>
+<dd><p>Remove the node from the scene.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.SpotLightHandle.visible">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">visible</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#viser.SpotLightHandle.visible" title="Link to this definition">#</a></dt>
+<dd><p>Whether the scene node is visible or not. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.SpotLightHandle.wxyz">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wxyz</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#viser.SpotLightHandle.wxyz" title="Link to this definition">#</a></dt>
+<dd><p>Orientation of the scene node. This is the quaternion representation of the R
+in <code class="docutils literal notranslate"><span class="pre">p_parent</span> <span class="pre">=</span> <span class="pre">[R</span> <span class="pre">|</span> <span class="pre">t]</span> <span class="pre">p_local</span></code>. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.SpotLightHandle.color">
+<span class="sig-name descname"><span class="pre">color</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#viser.SpotLightHandle.color" title="Link to this definition">#</a></dt>
+<dd><p>Color of the spot light. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.SpotLightHandle.intensity">
+<span class="sig-name descname"><span class="pre">intensity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#viser.SpotLightHandle.intensity" title="Link to this definition">#</a></dt>
+<dd><p>Intensity of the spot light. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.SpotLightHandle.distance">
+<span class="sig-name descname"><span class="pre">distance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#viser.SpotLightHandle.distance" title="Link to this definition">#</a></dt>
+<dd><p>Distance of the spot light. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.SpotLightHandle.angle">
+<span class="sig-name descname"><span class="pre">angle</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#viser.SpotLightHandle.angle" title="Link to this definition">#</a></dt>
+<dd><p>Angle of the spot light. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.SpotLightHandle.penumbra">
+<span class="sig-name descname"><span class="pre">penumbra</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#viser.SpotLightHandle.penumbra" title="Link to this definition">#</a></dt>
+<dd><p>Penumbra of the spot light. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.SpotLightHandle.decay">
+<span class="sig-name descname"><span class="pre">decay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#viser.SpotLightHandle.decay" title="Link to this definition">#</a></dt>
+<dd><p>Decay of the spot light. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+</dd></dl>
+
 <!-- prettier-ignore-end --></section>
 
         </article>
@@ -1732,6 +2117,75 @@ factor of covariance matrices.</p>
 <li><a class="reference internal" href="#viser.GaussianSplatHandle.visible"><code class="docutils literal notranslate"><span class="pre">GaussianSplatHandle.visible</span></code></a></li>
 <li><a class="reference internal" href="#viser.GaussianSplatHandle.wxyz"><code class="docutils literal notranslate"><span class="pre">GaussianSplatHandle.wxyz</span></code></a></li>
 <li><a class="reference internal" href="#viser.GaussianSplatHandle.buffer"><code class="docutils literal notranslate"><span class="pre">GaussianSplatHandle.buffer</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#viser.DirectionalLightHandle"><code class="docutils literal notranslate"><span class="pre">DirectionalLightHandle</span></code></a><ul>
+<li><a class="reference internal" href="#viser.DirectionalLightHandle.name"><code class="docutils literal notranslate"><span class="pre">DirectionalLightHandle.name</span></code></a></li>
+<li><a class="reference internal" href="#viser.DirectionalLightHandle.position"><code class="docutils literal notranslate"><span class="pre">DirectionalLightHandle.position</span></code></a></li>
+<li><a class="reference internal" href="#viser.DirectionalLightHandle.remove"><code class="docutils literal notranslate"><span class="pre">DirectionalLightHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.DirectionalLightHandle.visible"><code class="docutils literal notranslate"><span class="pre">DirectionalLightHandle.visible</span></code></a></li>
+<li><a class="reference internal" href="#viser.DirectionalLightHandle.wxyz"><code class="docutils literal notranslate"><span class="pre">DirectionalLightHandle.wxyz</span></code></a></li>
+<li><a class="reference internal" href="#viser.DirectionalLightHandle.color"><code class="docutils literal notranslate"><span class="pre">DirectionalLightHandle.color</span></code></a></li>
+<li><a class="reference internal" href="#viser.DirectionalLightHandle.intensity"><code class="docutils literal notranslate"><span class="pre">DirectionalLightHandle.intensity</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#viser.AmbientLightHandle"><code class="docutils literal notranslate"><span class="pre">AmbientLightHandle</span></code></a><ul>
+<li><a class="reference internal" href="#viser.AmbientLightHandle.name"><code class="docutils literal notranslate"><span class="pre">AmbientLightHandle.name</span></code></a></li>
+<li><a class="reference internal" href="#viser.AmbientLightHandle.position"><code class="docutils literal notranslate"><span class="pre">AmbientLightHandle.position</span></code></a></li>
+<li><a class="reference internal" href="#viser.AmbientLightHandle.remove"><code class="docutils literal notranslate"><span class="pre">AmbientLightHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.AmbientLightHandle.visible"><code class="docutils literal notranslate"><span class="pre">AmbientLightHandle.visible</span></code></a></li>
+<li><a class="reference internal" href="#viser.AmbientLightHandle.wxyz"><code class="docutils literal notranslate"><span class="pre">AmbientLightHandle.wxyz</span></code></a></li>
+<li><a class="reference internal" href="#viser.AmbientLightHandle.color"><code class="docutils literal notranslate"><span class="pre">AmbientLightHandle.color</span></code></a></li>
+<li><a class="reference internal" href="#viser.AmbientLightHandle.intensity"><code class="docutils literal notranslate"><span class="pre">AmbientLightHandle.intensity</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#viser.HemisphereLightHandle"><code class="docutils literal notranslate"><span class="pre">HemisphereLightHandle</span></code></a><ul>
+<li><a class="reference internal" href="#viser.HemisphereLightHandle.name"><code class="docutils literal notranslate"><span class="pre">HemisphereLightHandle.name</span></code></a></li>
+<li><a class="reference internal" href="#viser.HemisphereLightHandle.position"><code class="docutils literal notranslate"><span class="pre">HemisphereLightHandle.position</span></code></a></li>
+<li><a class="reference internal" href="#viser.HemisphereLightHandle.remove"><code class="docutils literal notranslate"><span class="pre">HemisphereLightHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.HemisphereLightHandle.visible"><code class="docutils literal notranslate"><span class="pre">HemisphereLightHandle.visible</span></code></a></li>
+<li><a class="reference internal" href="#viser.HemisphereLightHandle.wxyz"><code class="docutils literal notranslate"><span class="pre">HemisphereLightHandle.wxyz</span></code></a></li>
+<li><a class="reference internal" href="#viser.HemisphereLightHandle.sky_color"><code class="docutils literal notranslate"><span class="pre">HemisphereLightHandle.sky_color</span></code></a></li>
+<li><a class="reference internal" href="#viser.HemisphereLightHandle.ground_color"><code class="docutils literal notranslate"><span class="pre">HemisphereLightHandle.ground_color</span></code></a></li>
+<li><a class="reference internal" href="#viser.HemisphereLightHandle.intensity"><code class="docutils literal notranslate"><span class="pre">HemisphereLightHandle.intensity</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#viser.PointLightHandle"><code class="docutils literal notranslate"><span class="pre">PointLightHandle</span></code></a><ul>
+<li><a class="reference internal" href="#viser.PointLightHandle.name"><code class="docutils literal notranslate"><span class="pre">PointLightHandle.name</span></code></a></li>
+<li><a class="reference internal" href="#viser.PointLightHandle.position"><code class="docutils literal notranslate"><span class="pre">PointLightHandle.position</span></code></a></li>
+<li><a class="reference internal" href="#viser.PointLightHandle.remove"><code class="docutils literal notranslate"><span class="pre">PointLightHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.PointLightHandle.visible"><code class="docutils literal notranslate"><span class="pre">PointLightHandle.visible</span></code></a></li>
+<li><a class="reference internal" href="#viser.PointLightHandle.wxyz"><code class="docutils literal notranslate"><span class="pre">PointLightHandle.wxyz</span></code></a></li>
+<li><a class="reference internal" href="#viser.PointLightHandle.color"><code class="docutils literal notranslate"><span class="pre">PointLightHandle.color</span></code></a></li>
+<li><a class="reference internal" href="#viser.PointLightHandle.intensity"><code class="docutils literal notranslate"><span class="pre">PointLightHandle.intensity</span></code></a></li>
+<li><a class="reference internal" href="#viser.PointLightHandle.distance"><code class="docutils literal notranslate"><span class="pre">PointLightHandle.distance</span></code></a></li>
+<li><a class="reference internal" href="#viser.PointLightHandle.decay"><code class="docutils literal notranslate"><span class="pre">PointLightHandle.decay</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#viser.RectAreaLightHandle"><code class="docutils literal notranslate"><span class="pre">RectAreaLightHandle</span></code></a><ul>
+<li><a class="reference internal" href="#viser.RectAreaLightHandle.name"><code class="docutils literal notranslate"><span class="pre">RectAreaLightHandle.name</span></code></a></li>
+<li><a class="reference internal" href="#viser.RectAreaLightHandle.position"><code class="docutils literal notranslate"><span class="pre">RectAreaLightHandle.position</span></code></a></li>
+<li><a class="reference internal" href="#viser.RectAreaLightHandle.remove"><code class="docutils literal notranslate"><span class="pre">RectAreaLightHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.RectAreaLightHandle.visible"><code class="docutils literal notranslate"><span class="pre">RectAreaLightHandle.visible</span></code></a></li>
+<li><a class="reference internal" href="#viser.RectAreaLightHandle.wxyz"><code class="docutils literal notranslate"><span class="pre">RectAreaLightHandle.wxyz</span></code></a></li>
+<li><a class="reference internal" href="#viser.RectAreaLightHandle.color"><code class="docutils literal notranslate"><span class="pre">RectAreaLightHandle.color</span></code></a></li>
+<li><a class="reference internal" href="#viser.RectAreaLightHandle.intensity"><code class="docutils literal notranslate"><span class="pre">RectAreaLightHandle.intensity</span></code></a></li>
+<li><a class="reference internal" href="#viser.RectAreaLightHandle.width"><code class="docutils literal notranslate"><span class="pre">RectAreaLightHandle.width</span></code></a></li>
+<li><a class="reference internal" href="#viser.RectAreaLightHandle.height"><code class="docutils literal notranslate"><span class="pre">RectAreaLightHandle.height</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#viser.SpotLightHandle"><code class="docutils literal notranslate"><span class="pre">SpotLightHandle</span></code></a><ul>
+<li><a class="reference internal" href="#viser.SpotLightHandle.name"><code class="docutils literal notranslate"><span class="pre">SpotLightHandle.name</span></code></a></li>
+<li><a class="reference internal" href="#viser.SpotLightHandle.position"><code class="docutils literal notranslate"><span class="pre">SpotLightHandle.position</span></code></a></li>
+<li><a class="reference internal" href="#viser.SpotLightHandle.remove"><code class="docutils literal notranslate"><span class="pre">SpotLightHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.SpotLightHandle.visible"><code class="docutils literal notranslate"><span class="pre">SpotLightHandle.visible</span></code></a></li>
+<li><a class="reference internal" href="#viser.SpotLightHandle.wxyz"><code class="docutils literal notranslate"><span class="pre">SpotLightHandle.wxyz</span></code></a></li>
+<li><a class="reference internal" href="#viser.SpotLightHandle.color"><code class="docutils literal notranslate"><span class="pre">SpotLightHandle.color</span></code></a></li>
+<li><a class="reference internal" href="#viser.SpotLightHandle.intensity"><code class="docutils literal notranslate"><span class="pre">SpotLightHandle.intensity</span></code></a></li>
+<li><a class="reference internal" href="#viser.SpotLightHandle.distance"><code class="docutils literal notranslate"><span class="pre">SpotLightHandle.distance</span></code></a></li>
+<li><a class="reference internal" href="#viser.SpotLightHandle.angle"><code class="docutils literal notranslate"><span class="pre">SpotLightHandle.angle</span></code></a></li>
+<li><a class="reference internal" href="#viser.SpotLightHandle.penumbra"><code class="docutils literal notranslate"><span class="pre">SpotLightHandle.penumbra</span></code></a></li>
+<li><a class="reference internal" href="#viser.SpotLightHandle.decay"><code class="docutils literal notranslate"><span class="pre">SpotLightHandle.decay</span></code></a></li>
 </ul>
 </li>
 </ul>
