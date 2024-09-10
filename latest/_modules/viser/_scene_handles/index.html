@@ -378,17 +378,7 @@
     <span class="k">return</span> <span class="n">colors</span>
 
 
-<span class="k">class</span> <span class="nc">_OverridablePropApi</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mixin that allows reading/assigning properties defined in each scene node message.&quot;&quot;&quot;</span>
-
-    <span class="n">_PropHints</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">type</span><span class="p">]]</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="kc">False</span>
-
-    <span class="k">def</span> <span class="nf">__init_subclass__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">PropClass</span><span class="p">:</span> <span class="nb">type</span><span class="p">):</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">_PropHints</span> <span class="o">=</span> <span class="n">get_type_hints</span><span class="p">(</span><span class="n">PropClass</span><span class="p">)</span>
-
+<span class="k">class</span> <span class="nc">_OverridablePropSettersAndGetters</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">handle</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">SceneNodeHandle</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="c1"># Get the value of the T TypeVar.</span>
@@ -408,12 +398,26 @@
             <span class="k">return</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_PropClass</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_PropHints</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">props</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39; object has no attribute &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
             <span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">_OverridablePropApi</span><span class="p">(</span>
+    <span class="n">_OverridablePropSettersAndGetters</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span> <span class="k">else</span> <span class="nb">object</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mixin that allows reading/assigning properties defined in each scene node message.&quot;&quot;&quot;</span>
+
+    <span class="n">_PropHints</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">type</span><span class="p">]]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">__init_subclass__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">PropClass</span><span class="p">:</span> <span class="nb">type</span><span class="p">):</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_PropHints</span> <span class="o">=</span> <span class="n">get_type_hints</span><span class="p">(</span><span class="n">PropClass</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="ScenePointerEvent">
