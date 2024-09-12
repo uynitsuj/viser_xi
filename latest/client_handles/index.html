@@ -457,43 +457,6 @@ otherwise False such that the notification never closes on its own.</p></li>
 <dt class="sig sig-object py" id="viser.NotificationHandle">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">viser.</span></span><span class="sig-name descname"><span class="pre">NotificationHandle</span></span><a class="reference internal" href="../_modules/viser/_notification_handle/#NotificationHandle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.NotificationHandle" title="Link to this definition">#</a></dt>
 <dd><p>Handle for a notification in our visualizer.</p>
-<dl class="py property">
-<dt class="sig sig-object py" id="viser.NotificationHandle.title">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">title</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#viser.NotificationHandle.title" title="Link to this definition">#</a></dt>
-<dd><p>Title to display on the notification.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="viser.NotificationHandle.body">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">body</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#viser.NotificationHandle.body" title="Link to this definition">#</a></dt>
-<dd><p>Message to display on the notification body.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="viser.NotificationHandle.loading">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">loading</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#viser.NotificationHandle.loading" title="Link to this definition">#</a></dt>
-<dd><p>Whether the notification shows loading icon.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="viser.NotificationHandle.with_close_button">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">with_close_button</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#viser.NotificationHandle.with_close_button" title="Link to this definition">#</a></dt>
-<dd><p>Whether the notification can be manually closed.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="viser.NotificationHandle.auto_close">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">auto_close</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">False</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#viser.NotificationHandle.auto_close" title="Link to this definition">#</a></dt>
-<dd><p>Time in ms before the notification automatically closes;
-otherwise False such that the notification never closes on its own.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="viser.NotificationHandle.color">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">color</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'dark'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'gray'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'red'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'pink'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'grape'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'violet'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'indigo'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'blue'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'cyan'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'green'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'lime'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'yellow'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'orange'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'teal'</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#viser.NotificationHandle.color" title="Link to this definition">#</a></dt>
-<dd><p>Color of the notification.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="viser.NotificationHandle.remove">
 <span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/viser/_notification_handle/#NotificationHandle.remove"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.NotificationHandle.remove" title="Link to this definition">#</a></dt>
@@ -502,6 +465,42 @@ otherwise False such that the notification never closes on its own.</p>
 <dd class="field-odd"><p>None</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.NotificationHandle.title">
+<span class="sig-name descname"><span class="pre">title</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#viser.NotificationHandle.title" title="Link to this definition">#</a></dt>
+<dd><p>Title of the notification. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.NotificationHandle.body">
+<span class="sig-name descname"><span class="pre">body</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#viser.NotificationHandle.body" title="Link to this definition">#</a></dt>
+<dd><p>Body text of the notification. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.NotificationHandle.loading">
+<span class="sig-name descname"><span class="pre">loading</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#viser.NotificationHandle.loading" title="Link to this definition">#</a></dt>
+<dd><p>Whether to show a loading indicator. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.NotificationHandle.with_close_button">
+<span class="sig-name descname"><span class="pre">with_close_button</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#viser.NotificationHandle.with_close_button" title="Link to this definition">#</a></dt>
+<dd><p>Whether to show a close button. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.NotificationHandle.auto_close">
+<span class="sig-name descname"><span class="pre">auto_close</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="k"><span class="pre">False</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#viser.NotificationHandle.auto_close" title="Link to this definition">#</a></dt>
+<dd><p>Time in milliseconds after which the notification should auto-close, or False to disable auto-close. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.NotificationHandle.color">
+<span class="sig-name descname"><span class="pre">color</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Color</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#viser.NotificationHandle.color" title="Link to this definition">#</a></dt>
+<dd><p>Color of the notification. For handles, synchronized automatically when assigned.</p>
 </dd></dl>
 
 </dd></dl>
@@ -583,13 +582,13 @@ otherwise False such that the notification never closes on its own.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#viser.NotificationHandle"><code class="docutils literal notranslate"><span class="pre">NotificationHandle</span></code></a><ul>
+<li><a class="reference internal" href="#viser.NotificationHandle.remove"><code class="docutils literal notranslate"><span class="pre">NotificationHandle.remove()</span></code></a></li>
 <li><a class="reference internal" href="#viser.NotificationHandle.title"><code class="docutils literal notranslate"><span class="pre">NotificationHandle.title</span></code></a></li>
 <li><a class="reference internal" href="#viser.NotificationHandle.body"><code class="docutils literal notranslate"><span class="pre">NotificationHandle.body</span></code></a></li>
 <li><a class="reference internal" href="#viser.NotificationHandle.loading"><code class="docutils literal notranslate"><span class="pre">NotificationHandle.loading</span></code></a></li>
 <li><a class="reference internal" href="#viser.NotificationHandle.with_close_button"><code class="docutils literal notranslate"><span class="pre">NotificationHandle.with_close_button</span></code></a></li>
 <li><a class="reference internal" href="#viser.NotificationHandle.auto_close"><code class="docutils literal notranslate"><span class="pre">NotificationHandle.auto_close</span></code></a></li>
 <li><a class="reference internal" href="#viser.NotificationHandle.color"><code class="docutils literal notranslate"><span class="pre">NotificationHandle.color</span></code></a></li>
-<li><a class="reference internal" href="#viser.NotificationHandle.remove"><code class="docutils literal notranslate"><span class="pre">NotificationHandle.remove()</span></code></a></li>
 </ul>
 </li>
 </ul>

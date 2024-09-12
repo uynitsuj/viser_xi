@@ -1259,6 +1259,164 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="viser.SplineCatmullRomHandle">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">viser.</span></span><span class="sig-name descname"><span class="pre">SplineCatmullRomHandle</span></span><a class="reference internal" href="../_modules/viser/_scene_handles/#SplineCatmullRomHandle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.SplineCatmullRomHandle" title="Link to this definition">#</a></dt>
+<dd><p>Handle for Catmull-Rom splines.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.SplineCatmullRomHandle.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#viser.SplineCatmullRomHandle.name" title="Link to this definition">#</a></dt>
+<dd><p>Read-only name of the scene node.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.SplineCatmullRomHandle.position">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#viser.SplineCatmullRomHandle.position" title="Link to this definition">#</a></dt>
+<dd><p>Position of the scene node. This is equivalent to the t in
+<code class="docutils literal notranslate"><span class="pre">p_parent</span> <span class="pre">=</span> <span class="pre">[R</span> <span class="pre">|</span> <span class="pre">t]</span> <span class="pre">p_local</span></code>. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.SplineCatmullRomHandle.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.SplineCatmullRomHandle.remove" title="Link to this definition">#</a></dt>
+<dd><p>Remove the node from the scene.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.SplineCatmullRomHandle.visible">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">visible</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#viser.SplineCatmullRomHandle.visible" title="Link to this definition">#</a></dt>
+<dd><p>Whether the scene node is visible or not. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.SplineCatmullRomHandle.wxyz">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wxyz</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#viser.SplineCatmullRomHandle.wxyz" title="Link to this definition">#</a></dt>
+<dd><p>Orientation of the scene node. This is the quaternion representation of the R
+in <code class="docutils literal notranslate"><span class="pre">p_parent</span> <span class="pre">=</span> <span class="pre">[R</span> <span class="pre">|</span> <span class="pre">t]</span> <span class="pre">p_local</span></code>. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.SplineCatmullRomHandle.positions">
+<span class="sig-name descname"><span class="pre">positions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#viser.SplineCatmullRomHandle.positions" title="Link to this definition">#</a></dt>
+<dd><p>A tuple of 3D positions (x, y, z) defining the spline’s path. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.SplineCatmullRomHandle.curve_type">
+<span class="sig-name descname"><span class="pre">curve_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'centripetal'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'chordal'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'catmullrom'</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#viser.SplineCatmullRomHandle.curve_type" title="Link to this definition">#</a></dt>
+<dd><p>Type of the curve (‘centripetal’, ‘chordal’, ‘catmullrom’). For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.SplineCatmullRomHandle.tension">
+<span class="sig-name descname"><span class="pre">tension</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#viser.SplineCatmullRomHandle.tension" title="Link to this definition">#</a></dt>
+<dd><p>Tension of the curve. Affects the tightness of the curve. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.SplineCatmullRomHandle.closed">
+<span class="sig-name descname"><span class="pre">closed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#viser.SplineCatmullRomHandle.closed" title="Link to this definition">#</a></dt>
+<dd><p>Boolean indicating if the spline is closed (forms a loop). For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.SplineCatmullRomHandle.line_width">
+<span class="sig-name descname"><span class="pre">line_width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#viser.SplineCatmullRomHandle.line_width" title="Link to this definition">#</a></dt>
+<dd><p>Width of the spline line. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.SplineCatmullRomHandle.color">
+<span class="sig-name descname"><span class="pre">color</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#viser.SplineCatmullRomHandle.color" title="Link to this definition">#</a></dt>
+<dd><p>Color of the spline as RGB integers. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.SplineCatmullRomHandle.segments">
+<span class="sig-name descname"><span class="pre">segments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#viser.SplineCatmullRomHandle.segments" title="Link to this definition">#</a></dt>
+<dd><p>Number of segments to divide the spline into. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="viser.SplineCubicBezierHandle">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">viser.</span></span><span class="sig-name descname"><span class="pre">SplineCubicBezierHandle</span></span><a class="reference internal" href="../_modules/viser/_scene_handles/#SplineCubicBezierHandle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.SplineCubicBezierHandle" title="Link to this definition">#</a></dt>
+<dd><p>Handle for cubic Bezier splines.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.SplineCubicBezierHandle.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#viser.SplineCubicBezierHandle.name" title="Link to this definition">#</a></dt>
+<dd><p>Read-only name of the scene node.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.SplineCubicBezierHandle.position">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#viser.SplineCubicBezierHandle.position" title="Link to this definition">#</a></dt>
+<dd><p>Position of the scene node. This is equivalent to the t in
+<code class="docutils literal notranslate"><span class="pre">p_parent</span> <span class="pre">=</span> <span class="pre">[R</span> <span class="pre">|</span> <span class="pre">t]</span> <span class="pre">p_local</span></code>. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.SplineCubicBezierHandle.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.SplineCubicBezierHandle.remove" title="Link to this definition">#</a></dt>
+<dd><p>Remove the node from the scene.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.SplineCubicBezierHandle.visible">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">visible</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#viser.SplineCubicBezierHandle.visible" title="Link to this definition">#</a></dt>
+<dd><p>Whether the scene node is visible or not. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="viser.SplineCubicBezierHandle.wxyz">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wxyz</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#viser.SplineCubicBezierHandle.wxyz" title="Link to this definition">#</a></dt>
+<dd><p>Orientation of the scene node. This is the quaternion representation of the R
+in <code class="docutils literal notranslate"><span class="pre">p_parent</span> <span class="pre">=</span> <span class="pre">[R</span> <span class="pre">|</span> <span class="pre">t]</span> <span class="pre">p_local</span></code>. Synchronized to clients automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.SplineCubicBezierHandle.positions">
+<span class="sig-name descname"><span class="pre">positions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#viser.SplineCubicBezierHandle.positions" title="Link to this definition">#</a></dt>
+<dd><p>A tuple of 3D positions (x, y, z) defining the spline’s key points. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.SplineCubicBezierHandle.control_points">
+<span class="sig-name descname"><span class="pre">control_points</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#viser.SplineCubicBezierHandle.control_points" title="Link to this definition">#</a></dt>
+<dd><p>A tuple of control points for Bezier curve shaping. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.SplineCubicBezierHandle.line_width">
+<span class="sig-name descname"><span class="pre">line_width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#viser.SplineCubicBezierHandle.line_width" title="Link to this definition">#</a></dt>
+<dd><p>Width of the spline line. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.SplineCubicBezierHandle.color">
+<span class="sig-name descname"><span class="pre">color</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#viser.SplineCubicBezierHandle.color" title="Link to this definition">#</a></dt>
+<dd><p>Color of the spline as RGB integers. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="viser.SplineCubicBezierHandle.segments">
+<span class="sig-name descname"><span class="pre">segments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#viser.SplineCubicBezierHandle.segments" title="Link to this definition">#</a></dt>
+<dd><p>Number of segments to divide the spline into. For handles, synchronized automatically when assigned.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="viser.TransformControlsHandle">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">viser.</span></span><span class="sig-name descname"><span class="pre">TransformControlsHandle</span></span><a class="reference internal" href="../_modules/viser/_scene_handles/#TransformControlsHandle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.TransformControlsHandle" title="Link to this definition">#</a></dt>
 <dd><p>Handle for interacting with transform control gizmos.</p>
@@ -2084,6 +2242,34 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 <li><a class="reference internal" href="#viser.PointCloudHandle.colors"><code class="docutils literal notranslate"><span class="pre">PointCloudHandle.colors</span></code></a></li>
 <li><a class="reference internal" href="#viser.PointCloudHandle.point_size"><code class="docutils literal notranslate"><span class="pre">PointCloudHandle.point_size</span></code></a></li>
 <li><a class="reference internal" href="#viser.PointCloudHandle.point_ball_norm"><code class="docutils literal notranslate"><span class="pre">PointCloudHandle.point_ball_norm</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#viser.SplineCatmullRomHandle"><code class="docutils literal notranslate"><span class="pre">SplineCatmullRomHandle</span></code></a><ul>
+<li><a class="reference internal" href="#viser.SplineCatmullRomHandle.name"><code class="docutils literal notranslate"><span class="pre">SplineCatmullRomHandle.name</span></code></a></li>
+<li><a class="reference internal" href="#viser.SplineCatmullRomHandle.position"><code class="docutils literal notranslate"><span class="pre">SplineCatmullRomHandle.position</span></code></a></li>
+<li><a class="reference internal" href="#viser.SplineCatmullRomHandle.remove"><code class="docutils literal notranslate"><span class="pre">SplineCatmullRomHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.SplineCatmullRomHandle.visible"><code class="docutils literal notranslate"><span class="pre">SplineCatmullRomHandle.visible</span></code></a></li>
+<li><a class="reference internal" href="#viser.SplineCatmullRomHandle.wxyz"><code class="docutils literal notranslate"><span class="pre">SplineCatmullRomHandle.wxyz</span></code></a></li>
+<li><a class="reference internal" href="#viser.SplineCatmullRomHandle.positions"><code class="docutils literal notranslate"><span class="pre">SplineCatmullRomHandle.positions</span></code></a></li>
+<li><a class="reference internal" href="#viser.SplineCatmullRomHandle.curve_type"><code class="docutils literal notranslate"><span class="pre">SplineCatmullRomHandle.curve_type</span></code></a></li>
+<li><a class="reference internal" href="#viser.SplineCatmullRomHandle.tension"><code class="docutils literal notranslate"><span class="pre">SplineCatmullRomHandle.tension</span></code></a></li>
+<li><a class="reference internal" href="#viser.SplineCatmullRomHandle.closed"><code class="docutils literal notranslate"><span class="pre">SplineCatmullRomHandle.closed</span></code></a></li>
+<li><a class="reference internal" href="#viser.SplineCatmullRomHandle.line_width"><code class="docutils literal notranslate"><span class="pre">SplineCatmullRomHandle.line_width</span></code></a></li>
+<li><a class="reference internal" href="#viser.SplineCatmullRomHandle.color"><code class="docutils literal notranslate"><span class="pre">SplineCatmullRomHandle.color</span></code></a></li>
+<li><a class="reference internal" href="#viser.SplineCatmullRomHandle.segments"><code class="docutils literal notranslate"><span class="pre">SplineCatmullRomHandle.segments</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#viser.SplineCubicBezierHandle"><code class="docutils literal notranslate"><span class="pre">SplineCubicBezierHandle</span></code></a><ul>
+<li><a class="reference internal" href="#viser.SplineCubicBezierHandle.name"><code class="docutils literal notranslate"><span class="pre">SplineCubicBezierHandle.name</span></code></a></li>
+<li><a class="reference internal" href="#viser.SplineCubicBezierHandle.position"><code class="docutils literal notranslate"><span class="pre">SplineCubicBezierHandle.position</span></code></a></li>
+<li><a class="reference internal" href="#viser.SplineCubicBezierHandle.remove"><code class="docutils literal notranslate"><span class="pre">SplineCubicBezierHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.SplineCubicBezierHandle.visible"><code class="docutils literal notranslate"><span class="pre">SplineCubicBezierHandle.visible</span></code></a></li>
+<li><a class="reference internal" href="#viser.SplineCubicBezierHandle.wxyz"><code class="docutils literal notranslate"><span class="pre">SplineCubicBezierHandle.wxyz</span></code></a></li>
+<li><a class="reference internal" href="#viser.SplineCubicBezierHandle.positions"><code class="docutils literal notranslate"><span class="pre">SplineCubicBezierHandle.positions</span></code></a></li>
+<li><a class="reference internal" href="#viser.SplineCubicBezierHandle.control_points"><code class="docutils literal notranslate"><span class="pre">SplineCubicBezierHandle.control_points</span></code></a></li>
+<li><a class="reference internal" href="#viser.SplineCubicBezierHandle.line_width"><code class="docutils literal notranslate"><span class="pre">SplineCubicBezierHandle.line_width</span></code></a></li>
+<li><a class="reference internal" href="#viser.SplineCubicBezierHandle.color"><code class="docutils literal notranslate"><span class="pre">SplineCubicBezierHandle.color</span></code></a></li>
+<li><a class="reference internal" href="#viser.SplineCubicBezierHandle.segments"><code class="docutils literal notranslate"><span class="pre">SplineCubicBezierHandle.segments</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#viser.TransformControlsHandle"><code class="docutils literal notranslate"><span class="pre">TransformControlsHandle</span></code></a><ul>

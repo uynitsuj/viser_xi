@@ -779,15 +779,17 @@
             <span class="n">_NotificationHandleState</span><span class="p">(</span>
                 <span class="n">websock_interface</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_websock_connection</span><span class="p">,</span>
                 <span class="nb">id</span><span class="o">=</span><span class="n">_make_unique_id</span><span class="p">(),</span>
-                <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
-                <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span>
-                <span class="n">loading</span><span class="o">=</span><span class="n">loading</span><span class="p">,</span>
-                <span class="n">with_close_button</span><span class="o">=</span><span class="n">with_close_button</span><span class="p">,</span>
-                <span class="n">auto_close</span><span class="o">=</span><span class="n">auto_close</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+                <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">NotificationProps</span><span class="p">(</span>
+                    <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+                    <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span>
+                    <span class="n">loading</span><span class="o">=</span><span class="n">loading</span><span class="p">,</span>
+                    <span class="n">with_close_button</span><span class="o">=</span><span class="n">with_close_button</span><span class="p">,</span>
+                    <span class="n">auto_close</span><span class="o">=</span><span class="n">auto_close</span><span class="p">,</span>
+                    <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+                <span class="p">),</span>
             <span class="p">)</span>
         <span class="p">)</span>
-        <span class="n">handle</span><span class="o">.</span><span class="n">_sync_with_client</span><span class="p">(</span><span class="n">first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">handle</span><span class="o">.</span><span class="n">_sync_with_client</span><span class="p">(</span><span class="s2">&quot;show&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">handle</span></div>
 </div>
 

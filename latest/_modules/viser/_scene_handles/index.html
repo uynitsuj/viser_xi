@@ -379,7 +379,7 @@
     <span class="k">return</span> <span class="n">colors</span>
 
 
-<span class="k">class</span> <span class="nc">_OverridablePropSettersAndGetters</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">_OverridablePropScenePropSettersAndGetters</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">handle</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">SceneNodeHandle</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="c1"># Get the value of the T TypeVar.</span>
@@ -407,8 +407,8 @@
             <span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">_OverridablePropApi</span><span class="p">(</span>
-    <span class="n">_OverridablePropSettersAndGetters</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span> <span class="k">else</span> <span class="nb">object</span>
+<span class="k">class</span> <span class="nc">_OverridableScenePropApi</span><span class="p">(</span>
+    <span class="n">_OverridablePropScenePropSettersAndGetters</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span> <span class="k">else</span> <span class="nb">object</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Mixin that allows reading/assigning properties defined in each scene node message.&quot;&quot;&quot;</span>
 
@@ -623,7 +623,7 @@
 <span class="k">class</span> <span class="nc">CameraFrustumHandle</span><span class="p">(</span>
     <span class="n">_ClickableSceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">CameraFrustumProps</span><span class="p">,</span>
-    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
     <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">CameraFrustumProps</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for camera frustums.&quot;&quot;&quot;</span></div>
@@ -635,7 +635,7 @@
 <span class="k">class</span> <span class="nc">DirectionalLightHandle</span><span class="p">(</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">DirectionalLightProps</span><span class="p">,</span>
-    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
     <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">DirectionalLightProps</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for directional lights.&quot;&quot;&quot;</span></div>
@@ -647,7 +647,7 @@
 <span class="k">class</span> <span class="nc">AmbientLightHandle</span><span class="p">(</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">AmbientLightProps</span><span class="p">,</span>
-    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
     <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">AmbientLightProps</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for ambient lights.&quot;&quot;&quot;</span></div>
@@ -659,7 +659,7 @@
 <span class="k">class</span> <span class="nc">HemisphereLightHandle</span><span class="p">(</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">HemisphereLightProps</span><span class="p">,</span>
-    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
     <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">HemisphereLightProps</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for hemisphere lights.&quot;&quot;&quot;</span></div>
@@ -671,7 +671,7 @@
 <span class="k">class</span> <span class="nc">PointLightHandle</span><span class="p">(</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">PointLightProps</span><span class="p">,</span>
-    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
     <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">PointLightProps</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for point lights.&quot;&quot;&quot;</span></div>
@@ -683,7 +683,7 @@
 <span class="k">class</span> <span class="nc">RectAreaLightHandle</span><span class="p">(</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">RectAreaLightProps</span><span class="p">,</span>
-    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
     <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">RectAreaLightProps</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for rectangular area lights.&quot;&quot;&quot;</span></div>
@@ -695,7 +695,7 @@
 <span class="k">class</span> <span class="nc">SpotLightHandle</span><span class="p">(</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">SpotLightProps</span><span class="p">,</span>
-    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
     <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">SpotLightProps</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for spot lights.&quot;&quot;&quot;</span></div>
@@ -707,7 +707,7 @@
 <span class="k">class</span> <span class="nc">PointCloudHandle</span><span class="p">(</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">PointCloudProps</span><span class="p">,</span>
-    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
     <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">PointCloudProps</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for point clouds. Does not support click events.&quot;&quot;&quot;</span></div>
@@ -719,7 +719,7 @@
 <span class="k">class</span> <span class="nc">BatchedAxesHandle</span><span class="p">(</span>
     <span class="n">_ClickableSceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">BatchedAxesProps</span><span class="p">,</span>
-    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
     <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">BatchedAxesProps</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for batched coordinate frames.&quot;&quot;&quot;</span></div>
@@ -731,7 +731,7 @@
 <span class="k">class</span> <span class="nc">FrameHandle</span><span class="p">(</span>
     <span class="n">_ClickableSceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">FrameProps</span><span class="p">,</span>
-    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
     <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">FrameProps</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for coordinate frames.&quot;&quot;&quot;</span></div>
@@ -743,7 +743,7 @@
 <span class="k">class</span> <span class="nc">MeshHandle</span><span class="p">(</span>
     <span class="n">_ClickableSceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">MeshProps</span><span class="p">,</span>
-    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
     <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">MeshProps</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for mesh objects.&quot;&quot;&quot;</span></div>
@@ -755,7 +755,7 @@
 <span class="k">class</span> <span class="nc">GaussianSplatHandle</span><span class="p">(</span>
     <span class="n">_ClickableSceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">GaussianSplatsProps</span><span class="p">,</span>
-    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
     <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GaussianSplatsProps</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for Gaussian splatting objects.</span>
@@ -770,7 +770,7 @@
 <span class="k">class</span> <span class="nc">MeshSkinnedHandle</span><span class="p">(</span>
     <span class="n">_ClickableSceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">SkinnedMeshProps</span><span class="p">,</span>
-    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
     <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">SkinnedMeshProps</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for skinned mesh objects.&quot;&quot;&quot;</span>
@@ -843,28 +843,34 @@
 <span class="k">class</span> <span class="nc">GridHandle</span><span class="p">(</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">GridProps</span><span class="p">,</span>
-    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
     <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GridProps</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for grid objects.&quot;&quot;&quot;</span>
 
 
+<div class="viewcode-block" id="SplineCatmullRomHandle">
+<a class="viewcode-back" href="../../../scene_handles/#viser.SplineCatmullRomHandle">[docs]</a>
 <span class="k">class</span> <span class="nc">SplineCatmullRomHandle</span><span class="p">(</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">CatmullRomSplineProps</span><span class="p">,</span>
-    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
     <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">CatmullRomSplineProps</span><span class="p">,</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for Catmull-Rom splines.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for Catmull-Rom splines.&quot;&quot;&quot;</span></div>
 
 
+
+<div class="viewcode-block" id="SplineCubicBezierHandle">
+<a class="viewcode-back" href="../../../scene_handles/#viser.SplineCubicBezierHandle">[docs]</a>
 <span class="k">class</span> <span class="nc">SplineCubicBezierHandle</span><span class="p">(</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">CubicBezierSplineProps</span><span class="p">,</span>
-    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
     <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">CubicBezierSplineProps</span><span class="p">,</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for cubic Bezier splines.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for cubic Bezier splines.&quot;&quot;&quot;</span></div>
+
 
 
 <div class="viewcode-block" id="GlbHandle">
@@ -872,7 +878,7 @@
 <span class="k">class</span> <span class="nc">GlbHandle</span><span class="p">(</span>
     <span class="n">_ClickableSceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">GlbProps</span><span class="p">,</span>
-    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
     <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GlbProps</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for GLB objects.&quot;&quot;&quot;</span></div>
@@ -884,7 +890,7 @@
 <span class="k">class</span> <span class="nc">ImageHandle</span><span class="p">(</span>
     <span class="n">_ClickableSceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">ImageProps</span><span class="p">,</span>
-    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
     <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">ImageProps</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for 2D images, rendered in 3D.&quot;&quot;&quot;</span></div>
@@ -896,7 +902,7 @@
 <span class="k">class</span> <span class="nc">LabelHandle</span><span class="p">(</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">LabelProps</span><span class="p">,</span>
-    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
     <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">LabelProps</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for 2D label objects. Does not support click events.&quot;&quot;&quot;</span></div>
@@ -915,7 +921,7 @@
 <span class="k">class</span> <span class="nc">TransformControlsHandle</span><span class="p">(</span>
     <span class="n">_ClickableSceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">TransformControlsProps</span><span class="p">,</span>
-    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
     <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">TransformControlsProps</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for interacting with transform control gizmos.&quot;&quot;&quot;</span>
@@ -945,7 +951,7 @@
 <span class="k">class</span> <span class="nc">Gui3dContainerHandle</span><span class="p">(</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">Gui3DProps</span><span class="p">,</span>
-    <span class="n">_OverridablePropApi</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
     <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">Gui3DProps</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Use as a context to place GUI elements into a 3D GUI container.&quot;&quot;&quot;</span>
