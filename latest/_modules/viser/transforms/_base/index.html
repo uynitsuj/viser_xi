@@ -350,9 +350,6 @@
 <span class="k">class</span> <span class="nc">MatrixLieGroup</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Interface definition for matrix Lie groups.&quot;&quot;&quot;</span>
 
-    <span class="c1"># Class properties.</span>
-    <span class="c1"># &gt; These will be set in `_utils.register_lie_group()`.</span>
-
     <span class="n">matrix_dim</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Dimension of square matrix output from `.as_matrix()`.&quot;&quot;&quot;</span>
 
@@ -376,6 +373,22 @@
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Construct a group object from its underlying parameters.&quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+<div class="viewcode-block" id="MatrixLieGroup.__init_subclass__">
+<a class="viewcode-back" href="../../../../transforms/#viser.transforms.MatrixLieGroup.__init_subclass__">[docs]</a>
+    <span class="k">def</span> <span class="nf">__init_subclass__</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">matrix_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">parameters_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">tangent_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">space_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set class properties for subclasses. We default to dummy values.&quot;&quot;&quot;</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">matrix_dim</span> <span class="o">=</span> <span class="n">matrix_dim</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">parameters_dim</span> <span class="o">=</span> <span class="n">parameters_dim</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">tangent_dim</span> <span class="o">=</span> <span class="n">tangent_dim</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">space_dim</span> <span class="o">=</span> <span class="n">space_dim</span></div>
+
 
     <span class="c1"># Shared implementations.</span>
 
@@ -412,11 +425,14 @@
 <a class="viewcode-back" href="../../../../transforms/#viser.transforms.MatrixLieGroup.identity">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">identity</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">batch_axes</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">identity</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">batch_axes</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(),</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">onpt</span><span class="o">.</span><span class="n">DTypeLike</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">float64</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns identity element.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            batch_axes: Any leading batch axes for the output transform.</span>
+<span class="sd">            dtype: Datatype for the output.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Identity element.</span>
@@ -549,20 +565,28 @@
 <span class="sd">        &quot;&quot;&quot;</span></div>
 
 
-    <span class="c1"># @classmethod</span>
-    <span class="c1"># @abc.abstractmethod</span>
-    <span class="c1"># def sample_uniform(cls, key: onp.ndarray, batch_axes: Tuple[int, ...] = ()) -&gt; Self:</span>
-    <span class="c1">#     &quot;&quot;&quot;Draw a uniform sample from the group. Translations (if applicable) are in the</span>
-    <span class="c1">#     range [-1, 1].</span>
-    <span class="c1">#</span>
-    <span class="c1">#     Args:</span>
-    <span class="c1">#         key: PRNG key, as returned by `jax.random.PRNGKey()`.</span>
-    <span class="c1">#         batch_axes: Any leading batch axes for the output transforms. Each</span>
-    <span class="c1">#             sampled transform will be different.</span>
-    <span class="c1">#</span>
-    <span class="c1">#     Returns:</span>
-    <span class="c1">#         Sampled group member.</span>
-    <span class="c1">#     &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="MatrixLieGroup.sample_uniform">
+<a class="viewcode-back" href="../../../../transforms/#viser.transforms.MatrixLieGroup.sample_uniform">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">sample_uniform</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">rng</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">Generator</span><span class="p">,</span>
+        <span class="n">batch_axes</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(),</span>
+        <span class="n">dtype</span><span class="p">:</span> <span class="n">onpt</span><span class="o">.</span><span class="n">DTypeLike</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Draw a uniform sample from the group. Translations (if applicable) are in the</span>
+<span class="sd">        range [-1, 1].</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            rng: numpy generator object.</span>
+<span class="sd">            batch_axes: Any leading batch axes for the output transforms. Each</span>
+<span class="sd">                sampled transform will be different.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Sampled group member.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
 
 <div class="viewcode-block" id="MatrixLieGroup.get_batch_axes">
 <a class="viewcode-back" href="../../../../transforms/#viser.transforms.MatrixLieGroup.get_batch_axes">[docs]</a>
