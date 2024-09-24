@@ -876,13 +876,36 @@
 
             <span class="n">use_gzip</span> <span class="o">=</span> <span class="s2">&quot;gzip&quot;</span> <span class="ow">in</span> <span class="n">request_headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Accept-Encoding&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
 
-            <span class="n">mime_type</span> <span class="o">=</span> <span class="n">mimetypes</span><span class="o">.</span><span class="n">guess_type</span><span class="p">(</span><span class="n">relpath</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="c1"># First, try some known MIME types. Using guess_type() can cause</span>
+            <span class="c1"># problems for Javascript on some Windows machines.</span>
+            <span class="c1">#</span>
+            <span class="c1"># Some references:</span>
+            <span class="c1">#     https://github.com/nerfstudio-project/viser/issues/256#issuecomment-2369684252</span>
+            <span class="c1">#     https://bugs.python.org/issue43975</span>
+            <span class="c1">#     https://github.com/golang/go/issues/32350#issuecomment-525111557</span>
+            <span class="c1">#</span>
+            <span class="c1"># We&#39;re assuming UTF-8, this is mostly reasonable but might want to revisit.</span>
+            <span class="n">mime_type</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;.css&quot;</span><span class="p">:</span> <span class="s2">&quot;text/css; charset=utf-8&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;.gif&quot;</span><span class="p">:</span> <span class="s2">&quot;image/gif&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;.htm&quot;</span><span class="p">:</span> <span class="s2">&quot;text/html; charset=utf-8&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;.html&quot;</span><span class="p">:</span> <span class="s2">&quot;text/html; charset=utf-8&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;.jpg&quot;</span><span class="p">:</span> <span class="s2">&quot;image/jpeg&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;.js&quot;</span><span class="p">:</span> <span class="s2">&quot;application/javascript&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;.wasm&quot;</span><span class="p">:</span> <span class="s2">&quot;application/wasm&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;.pdf&quot;</span><span class="p">:</span> <span class="s2">&quot;application/pdf&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;.png&quot;</span><span class="p">:</span> <span class="s2">&quot;image/png&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;.svg&quot;</span><span class="p">:</span> <span class="s2">&quot;image/svg+xml&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;.xml&quot;</span><span class="p">:</span> <span class="s2">&quot;text/xml; charset=utf-8&quot;</span><span class="p">,</span>
+            <span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">suffix</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">mime_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">mime_type</span> <span class="o">=</span> <span class="n">mimetypes</span><span class="o">.</span><span class="n">guess_type</span><span class="p">(</span><span class="n">relpath</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">mime_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">mime_type</span> <span class="o">=</span> <span class="s2">&quot;application/octet-stream&quot;</span>
+
             <span class="n">response_headers</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="n">mime_type</span><span class="p">,</span>
             <span class="p">}</span>
-
             <span class="k">if</span> <span class="n">source_path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">file_cache</span><span class="p">:</span>
                 <span class="n">file_cache</span><span class="p">[</span><span class="n">source_path</span><span class="p">]</span> <span class="o">=</span> <span class="n">source_path</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">use_gzip</span><span class="p">:</span>
