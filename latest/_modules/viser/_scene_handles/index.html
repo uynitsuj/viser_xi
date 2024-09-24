@@ -13,13 +13,13 @@
     </script>
     <link rel="index" title="Index" href="../../../genindex/" /><link rel="search" title="Search" href="../../../search/" />
 
-    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+    <!-- Generated with Sphinx 8.0.2 and Furo 2024.08.06 -->
         <title>viser._scene_handles - viser</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b20cc3f5" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=5976cbfc" />
     <link rel="stylesheet" type="text/css" href="../../../_static/ansi.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=302659d7" />
     
     
 
@@ -80,7 +80,7 @@
   <symbol id="svg-sun" viewBox="0 0 24 24">
     <title>Light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
       <circle cx="12" cy="12" r="5"></circle>
       <line x1="12" y1="1" x2="12" y2="3"></line>
       <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -95,22 +95,63 @@
   <symbol id="svg-moon" viewBox="0 0 24 24">
     <title>Dark mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
     </svg>
   </symbol>
-  <symbol id="svg-sun-half" viewBox="0 0 24 24">
-    <title>Auto light/dark mode</title>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M13 12h5" />
-      <path d="M13 15h4" />
-      <path d="M13 18h1" />
-      <path d="M13 9h4" />
-      <path d="M13 6h1" />
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
     </svg>
   </symbol>
 </svg>
@@ -123,6 +164,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -141,7 +184,8 @@
       <div class="theme-toggle-container theme-toggle-header">
         <button class="theme-toggle">
           <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
-          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
           <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
@@ -325,7 +369,8 @@
           <div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
-              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
               <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
@@ -335,17 +380,17 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <h1>Source code for viser._scene_handles</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">import</span> <span class="nn">dataclasses</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">TYPE_CHECKING</span><span class="p">,</span>
     <span class="n">Any</span><span class="p">,</span>
     <span class="n">Callable</span><span class="p">,</span>
-    <span class="n">ClassVar</span><span class="p">,</span>
     <span class="n">Dict</span><span class="p">,</span>
     <span class="n">Generic</span><span class="p">,</span>
     <span class="n">Literal</span><span class="p">,</span>
@@ -354,7 +399,7 @@
     <span class="n">cast</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">onp</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">numpy.typing</span> <span class="k">as</span> <span class="nn">onpt</span>
 <span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">get_type_hints</span>
 
@@ -368,27 +413,32 @@
     <span class="kn">from</span> <span class="nn">.infra</span> <span class="kn">import</span> <span class="n">ClientId</span>
 
 
-<span class="k">def</span> <span class="nf">colors_to_uint8</span><span class="p">(</span><span class="n">colors</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">onpt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">onp</span><span class="o">.</span><span class="n">uint8</span><span class="p">]:</span>
+<span class="k">def</span> <span class="nf">colors_to_uint8</span><span class="p">(</span><span class="n">colors</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">onpt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert intensity values to uint8. We assume the range [0,1] for floats, and</span>
 <span class="sd">    [0,255] for integers. Accepts any shape.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">colors</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">onp</span><span class="o">.</span><span class="n">uint8</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">onp</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">colors</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">onp</span><span class="o">.</span><span class="n">floating</span><span class="p">):</span>
-            <span class="n">colors</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">colors</span> <span class="o">*</span> <span class="mf">255.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">onp</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">colors</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">onp</span><span class="o">.</span><span class="n">integer</span><span class="p">):</span>
-            <span class="n">colors</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">colors</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">colors</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">floating</span><span class="p">):</span>
+            <span class="n">colors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">colors</span> <span class="o">*</span> <span class="mf">255.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">colors</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">):</span>
+            <span class="n">colors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">colors</span>
 
 
-<span class="k">class</span> <span class="nc">_OverridablePropScenePropSettersAndGetters</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">_OverridableScenePropApi</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mixin that allows reading/assigning properties defined in each scene node message.&quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;_impl&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
         <span class="n">handle</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">SceneNodeHandle</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="c1"># Get the value of the T TypeVar.</span>
-        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_PropHints</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prop_hints</span><span class="p">:</span>
             <span class="c1"># Help the user with some casting...</span>
-            <span class="n">hint</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_PropHints</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">hint</span> <span class="o">==</span> <span class="n">onpt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">onp</span><span class="o">.</span><span class="n">float32</span><span class="p">]:</span>
-                <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">onp</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">hint</span> <span class="o">==</span> <span class="n">onpt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">onp</span><span class="o">.</span><span class="n">uint8</span><span class="p">]</span> <span class="ow">and</span> <span class="s2">&quot;color&quot;</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
+            <span class="n">hint</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prop_hints</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">hint</span> <span class="o">==</span> <span class="n">onpt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">]:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">hint</span> <span class="o">==</span> <span class="n">onpt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">]</span> <span class="ow">and</span> <span class="s2">&quot;color&quot;</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
                 <span class="n">value</span> <span class="o">=</span> <span class="n">colors_to_uint8</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
             <span class="nb">setattr</span><span class="p">(</span><span class="n">handle</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">props</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
@@ -399,26 +449,16 @@
             <span class="k">return</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_PropHints</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prop_hints</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">props</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39; object has no attribute &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
             <span class="p">)</span>
 
-
-<span class="k">class</span> <span class="nc">_OverridableScenePropApi</span><span class="p">(</span>
-    <span class="n">_OverridablePropScenePropSettersAndGetters</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span> <span class="k">else</span> <span class="nb">object</span>
-<span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mixin that allows reading/assigning properties defined in each scene node message.&quot;&quot;&quot;</span>
-
-    <span class="n">_PropHints</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">type</span><span class="p">]]</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="kc">False</span>
-
-    <span class="k">def</span> <span class="nf">__init_subclass__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">PropClass</span><span class="p">:</span> <span class="nb">type</span><span class="p">):</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">_PropHints</span> <span class="o">=</span> <span class="n">get_type_hints</span><span class="p">(</span><span class="n">PropClass</span><span class="p">)</span>
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">_prop_hints</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">get_type_hints</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">props</span><span class="p">))</span>
 
 
 <div class="viewcode-block" id="ScenePointerEvent">
@@ -459,11 +499,11 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Message containing properties of this scene node that are sent to the</span>
 <span class="sd">    client.&quot;&quot;&quot;</span>
     <span class="n">api</span><span class="p">:</span> <span class="n">SceneApi</span>
-    <span class="n">wxyz</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">field</span><span class="p">(</span>
-        <span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+    <span class="n">wxyz</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
     <span class="p">)</span>
-    <span class="n">position</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">field</span><span class="p">(</span>
-        <span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+    <span class="n">position</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
     <span class="p">)</span>
     <span class="n">visible</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="c1"># TODO: we should remove SceneNodeHandle as an argument here.</span>
@@ -496,8 +536,8 @@
         <span class="n">api</span><span class="p">:</span> <span class="n">SceneApi</span><span class="p">,</span>
         <span class="n">message</span><span class="p">:</span> <span class="n">_SceneNodeMessage</span><span class="p">,</span>
         <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">wxyz</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
-        <span class="n">position</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">wxyz</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">position</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
         <span class="n">visible</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TSceneNodeHandle</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create scene node: send state to client(s) and set up</span>
@@ -519,35 +559,35 @@
         <span class="k">return</span> <span class="n">out</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">wxyz</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">wxyz</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Orientation of the scene node. This is the quaternion representation of the R</span>
 <span class="sd">        in `p_parent = [R | t] p_local`. Synchronized to clients automatically when assigned.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">wxyz</span>
 
     <span class="nd">@wxyz</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">wxyz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">wxyz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="kn">from</span> <span class="nn">._scene_api</span> <span class="kn">import</span> <span class="n">cast_vector</span>
 
         <span class="n">wxyz_cast</span> <span class="o">=</span> <span class="n">cast_vector</span><span class="p">(</span><span class="n">wxyz</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">wxyz</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">wxyz</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">wxyz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">wxyz</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
             <span class="n">_messages</span><span class="o">.</span><span class="n">SetOrientationMessage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">wxyz_cast</span><span class="p">)</span>
         <span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Position of the scene node. This is equivalent to the t in</span>
 <span class="sd">        `p_parent = [R | t] p_local`. Synchronized to clients automatically when assigned.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">position</span>
 
     <span class="nd">@position</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="kn">from</span> <span class="nn">._scene_api</span> <span class="kn">import</span> <span class="n">cast_vector</span>
 
         <span class="n">position_cast</span> <span class="o">=</span> <span class="n">cast_vector</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
             <span class="n">_messages</span><span class="o">.</span><span class="n">SetPositionMessage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">position_cast</span><span class="p">)</span>
         <span class="p">)</span>
@@ -623,8 +663,7 @@
 <span class="k">class</span> <span class="nc">CameraFrustumHandle</span><span class="p">(</span>
     <span class="n">_ClickableSceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">CameraFrustumProps</span><span class="p">,</span>
-    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
-    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">CameraFrustumProps</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span> <span class="k">else</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for camera frustums.&quot;&quot;&quot;</span></div>
 
@@ -635,8 +674,7 @@
 <span class="k">class</span> <span class="nc">DirectionalLightHandle</span><span class="p">(</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">DirectionalLightProps</span><span class="p">,</span>
-    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
-    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">DirectionalLightProps</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span> <span class="k">else</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for directional lights.&quot;&quot;&quot;</span></div>
 
@@ -647,8 +685,7 @@
 <span class="k">class</span> <span class="nc">AmbientLightHandle</span><span class="p">(</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">AmbientLightProps</span><span class="p">,</span>
-    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
-    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">AmbientLightProps</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span> <span class="k">else</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for ambient lights.&quot;&quot;&quot;</span></div>
 
@@ -659,8 +696,7 @@
 <span class="k">class</span> <span class="nc">HemisphereLightHandle</span><span class="p">(</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">HemisphereLightProps</span><span class="p">,</span>
-    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
-    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">HemisphereLightProps</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span> <span class="k">else</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for hemisphere lights.&quot;&quot;&quot;</span></div>
 
@@ -671,8 +707,7 @@
 <span class="k">class</span> <span class="nc">PointLightHandle</span><span class="p">(</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">PointLightProps</span><span class="p">,</span>
-    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
-    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">PointLightProps</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span> <span class="k">else</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for point lights.&quot;&quot;&quot;</span></div>
 
@@ -683,8 +718,7 @@
 <span class="k">class</span> <span class="nc">RectAreaLightHandle</span><span class="p">(</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">RectAreaLightProps</span><span class="p">,</span>
-    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
-    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">RectAreaLightProps</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span> <span class="k">else</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for rectangular area lights.&quot;&quot;&quot;</span></div>
 
@@ -695,8 +729,7 @@
 <span class="k">class</span> <span class="nc">SpotLightHandle</span><span class="p">(</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">SpotLightProps</span><span class="p">,</span>
-    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
-    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">SpotLightProps</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span> <span class="k">else</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for spot lights.&quot;&quot;&quot;</span></div>
 
@@ -707,8 +740,7 @@
 <span class="k">class</span> <span class="nc">PointCloudHandle</span><span class="p">(</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">PointCloudProps</span><span class="p">,</span>
-    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
-    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">PointCloudProps</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span> <span class="k">else</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for point clouds. Does not support click events.&quot;&quot;&quot;</span></div>
 
@@ -719,8 +751,7 @@
 <span class="k">class</span> <span class="nc">BatchedAxesHandle</span><span class="p">(</span>
     <span class="n">_ClickableSceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">BatchedAxesProps</span><span class="p">,</span>
-    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
-    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">BatchedAxesProps</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span> <span class="k">else</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for batched coordinate frames.&quot;&quot;&quot;</span></div>
 
@@ -731,8 +762,7 @@
 <span class="k">class</span> <span class="nc">FrameHandle</span><span class="p">(</span>
     <span class="n">_ClickableSceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">FrameProps</span><span class="p">,</span>
-    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
-    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">FrameProps</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span> <span class="k">else</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for coordinate frames.&quot;&quot;&quot;</span></div>
 
@@ -743,8 +773,7 @@
 <span class="k">class</span> <span class="nc">MeshHandle</span><span class="p">(</span>
     <span class="n">_ClickableSceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">MeshProps</span><span class="p">,</span>
-    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
-    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">MeshProps</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span> <span class="k">else</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for mesh objects.&quot;&quot;&quot;</span></div>
 
@@ -755,8 +784,7 @@
 <span class="k">class</span> <span class="nc">GaussianSplatHandle</span><span class="p">(</span>
     <span class="n">_ClickableSceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">GaussianSplatsProps</span><span class="p">,</span>
-    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
-    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GaussianSplatsProps</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span> <span class="k">else</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for Gaussian splatting objects.</span>
 
@@ -770,8 +798,7 @@
 <span class="k">class</span> <span class="nc">MeshSkinnedHandle</span><span class="p">(</span>
     <span class="n">_ClickableSceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">SkinnedMeshProps</span><span class="p">,</span>
-    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
-    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">SkinnedMeshProps</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span> <span class="k">else</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for skinned mesh objects.&quot;&quot;&quot;</span>
 
@@ -788,8 +815,8 @@
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">websock_interface</span><span class="p">:</span> <span class="n">WebsockServer</span> <span class="o">|</span> <span class="n">WebsockClientConnection</span>
     <span class="n">bone_index</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="n">wxyz</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span>
-    <span class="n">position</span><span class="p">:</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span>
+    <span class="n">wxyz</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+    <span class="n">position</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
 
 
 <div class="viewcode-block" id="MeshSkinnedBoneHandle">
@@ -801,18 +828,18 @@
     <span class="n">_impl</span><span class="p">:</span> <span class="n">BoneState</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">wxyz</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">wxyz</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Orientation of the bone. This is the quaternion representation of the R</span>
 <span class="sd">        in `p_parent = [R | t] p_local`. Synchronized to clients automatically when assigned.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">wxyz</span>
 
     <span class="nd">@wxyz</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">wxyz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">wxyz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="kn">from</span> <span class="nn">._scene_api</span> <span class="kn">import</span> <span class="n">cast_vector</span>
 
         <span class="n">wxyz_cast</span> <span class="o">=</span> <span class="n">cast_vector</span><span class="p">(</span><span class="n">wxyz</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">wxyz</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">wxyz</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">wxyz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">wxyz</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
             <span class="n">_messages</span><span class="o">.</span><span class="n">SetBoneOrientationMessage</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">bone_index</span><span class="p">,</span> <span class="n">wxyz_cast</span>
@@ -820,18 +847,18 @@
         <span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Position of the bone. This is equivalent to the t in</span>
 <span class="sd">        `p_parent = [R | t] p_local`. Synchronized to clients automatically when assigned.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">position</span>
 
     <span class="nd">@position</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">onp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="kn">from</span> <span class="nn">._scene_api</span> <span class="kn">import</span> <span class="n">cast_vector</span>
 
         <span class="n">position_cast</span> <span class="o">=</span> <span class="n">cast_vector</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">onp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
             <span class="n">_messages</span><span class="o">.</span><span class="n">SetBonePositionMessage</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">bone_index</span><span class="p">,</span> <span class="n">position_cast</span>
@@ -843,8 +870,7 @@
 <span class="k">class</span> <span class="nc">GridHandle</span><span class="p">(</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">GridProps</span><span class="p">,</span>
-    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
-    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GridProps</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span> <span class="k">else</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for grid objects.&quot;&quot;&quot;</span>
 
@@ -854,8 +880,7 @@
 <span class="k">class</span> <span class="nc">SplineCatmullRomHandle</span><span class="p">(</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">CatmullRomSplineProps</span><span class="p">,</span>
-    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
-    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">CatmullRomSplineProps</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span> <span class="k">else</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for Catmull-Rom splines.&quot;&quot;&quot;</span></div>
 
@@ -866,8 +891,7 @@
 <span class="k">class</span> <span class="nc">SplineCubicBezierHandle</span><span class="p">(</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">CubicBezierSplineProps</span><span class="p">,</span>
-    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
-    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">CubicBezierSplineProps</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span> <span class="k">else</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for cubic Bezier splines.&quot;&quot;&quot;</span></div>
 
@@ -878,8 +902,7 @@
 <span class="k">class</span> <span class="nc">GlbHandle</span><span class="p">(</span>
     <span class="n">_ClickableSceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">GlbProps</span><span class="p">,</span>
-    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
-    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GlbProps</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span> <span class="k">else</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for GLB objects.&quot;&quot;&quot;</span></div>
 
@@ -890,8 +913,7 @@
 <span class="k">class</span> <span class="nc">ImageHandle</span><span class="p">(</span>
     <span class="n">_ClickableSceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">ImageProps</span><span class="p">,</span>
-    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
-    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">ImageProps</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span> <span class="k">else</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for 2D images, rendered in 3D.&quot;&quot;&quot;</span></div>
 
@@ -902,8 +924,7 @@
 <span class="k">class</span> <span class="nc">LabelHandle</span><span class="p">(</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">LabelProps</span><span class="p">,</span>
-    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
-    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">LabelProps</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span> <span class="k">else</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for 2D label objects. Does not support click events.&quot;&quot;&quot;</span></div>
 
@@ -921,8 +942,7 @@
 <span class="k">class</span> <span class="nc">TransformControlsHandle</span><span class="p">(</span>
     <span class="n">_ClickableSceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">TransformControlsProps</span><span class="p">,</span>
-    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
-    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">TransformControlsProps</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span> <span class="k">else</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle for interacting with transform control gizmos.&quot;&quot;&quot;</span>
 
@@ -951,8 +971,7 @@
 <span class="k">class</span> <span class="nc">Gui3dContainerHandle</span><span class="p">(</span>
     <span class="n">SceneNodeHandle</span><span class="p">,</span>
     <span class="n">_messages</span><span class="o">.</span><span class="n">Gui3DProps</span><span class="p">,</span>
-    <span class="n">_OverridableScenePropApi</span><span class="p">,</span>
-    <span class="n">PropClass</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">Gui3DProps</span><span class="p">,</span>
+    <span class="n">_OverridableScenePropApi</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span> <span class="k">else</span> <span class="nb">object</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Use as a context to place GUI elements into a 3D GUI container.&quot;&quot;&quot;</span>
 
@@ -1029,8 +1048,8 @@
     </aside>
   </div>
 </div><script src="../../../_static/documentation_options.js?v=187304be"></script>
-    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../../_static/scripts/furo.js?v=5fa4622c"></script>
     </body>
 </html>
