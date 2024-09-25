@@ -496,14 +496,12 @@ define a kinematic tree.</p></li>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<em>str</em>) – A scene tree name. Names in the format of /parent/child can be used to
 define a kinematic tree.</p></li>
-<li><p><strong>skyColor</strong> – The light’s sky color.</p></li>
-<li><p><strong>groundColor</strong> – The light’s ground color.</p></li>
+<li><p><strong>sky_color</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>, </em><em>int</em><em>]</em>) – The light’s sky color.</p></li>
+<li><p><strong>ground_color</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>, </em><em>int</em><em>]</em>) – The light’s ground color.</p></li>
 <li><p><strong>intensity</strong> (<em>float</em>) – Light’s strength/intensity.</p></li>
 <li><p><strong>wxyz</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>] </em><em>| </em><em>ndarray</em>) – Quaternion rotation to parent frame from local frame (R_pl).</p></li>
 <li><p><strong>position</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em>) – Translation to parent frame from local frame (t_pl).</p></li>
 <li><p><strong>visible</strong> (<em>bool</em>) – Whether or not this scene node is initially visible.</p></li>
-<li><p><strong>sky_color</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>, </em><em>int</em><em>]</em>)</p></li>
-<li><p><strong>ground_color</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>, </em><em>int</em><em>]</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -553,7 +551,7 @@ define a kinematic tree.</p></li>
 define a kinematic tree.</p></li>
 <li><p><strong>color</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>, </em><em>int</em><em>]</em>) – Color of the light.</p></li>
 <li><p><strong>intensity</strong> (<em>float</em>) – Light’s strength/intensity.</p></li>
-<li><p><strong>width</strong> (<em>float</em>) – THe width of the light.</p></li>
+<li><p><strong>width</strong> (<em>float</em>) – The width of the light.</p></li>
 <li><p><strong>height</strong> (<em>float</em>) – The height of the light.</p></li>
 <li><p><strong>wxyz</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>] </em><em>| </em><em>ndarray</em>) – Quaternion rotation to parent frame from local frame (R_pl).</p></li>
 <li><p><strong>position</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em>) – Translation to parent frame from local frame (t_pl).</p></li>
@@ -1038,8 +1036,7 @@ development. It may be changed or removed.</p>
 <li><p><strong>opacities</strong> (<em>ndarray</em>) – Opacity for each Gaussian. (N, 1).</p></li>
 <li><p><strong>wxyz</strong> (<em>Tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>] </em><em>| </em><em>ndarray</em>) – R_parent_local transformation.</p></li>
 <li><p><strong>position</strong> (<em>Tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>] </em><em>| </em><em>ndarray</em>) – t_parent_local transformation.</p></li>
-<li><p><strong>visibile</strong> – Initial visibility of scene node.</p></li>
-<li><p><strong>visible</strong> (<em>bool</em>)</p></li>
+<li><p><strong>visible</strong> (<em>bool</em>) – Initial visibility of scene node.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
