@@ -1639,7 +1639,13 @@
             <span class="p">)</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_add_gaussian_splats</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">_add_gaussian_splats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GaussianSplatHandle</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Backwards compatibility shim. Use `add_gaussian_splats()` instead.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_gaussian_splats</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SceneApi.add_gaussian_splats">
+<a class="viewcode-back" href="../../../scene_api/#viser.SceneApi.add_gaussian_splats">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_gaussian_splats</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">centers</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
@@ -1652,7 +1658,7 @@
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GaussianSplatHandle</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a model to render using Gaussian Splatting.</span>
 
-<span class="sd">        **Work-in-progress.** This feature is experimental and still under</span>
+<span class="sd">        **Experimental.** This feature is experimental and still under</span>
 <span class="sd">        development. It may be changed or removed.</span>
 
 <span class="sd">        Arguments:</span>
@@ -1708,7 +1714,8 @@
         <span class="n">node_handle</span> <span class="o">=</span> <span class="n">GaussianSplatHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">node_handle</span>
+        <span class="k">return</span> <span class="n">node_handle</span></div>
+
 
 <div class="viewcode-block" id="SceneApi.add_box">
 <a class="viewcode-back" href="../../../scene_api/#viser.SceneApi.add_box">[docs]</a>
