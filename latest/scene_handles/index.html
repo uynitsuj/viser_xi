@@ -1235,14 +1235,14 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="viser.MeshSkinnedHandle.bone_wxyzs">
-<span class="sig-name descname"><span class="pre">bone_wxyzs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#viser.MeshSkinnedHandle.bone_wxyzs" title="Link to this definition">¶</a></dt>
-<dd><p>Tuple of quaternions representing bone orientations. Synchronized automatically when assigned.</p>
+<span class="sig-name descname"><span class="pre">bone_wxyzs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">npt.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.float32</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#viser.MeshSkinnedHandle.bone_wxyzs" title="Link to this definition">¶</a></dt>
+<dd><p>Array of quaternions representing bone orientations (B, 4). Synchronized automatically when assigned.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="viser.MeshSkinnedHandle.bone_positions">
-<span class="sig-name descname"><span class="pre">bone_positions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#viser.MeshSkinnedHandle.bone_positions" title="Link to this definition">¶</a></dt>
-<dd><p>Tuple of positions representing bone positions. Synchronized automatically when assigned.</p>
+<span class="sig-name descname"><span class="pre">bone_positions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">npt.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.float32</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#viser.MeshSkinnedHandle.bone_positions" title="Link to this definition">¶</a></dt>
+<dd><p>Array of positions representing bone positions (B, 3). Synchronized automatically when assigned.</p>
 </dd></dl>
 
 <dl class="py attribute">

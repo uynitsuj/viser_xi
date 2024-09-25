@@ -1510,19 +1510,8 @@
                 <span class="n">flat_shading</span><span class="o">=</span><span class="n">flat_shading</span><span class="p">,</span>
                 <span class="n">side</span><span class="o">=</span><span class="n">side</span><span class="p">,</span>
                 <span class="n">material</span><span class="o">=</span><span class="n">material</span><span class="p">,</span>
-                <span class="n">bone_wxyzs</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span>
-                    <span class="p">(</span>
-                        <span class="nb">float</span><span class="p">(</span><span class="n">wxyz</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
-                        <span class="nb">float</span><span class="p">(</span><span class="n">wxyz</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
-                        <span class="nb">float</span><span class="p">(</span><span class="n">wxyz</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
-                        <span class="nb">float</span><span class="p">(</span><span class="n">wxyz</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span>
-                    <span class="p">)</span>
-                    <span class="k">for</span> <span class="n">wxyz</span> <span class="ow">in</span> <span class="n">bone_wxyzs</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-                <span class="p">),</span>
-                <span class="n">bone_positions</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span>
-                    <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">xyz</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">xyz</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">xyz</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
-                    <span class="k">for</span> <span class="n">xyz</span> <span class="ow">in</span> <span class="n">bone_positions</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-                <span class="p">),</span>
+                <span class="n">bone_wxyzs</span><span class="o">=</span><span class="n">bone_wxyzs</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+                <span class="n">bone_positions</span><span class="o">=</span><span class="n">bone_positions</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
                 <span class="n">skin_indices</span><span class="o">=</span><span class="n">top4_skin_indices</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">),</span>
                 <span class="n">skin_weights</span><span class="o">=</span><span class="n">top4_skin_weights</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
             <span class="p">),</span>
