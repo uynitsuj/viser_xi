@@ -401,7 +401,9 @@ synchronized between all connected clients. When a GUI element is added via
 <dl class="py method">
 <dt class="sig sig-object py" id="viser.GuiInputHandle.on_update">
 <span class="sig-name descname"><span class="pre">on_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.GuiEvent" title="viser._gui_handles.GuiEvent"><span class="pre">GuiEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TGuiHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.GuiEvent" title="viser._gui_handles.GuiEvent"><span class="pre">GuiEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TGuiHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/viser/_gui_handles/#GuiInputHandle.on_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.GuiInputHandle.on_update" title="Link to this definition">¶</a></dt>
-<dd><p>Attach a function to call when a GUI input is updated. Happens in a thread.</p>
+<dd><p>Attach a function to call when a GUI input is updated. Callbacks stack (need
+to be manually removed via <a class="reference internal" href="#viser.GuiInputHandle.remove_update_callback" title="viser.GuiInputHandle.remove_update_callback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">remove_update_callback()</span></code></a>) and will be called
+from a thread.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -411,6 +413,20 @@ synchronized between all connected clients. When a GUI element is added via
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><em>Callable</em>[[<a class="reference internal" href="../events/#viser.GuiEvent" title="viser._gui_handles.GuiEvent"><em>GuiEvent</em></a>[<em>TGuiHandle</em>]], None]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.GuiInputHandle.remove_update_callback">
+<span class="sig-name descname"><span class="pre">remove_update_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">‘all’</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/viser/_gui_handles/#GuiInputHandle.remove_update_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.GuiInputHandle.remove_update_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Remove update callbacks from the GUI input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> (<em>Literal</em><em>[</em><em>‘all’</em><em>] </em><em>| </em><em>~typing.Callable</em>) – Either “all” to remove all callbacks, or a specific callback function to remove.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -645,7 +661,9 @@ we can declare handles as <code class="docutils literal notranslate"><span class
 <dl class="py method">
 <dt class="sig sig-object py" id="viser.GuiDropdownHandle.on_update">
 <span class="sig-name descname"><span class="pre">on_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.GuiEvent" title="viser._gui_handles.GuiEvent"><span class="pre">GuiEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TGuiHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.GuiEvent" title="viser._gui_handles.GuiEvent"><span class="pre">GuiEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TGuiHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.GuiDropdownHandle.on_update" title="Link to this definition">¶</a></dt>
-<dd><p>Attach a function to call when a GUI input is updated. Happens in a thread.</p>
+<dd><p>Attach a function to call when a GUI input is updated. Callbacks stack (need
+to be manually removed via <a class="reference internal" href="#viser.GuiDropdownHandle.remove_update_callback" title="viser.GuiDropdownHandle.remove_update_callback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">remove_update_callback()</span></code></a>) and will be called
+from a thread.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -666,6 +684,20 @@ we can declare handles as <code class="docutils literal notranslate"><span class
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.GuiDropdownHandle.remove_update_callback">
+<span class="sig-name descname"><span class="pre">remove_update_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">‘all’</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.GuiDropdownHandle.remove_update_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Remove update callbacks from the GUI input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> (<em>Literal</em><em>[</em><em>‘all’</em><em>] </em><em>| </em><em>~typing.Callable</em>) – Either “all” to remove all callbacks, or a specific callback function to remove.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -903,7 +935,9 @@ visualizer.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="viser.GuiCheckboxHandle.on_update">
 <span class="sig-name descname"><span class="pre">on_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.GuiEvent" title="viser._gui_handles.GuiEvent"><span class="pre">GuiEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TGuiHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.GuiEvent" title="viser._gui_handles.GuiEvent"><span class="pre">GuiEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TGuiHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.GuiCheckboxHandle.on_update" title="Link to this definition">¶</a></dt>
-<dd><p>Attach a function to call when a GUI input is updated. Happens in a thread.</p>
+<dd><p>Attach a function to call when a GUI input is updated. Callbacks stack (need
+to be manually removed via <a class="reference internal" href="#viser.GuiCheckboxHandle.remove_update_callback" title="viser.GuiCheckboxHandle.remove_update_callback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">remove_update_callback()</span></code></a>) and will be called
+from a thread.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -924,6 +958,20 @@ visualizer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.GuiCheckboxHandle.remove_update_callback">
+<span class="sig-name descname"><span class="pre">remove_update_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">‘all’</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.GuiCheckboxHandle.remove_update_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Remove update callbacks from the GUI input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> (<em>Literal</em><em>[</em><em>‘all’</em><em>] </em><em>| </em><em>~typing.Callable</em>) – Either “all” to remove all callbacks, or a specific callback function to remove.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -985,7 +1033,9 @@ visualizer.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="viser.GuiMultiSliderHandle.on_update">
 <span class="sig-name descname"><span class="pre">on_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.GuiEvent" title="viser._gui_handles.GuiEvent"><span class="pre">GuiEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TGuiHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.GuiEvent" title="viser._gui_handles.GuiEvent"><span class="pre">GuiEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TGuiHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.GuiMultiSliderHandle.on_update" title="Link to this definition">¶</a></dt>
-<dd><p>Attach a function to call when a GUI input is updated. Happens in a thread.</p>
+<dd><p>Attach a function to call when a GUI input is updated. Callbacks stack (need
+to be manually removed via <a class="reference internal" href="#viser.GuiMultiSliderHandle.remove_update_callback" title="viser.GuiMultiSliderHandle.remove_update_callback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">remove_update_callback()</span></code></a>) and will be called
+from a thread.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1006,6 +1056,20 @@ visualizer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.GuiMultiSliderHandle.remove_update_callback">
+<span class="sig-name descname"><span class="pre">remove_update_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">‘all’</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.GuiMultiSliderHandle.remove_update_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Remove update callbacks from the GUI input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> (<em>Literal</em><em>[</em><em>‘all’</em><em>] </em><em>| </em><em>~typing.Callable</em>) – Either “all” to remove all callbacks, or a specific callback function to remove.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1091,7 +1155,9 @@ visualizer.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="viser.GuiNumberHandle.on_update">
 <span class="sig-name descname"><span class="pre">on_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.GuiEvent" title="viser._gui_handles.GuiEvent"><span class="pre">GuiEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TGuiHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.GuiEvent" title="viser._gui_handles.GuiEvent"><span class="pre">GuiEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TGuiHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.GuiNumberHandle.on_update" title="Link to this definition">¶</a></dt>
-<dd><p>Attach a function to call when a GUI input is updated. Happens in a thread.</p>
+<dd><p>Attach a function to call when a GUI input is updated. Callbacks stack (need
+to be manually removed via <a class="reference internal" href="#viser.GuiNumberHandle.remove_update_callback" title="viser.GuiNumberHandle.remove_update_callback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">remove_update_callback()</span></code></a>) and will be called
+from a thread.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1112,6 +1178,20 @@ visualizer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.GuiNumberHandle.remove_update_callback">
+<span class="sig-name descname"><span class="pre">remove_update_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">‘all’</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.GuiNumberHandle.remove_update_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Remove update callbacks from the GUI input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> (<em>Literal</em><em>[</em><em>‘all’</em><em>] </em><em>| </em><em>~typing.Callable</em>) – Either “all” to remove all callbacks, or a specific callback function to remove.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1191,7 +1271,9 @@ visualizer.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="viser.GuiRgbaHandle.on_update">
 <span class="sig-name descname"><span class="pre">on_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.GuiEvent" title="viser._gui_handles.GuiEvent"><span class="pre">GuiEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TGuiHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.GuiEvent" title="viser._gui_handles.GuiEvent"><span class="pre">GuiEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TGuiHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.GuiRgbaHandle.on_update" title="Link to this definition">¶</a></dt>
-<dd><p>Attach a function to call when a GUI input is updated. Happens in a thread.</p>
+<dd><p>Attach a function to call when a GUI input is updated. Callbacks stack (need
+to be manually removed via <a class="reference internal" href="#viser.GuiRgbaHandle.remove_update_callback" title="viser.GuiRgbaHandle.remove_update_callback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">remove_update_callback()</span></code></a>) and will be called
+from a thread.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1212,6 +1294,20 @@ visualizer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.GuiRgbaHandle.remove_update_callback">
+<span class="sig-name descname"><span class="pre">remove_update_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">‘all’</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.GuiRgbaHandle.remove_update_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Remove update callbacks from the GUI input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> (<em>Literal</em><em>[</em><em>‘all’</em><em>] </em><em>| </em><em>~typing.Callable</em>) – Either “all” to remove all callbacks, or a specific callback function to remove.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1267,7 +1363,9 @@ visualizer.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="viser.GuiRgbHandle.on_update">
 <span class="sig-name descname"><span class="pre">on_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.GuiEvent" title="viser._gui_handles.GuiEvent"><span class="pre">GuiEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TGuiHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.GuiEvent" title="viser._gui_handles.GuiEvent"><span class="pre">GuiEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TGuiHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.GuiRgbHandle.on_update" title="Link to this definition">¶</a></dt>
-<dd><p>Attach a function to call when a GUI input is updated. Happens in a thread.</p>
+<dd><p>Attach a function to call when a GUI input is updated. Callbacks stack (need
+to be manually removed via <a class="reference internal" href="#viser.GuiRgbHandle.remove_update_callback" title="viser.GuiRgbHandle.remove_update_callback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">remove_update_callback()</span></code></a>) and will be called
+from a thread.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1288,6 +1386,20 @@ visualizer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.GuiRgbHandle.remove_update_callback">
+<span class="sig-name descname"><span class="pre">remove_update_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">‘all’</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.GuiRgbHandle.remove_update_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Remove update callbacks from the GUI input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> (<em>Literal</em><em>[</em><em>‘all’</em><em>] </em><em>| </em><em>~typing.Callable</em>) – Either “all” to remove all callbacks, or a specific callback function to remove.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1343,7 +1455,9 @@ visualizer.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="viser.GuiSliderHandle.on_update">
 <span class="sig-name descname"><span class="pre">on_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.GuiEvent" title="viser._gui_handles.GuiEvent"><span class="pre">GuiEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TGuiHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.GuiEvent" title="viser._gui_handles.GuiEvent"><span class="pre">GuiEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TGuiHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.GuiSliderHandle.on_update" title="Link to this definition">¶</a></dt>
-<dd><p>Attach a function to call when a GUI input is updated. Happens in a thread.</p>
+<dd><p>Attach a function to call when a GUI input is updated. Callbacks stack (need
+to be manually removed via <a class="reference internal" href="#viser.GuiSliderHandle.remove_update_callback" title="viser.GuiSliderHandle.remove_update_callback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">remove_update_callback()</span></code></a>) and will be called
+from a thread.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1364,6 +1478,20 @@ visualizer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.GuiSliderHandle.remove_update_callback">
+<span class="sig-name descname"><span class="pre">remove_update_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">‘all’</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.GuiSliderHandle.remove_update_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Remove update callbacks from the GUI input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> (<em>Literal</em><em>[</em><em>‘all’</em><em>] </em><em>| </em><em>~typing.Callable</em>) – Either “all” to remove all callbacks, or a specific callback function to remove.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1443,7 +1571,9 @@ visualizer.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="viser.GuiTextHandle.on_update">
 <span class="sig-name descname"><span class="pre">on_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.GuiEvent" title="viser._gui_handles.GuiEvent"><span class="pre">GuiEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TGuiHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.GuiEvent" title="viser._gui_handles.GuiEvent"><span class="pre">GuiEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TGuiHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.GuiTextHandle.on_update" title="Link to this definition">¶</a></dt>
-<dd><p>Attach a function to call when a GUI input is updated. Happens in a thread.</p>
+<dd><p>Attach a function to call when a GUI input is updated. Callbacks stack (need
+to be manually removed via <a class="reference internal" href="#viser.GuiTextHandle.remove_update_callback" title="viser.GuiTextHandle.remove_update_callback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">remove_update_callback()</span></code></a>) and will be called
+from a thread.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1464,6 +1594,20 @@ visualizer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.GuiTextHandle.remove_update_callback">
+<span class="sig-name descname"><span class="pre">remove_update_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">‘all’</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.GuiTextHandle.remove_update_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Remove update callbacks from the GUI input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> (<em>Literal</em><em>[</em><em>‘all’</em><em>] </em><em>| </em><em>~typing.Callable</em>) – Either “all” to remove all callbacks, or a specific callback function to remove.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1614,7 +1758,9 @@ visualizer.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="viser.GuiVector2Handle.on_update">
 <span class="sig-name descname"><span class="pre">on_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.GuiEvent" title="viser._gui_handles.GuiEvent"><span class="pre">GuiEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TGuiHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.GuiEvent" title="viser._gui_handles.GuiEvent"><span class="pre">GuiEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TGuiHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.GuiVector2Handle.on_update" title="Link to this definition">¶</a></dt>
-<dd><p>Attach a function to call when a GUI input is updated. Happens in a thread.</p>
+<dd><p>Attach a function to call when a GUI input is updated. Callbacks stack (need
+to be manually removed via <a class="reference internal" href="#viser.GuiVector2Handle.remove_update_callback" title="viser.GuiVector2Handle.remove_update_callback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">remove_update_callback()</span></code></a>) and will be called
+from a thread.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1635,6 +1781,20 @@ visualizer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.GuiVector2Handle.remove_update_callback">
+<span class="sig-name descname"><span class="pre">remove_update_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">‘all’</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.GuiVector2Handle.remove_update_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Remove update callbacks from the GUI input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> (<em>Literal</em><em>[</em><em>‘all’</em><em>] </em><em>| </em><em>~typing.Callable</em>) – Either “all” to remove all callbacks, or a specific callback function to remove.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1714,7 +1874,9 @@ visualizer.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="viser.GuiVector3Handle.on_update">
 <span class="sig-name descname"><span class="pre">on_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.GuiEvent" title="viser._gui_handles.GuiEvent"><span class="pre">GuiEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TGuiHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.GuiEvent" title="viser._gui_handles.GuiEvent"><span class="pre">GuiEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TGuiHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.GuiVector3Handle.on_update" title="Link to this definition">¶</a></dt>
-<dd><p>Attach a function to call when a GUI input is updated. Happens in a thread.</p>
+<dd><p>Attach a function to call when a GUI input is updated. Callbacks stack (need
+to be manually removed via <a class="reference internal" href="#viser.GuiVector3Handle.remove_update_callback" title="viser.GuiVector3Handle.remove_update_callback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">remove_update_callback()</span></code></a>) and will be called
+from a thread.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1735,6 +1897,20 @@ visualizer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.GuiVector3Handle.remove_update_callback">
+<span class="sig-name descname"><span class="pre">remove_update_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">‘all’</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.GuiVector3Handle.remove_update_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Remove update callbacks from the GUI input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> (<em>Literal</em><em>[</em><em>‘all’</em><em>] </em><em>| </em><em>~typing.Callable</em>) – Either “all” to remove all callbacks, or a specific callback function to remove.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1868,6 +2044,7 @@ visualizer.</p>
 <li><a class="reference internal" href="#">GUI Handles</a><ul>
 <li><a class="reference internal" href="#viser.GuiInputHandle"><code class="docutils literal notranslate"><span class="pre">GuiInputHandle</span></code></a><ul>
 <li><a class="reference internal" href="#viser.GuiInputHandle.on_update"><code class="docutils literal notranslate"><span class="pre">GuiInputHandle.on_update()</span></code></a></li>
+<li><a class="reference internal" href="#viser.GuiInputHandle.remove_update_callback"><code class="docutils literal notranslate"><span class="pre">GuiInputHandle.remove_update_callback()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiInputHandle.remove"><code class="docutils literal notranslate"><span class="pre">GuiInputHandle.remove()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiInputHandle.update_timestamp"><code class="docutils literal notranslate"><span class="pre">GuiInputHandle.update_timestamp</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiInputHandle.order"><code class="docutils literal notranslate"><span class="pre">GuiInputHandle.order</span></code></a></li>
@@ -1907,6 +2084,7 @@ visualizer.</p>
 <li><a class="reference internal" href="#viser.GuiDropdownHandle.options"><code class="docutils literal notranslate"><span class="pre">GuiDropdownHandle.options</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiDropdownHandle.on_update"><code class="docutils literal notranslate"><span class="pre">GuiDropdownHandle.on_update()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiDropdownHandle.remove"><code class="docutils literal notranslate"><span class="pre">GuiDropdownHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.GuiDropdownHandle.remove_update_callback"><code class="docutils literal notranslate"><span class="pre">GuiDropdownHandle.remove_update_callback()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiDropdownHandle.update_timestamp"><code class="docutils literal notranslate"><span class="pre">GuiDropdownHandle.update_timestamp</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiDropdownHandle.order"><code class="docutils literal notranslate"><span class="pre">GuiDropdownHandle.order</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiDropdownHandle.label"><code class="docutils literal notranslate"><span class="pre">GuiDropdownHandle.label</span></code></a></li>
@@ -1953,6 +2131,7 @@ visualizer.</p>
 <li><a class="reference internal" href="#viser.GuiCheckboxHandle.value"><code class="docutils literal notranslate"><span class="pre">GuiCheckboxHandle.value</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiCheckboxHandle.on_update"><code class="docutils literal notranslate"><span class="pre">GuiCheckboxHandle.on_update()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiCheckboxHandle.remove"><code class="docutils literal notranslate"><span class="pre">GuiCheckboxHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.GuiCheckboxHandle.remove_update_callback"><code class="docutils literal notranslate"><span class="pre">GuiCheckboxHandle.remove_update_callback()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiCheckboxHandle.update_timestamp"><code class="docutils literal notranslate"><span class="pre">GuiCheckboxHandle.update_timestamp</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiCheckboxHandle.order"><code class="docutils literal notranslate"><span class="pre">GuiCheckboxHandle.order</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiCheckboxHandle.label"><code class="docutils literal notranslate"><span class="pre">GuiCheckboxHandle.label</span></code></a></li>
@@ -1966,6 +2145,7 @@ visualizer.</p>
 <li><a class="reference internal" href="#viser.GuiMultiSliderHandle.fixed_endpoints"><code class="docutils literal notranslate"><span class="pre">GuiMultiSliderHandle.fixed_endpoints</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiMultiSliderHandle.on_update"><code class="docutils literal notranslate"><span class="pre">GuiMultiSliderHandle.on_update()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiMultiSliderHandle.remove"><code class="docutils literal notranslate"><span class="pre">GuiMultiSliderHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.GuiMultiSliderHandle.remove_update_callback"><code class="docutils literal notranslate"><span class="pre">GuiMultiSliderHandle.remove_update_callback()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiMultiSliderHandle.update_timestamp"><code class="docutils literal notranslate"><span class="pre">GuiMultiSliderHandle.update_timestamp</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiMultiSliderHandle.order"><code class="docutils literal notranslate"><span class="pre">GuiMultiSliderHandle.order</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiMultiSliderHandle.label"><code class="docutils literal notranslate"><span class="pre">GuiMultiSliderHandle.label</span></code></a></li>
@@ -1983,6 +2163,7 @@ visualizer.</p>
 <li><a class="reference internal" href="#viser.GuiNumberHandle.value"><code class="docutils literal notranslate"><span class="pre">GuiNumberHandle.value</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiNumberHandle.on_update"><code class="docutils literal notranslate"><span class="pre">GuiNumberHandle.on_update()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiNumberHandle.remove"><code class="docutils literal notranslate"><span class="pre">GuiNumberHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.GuiNumberHandle.remove_update_callback"><code class="docutils literal notranslate"><span class="pre">GuiNumberHandle.remove_update_callback()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiNumberHandle.update_timestamp"><code class="docutils literal notranslate"><span class="pre">GuiNumberHandle.update_timestamp</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiNumberHandle.order"><code class="docutils literal notranslate"><span class="pre">GuiNumberHandle.order</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiNumberHandle.label"><code class="docutils literal notranslate"><span class="pre">GuiNumberHandle.label</span></code></a></li>
@@ -1999,6 +2180,7 @@ visualizer.</p>
 <li><a class="reference internal" href="#viser.GuiRgbaHandle.value"><code class="docutils literal notranslate"><span class="pre">GuiRgbaHandle.value</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiRgbaHandle.on_update"><code class="docutils literal notranslate"><span class="pre">GuiRgbaHandle.on_update()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiRgbaHandle.remove"><code class="docutils literal notranslate"><span class="pre">GuiRgbaHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.GuiRgbaHandle.remove_update_callback"><code class="docutils literal notranslate"><span class="pre">GuiRgbaHandle.remove_update_callback()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiRgbaHandle.update_timestamp"><code class="docutils literal notranslate"><span class="pre">GuiRgbaHandle.update_timestamp</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiRgbaHandle.order"><code class="docutils literal notranslate"><span class="pre">GuiRgbaHandle.order</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiRgbaHandle.label"><code class="docutils literal notranslate"><span class="pre">GuiRgbaHandle.label</span></code></a></li>
@@ -2011,6 +2193,7 @@ visualizer.</p>
 <li><a class="reference internal" href="#viser.GuiRgbHandle.value"><code class="docutils literal notranslate"><span class="pre">GuiRgbHandle.value</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiRgbHandle.on_update"><code class="docutils literal notranslate"><span class="pre">GuiRgbHandle.on_update()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiRgbHandle.remove"><code class="docutils literal notranslate"><span class="pre">GuiRgbHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.GuiRgbHandle.remove_update_callback"><code class="docutils literal notranslate"><span class="pre">GuiRgbHandle.remove_update_callback()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiRgbHandle.update_timestamp"><code class="docutils literal notranslate"><span class="pre">GuiRgbHandle.update_timestamp</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiRgbHandle.order"><code class="docutils literal notranslate"><span class="pre">GuiRgbHandle.order</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiRgbHandle.label"><code class="docutils literal notranslate"><span class="pre">GuiRgbHandle.label</span></code></a></li>
@@ -2023,6 +2206,7 @@ visualizer.</p>
 <li><a class="reference internal" href="#viser.GuiSliderHandle.value"><code class="docutils literal notranslate"><span class="pre">GuiSliderHandle.value</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiSliderHandle.on_update"><code class="docutils literal notranslate"><span class="pre">GuiSliderHandle.on_update()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiSliderHandle.remove"><code class="docutils literal notranslate"><span class="pre">GuiSliderHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.GuiSliderHandle.remove_update_callback"><code class="docutils literal notranslate"><span class="pre">GuiSliderHandle.remove_update_callback()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiSliderHandle.update_timestamp"><code class="docutils literal notranslate"><span class="pre">GuiSliderHandle.update_timestamp</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiSliderHandle.order"><code class="docutils literal notranslate"><span class="pre">GuiSliderHandle.order</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiSliderHandle.label"><code class="docutils literal notranslate"><span class="pre">GuiSliderHandle.label</span></code></a></li>
@@ -2039,6 +2223,7 @@ visualizer.</p>
 <li><a class="reference internal" href="#viser.GuiTextHandle.value"><code class="docutils literal notranslate"><span class="pre">GuiTextHandle.value</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiTextHandle.on_update"><code class="docutils literal notranslate"><span class="pre">GuiTextHandle.on_update()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiTextHandle.remove"><code class="docutils literal notranslate"><span class="pre">GuiTextHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.GuiTextHandle.remove_update_callback"><code class="docutils literal notranslate"><span class="pre">GuiTextHandle.remove_update_callback()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiTextHandle.update_timestamp"><code class="docutils literal notranslate"><span class="pre">GuiTextHandle.update_timestamp</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiTextHandle.order"><code class="docutils literal notranslate"><span class="pre">GuiTextHandle.order</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiTextHandle.label"><code class="docutils literal notranslate"><span class="pre">GuiTextHandle.label</span></code></a></li>
@@ -2068,6 +2253,7 @@ visualizer.</p>
 <li><a class="reference internal" href="#viser.GuiVector2Handle.value"><code class="docutils literal notranslate"><span class="pre">GuiVector2Handle.value</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiVector2Handle.on_update"><code class="docutils literal notranslate"><span class="pre">GuiVector2Handle.on_update()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiVector2Handle.remove"><code class="docutils literal notranslate"><span class="pre">GuiVector2Handle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.GuiVector2Handle.remove_update_callback"><code class="docutils literal notranslate"><span class="pre">GuiVector2Handle.remove_update_callback()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiVector2Handle.update_timestamp"><code class="docutils literal notranslate"><span class="pre">GuiVector2Handle.update_timestamp</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiVector2Handle.order"><code class="docutils literal notranslate"><span class="pre">GuiVector2Handle.order</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiVector2Handle.label"><code class="docutils literal notranslate"><span class="pre">GuiVector2Handle.label</span></code></a></li>
@@ -2084,6 +2270,7 @@ visualizer.</p>
 <li><a class="reference internal" href="#viser.GuiVector3Handle.value"><code class="docutils literal notranslate"><span class="pre">GuiVector3Handle.value</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiVector3Handle.on_update"><code class="docutils literal notranslate"><span class="pre">GuiVector3Handle.on_update()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiVector3Handle.remove"><code class="docutils literal notranslate"><span class="pre">GuiVector3Handle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.GuiVector3Handle.remove_update_callback"><code class="docutils literal notranslate"><span class="pre">GuiVector3Handle.remove_update_callback()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiVector3Handle.update_timestamp"><code class="docutils literal notranslate"><span class="pre">GuiVector3Handle.update_timestamp</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiVector3Handle.order"><code class="docutils literal notranslate"><span class="pre">GuiVector3Handle.order</span></code></a></li>
 <li><a class="reference internal" href="#viser.GuiVector3Handle.label"><code class="docutils literal notranslate"><span class="pre">GuiVector3Handle.label</span></code></a></li>

@@ -1482,6 +1482,7 @@
                 <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
             <span class="p">)</span>
 
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">bone_wxyzs</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">bone_positions</span><span class="p">)</span>
         <span class="n">num_bones</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">bone_wxyzs</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">skin_weights</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">vertices</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">num_bones</span><span class="p">)</span>
 
@@ -1504,7 +1505,6 @@
                 <span class="n">vertices</span><span class="o">=</span><span class="n">vertices</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
                 <span class="n">faces</span><span class="o">=</span><span class="n">faces</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">),</span>
                 <span class="n">color</span><span class="o">=</span><span class="n">_encode_rgb</span><span class="p">(</span><span class="n">color</span><span class="p">),</span>
-                <span class="n">vertex_colors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                 <span class="n">wireframe</span><span class="o">=</span><span class="n">wireframe</span><span class="p">,</span>
                 <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">,</span>
                 <span class="n">flat_shading</span><span class="o">=</span><span class="n">flat_shading</span><span class="p">,</span>
@@ -1601,7 +1601,6 @@
                 <span class="n">vertices</span><span class="o">=</span><span class="n">vertices</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
                 <span class="n">faces</span><span class="o">=</span><span class="n">faces</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">),</span>
                 <span class="n">color</span><span class="o">=</span><span class="n">_encode_rgb</span><span class="p">(</span><span class="n">color</span><span class="p">),</span>
-                <span class="n">vertex_colors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                 <span class="n">wireframe</span><span class="o">=</span><span class="n">wireframe</span><span class="p">,</span>
                 <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">,</span>
                 <span class="n">flat_shading</span><span class="o">=</span><span class="n">flat_shading</span><span class="p">,</span>
@@ -2238,6 +2237,18 @@
             <span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">visible</span><span class="o">=</span><span class="n">visible</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">Gui3dContainerHandle</span><span class="p">(</span><span class="n">node_handle</span><span class="o">.</span><span class="n">_impl</span><span class="p">,</span> <span class="n">gui_api</span><span class="p">,</span> <span class="n">container_id</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SceneApi.remove_by_name">
+<a class="viewcode-back" href="../../../scene_api/#viser.SceneApi.remove_by_name">[docs]</a>
+    <span class="k">def</span> <span class="nf">remove_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Helper to call `.remove()` on the scene node handles of the `name`</span>
+<span class="sd">        element or any of its children.&quot;&quot;&quot;</span>
+        <span class="n">handle_from_node_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_from_node_name</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>  <span class="c1"># &#39;/parent/&#39; =&gt; &#39;/parent&#39;</span>
+        <span class="k">for</span> <span class="n">node_name</span><span class="p">,</span> <span class="n">handle</span> <span class="ow">in</span> <span class="n">handle_from_node_name</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">node_name</span> <span class="o">==</span> <span class="n">name</span> <span class="ow">or</span> <span class="n">node_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span><span class="p">):</span>
+                <span class="n">handle</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span></div>
 </div>
 
 </pre></div>

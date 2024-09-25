@@ -457,17 +457,17 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 
 <dl class="py method">
 <dt class="sig sig-object py" id="viser.CameraFrustumHandle.on_click">
-<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TSceneNodeHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TSceneNodeHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.CameraFrustumHandle.on_click" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Self</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Self</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.CameraFrustumHandle.on_click" title="Link to this definition">¶</a></dt>
 <dd><p>Attach a callback for when a scene node is clicked.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>self</strong> (<em>TSceneNodeHandle</em>)</p></li>
-<li><p><strong>func</strong> (<em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a><em>[</em><em>TSceneNodeHandle</em><em>]</em><em>]</em><em>, </em><em>None</em><em>]</em>)</p></li>
+<li><p><strong>self</strong> (<em>Self</em>)</p></li>
+<li><p><strong>func</strong> (<em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a><em>[</em><em>Self</em><em>]</em><em>]</em><em>, </em><em>None</em><em>]</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>Callable</em>[[<a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a>[<em>TSceneNodeHandle</em>]], None]</p>
+<dd class="field-even"><p><em>Callable</em>[[<a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a>[<em>Self</em>]], None]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -486,6 +486,20 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.CameraFrustumHandle.remove_click_callback">
+<span class="sig-name descname"><span class="pre">remove_click_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">‘all’</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.CameraFrustumHandle.remove_click_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Remove click callbacks from scene node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> (<em>Literal</em><em>[</em><em>‘all’</em><em>] </em><em>| </em><em>~typing.Callable</em>) – Either “all” to remove all callbacks, or a specific callback function to remove.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -553,17 +567,17 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 
 <dl class="py method">
 <dt class="sig sig-object py" id="viser.FrameHandle.on_click">
-<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TSceneNodeHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TSceneNodeHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.FrameHandle.on_click" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Self</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Self</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.FrameHandle.on_click" title="Link to this definition">¶</a></dt>
 <dd><p>Attach a callback for when a scene node is clicked.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>self</strong> (<em>TSceneNodeHandle</em>)</p></li>
-<li><p><strong>func</strong> (<em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a><em>[</em><em>TSceneNodeHandle</em><em>]</em><em>]</em><em>, </em><em>None</em><em>]</em>)</p></li>
+<li><p><strong>self</strong> (<em>Self</em>)</p></li>
+<li><p><strong>func</strong> (<em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a><em>[</em><em>Self</em><em>]</em><em>]</em><em>, </em><em>None</em><em>]</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>Callable</em>[[<a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a>[<em>TSceneNodeHandle</em>]], None]</p>
+<dd class="field-even"><p><em>Callable</em>[[<a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a>[<em>Self</em>]], None]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -582,6 +596,20 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.FrameHandle.remove_click_callback">
+<span class="sig-name descname"><span class="pre">remove_click_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">‘all’</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.FrameHandle.remove_click_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Remove click callbacks from scene node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> (<em>Literal</em><em>[</em><em>‘all’</em><em>] </em><em>| </em><em>~typing.Callable</em>) – Either “all” to remove all callbacks, or a specific callback function to remove.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -637,17 +665,17 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 
 <dl class="py method">
 <dt class="sig sig-object py" id="viser.BatchedAxesHandle.on_click">
-<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TSceneNodeHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TSceneNodeHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.BatchedAxesHandle.on_click" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Self</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Self</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.BatchedAxesHandle.on_click" title="Link to this definition">¶</a></dt>
 <dd><p>Attach a callback for when a scene node is clicked.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>self</strong> (<em>TSceneNodeHandle</em>)</p></li>
-<li><p><strong>func</strong> (<em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a><em>[</em><em>TSceneNodeHandle</em><em>]</em><em>]</em><em>, </em><em>None</em><em>]</em>)</p></li>
+<li><p><strong>self</strong> (<em>Self</em>)</p></li>
+<li><p><strong>func</strong> (<em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a><em>[</em><em>Self</em><em>]</em><em>]</em><em>, </em><em>None</em><em>]</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>Callable</em>[[<a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a>[<em>TSceneNodeHandle</em>]], None]</p>
+<dd class="field-even"><p><em>Callable</em>[[<a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a>[<em>Self</em>]], None]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -666,6 +694,20 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.BatchedAxesHandle.remove_click_callback">
+<span class="sig-name descname"><span class="pre">remove_click_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">‘all’</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.BatchedAxesHandle.remove_click_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Remove click callbacks from scene node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> (<em>Literal</em><em>[</em><em>‘all’</em><em>] </em><em>| </em><em>~typing.Callable</em>) – Either “all” to remove all callbacks, or a specific callback function to remove.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -721,17 +763,17 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 
 <dl class="py method">
 <dt class="sig sig-object py" id="viser.GlbHandle.on_click">
-<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TSceneNodeHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TSceneNodeHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.GlbHandle.on_click" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Self</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Self</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.GlbHandle.on_click" title="Link to this definition">¶</a></dt>
 <dd><p>Attach a callback for when a scene node is clicked.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>self</strong> (<em>TSceneNodeHandle</em>)</p></li>
-<li><p><strong>func</strong> (<em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a><em>[</em><em>TSceneNodeHandle</em><em>]</em><em>]</em><em>, </em><em>None</em><em>]</em>)</p></li>
+<li><p><strong>self</strong> (<em>Self</em>)</p></li>
+<li><p><strong>func</strong> (<em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a><em>[</em><em>Self</em><em>]</em><em>]</em><em>, </em><em>None</em><em>]</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>Callable</em>[[<a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a>[<em>TSceneNodeHandle</em>]], None]</p>
+<dd class="field-even"><p><em>Callable</em>[[<a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a>[<em>Self</em>]], None]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -750,6 +792,20 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.GlbHandle.remove_click_callback">
+<span class="sig-name descname"><span class="pre">remove_click_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">‘all’</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.GlbHandle.remove_click_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Remove click callbacks from scene node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> (<em>Literal</em><em>[</em><em>‘all’</em><em>] </em><em>| </em><em>~typing.Callable</em>) – Either “all” to remove all callbacks, or a specific callback function to remove.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -848,17 +904,17 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 
 <dl class="py method">
 <dt class="sig sig-object py" id="viser.ImageHandle.on_click">
-<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TSceneNodeHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TSceneNodeHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.ImageHandle.on_click" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Self</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Self</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.ImageHandle.on_click" title="Link to this definition">¶</a></dt>
 <dd><p>Attach a callback for when a scene node is clicked.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>self</strong> (<em>TSceneNodeHandle</em>)</p></li>
-<li><p><strong>func</strong> (<em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a><em>[</em><em>TSceneNodeHandle</em><em>]</em><em>]</em><em>, </em><em>None</em><em>]</em>)</p></li>
+<li><p><strong>self</strong> (<em>Self</em>)</p></li>
+<li><p><strong>func</strong> (<em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a><em>[</em><em>Self</em><em>]</em><em>]</em><em>, </em><em>None</em><em>]</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>Callable</em>[[<a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a>[<em>TSceneNodeHandle</em>]], None]</p>
+<dd class="field-even"><p><em>Callable</em>[[<a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a>[<em>Self</em>]], None]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -877,6 +933,20 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.ImageHandle.remove_click_callback">
+<span class="sig-name descname"><span class="pre">remove_click_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">‘all’</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.ImageHandle.remove_click_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Remove click callbacks from scene node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> (<em>Literal</em><em>[</em><em>‘all’</em><em>] </em><em>| </em><em>~typing.Callable</em>) – Either “all” to remove all callbacks, or a specific callback function to remove.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -981,17 +1051,17 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 
 <dl class="py method">
 <dt class="sig sig-object py" id="viser.MeshHandle.on_click">
-<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TSceneNodeHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TSceneNodeHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.MeshHandle.on_click" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Self</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Self</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.MeshHandle.on_click" title="Link to this definition">¶</a></dt>
 <dd><p>Attach a callback for when a scene node is clicked.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>self</strong> (<em>TSceneNodeHandle</em>)</p></li>
-<li><p><strong>func</strong> (<em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a><em>[</em><em>TSceneNodeHandle</em><em>]</em><em>]</em><em>, </em><em>None</em><em>]</em>)</p></li>
+<li><p><strong>self</strong> (<em>Self</em>)</p></li>
+<li><p><strong>func</strong> (<em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a><em>[</em><em>Self</em><em>]</em><em>]</em><em>, </em><em>None</em><em>]</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>Callable</em>[[<a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a>[<em>TSceneNodeHandle</em>]], None]</p>
+<dd class="field-even"><p><em>Callable</em>[[<a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a>[<em>Self</em>]], None]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1010,6 +1080,20 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.MeshHandle.remove_click_callback">
+<span class="sig-name descname"><span class="pre">remove_click_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">‘all’</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.MeshHandle.remove_click_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Remove click callbacks from scene node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> (<em>Literal</em><em>[</em><em>‘all’</em><em>] </em><em>| </em><em>~typing.Callable</em>) – Either “all” to remove all callbacks, or a specific callback function to remove.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1043,12 +1127,6 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 <dt class="sig sig-object py" id="viser.MeshHandle.color">
 <span class="sig-name descname"><span class="pre">color</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#viser.MeshHandle.color" title="Link to this definition">¶</a></dt>
 <dd><p>Color of the mesh as RGB integers. Synchronized automatically when assigned.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="viser.MeshHandle.vertex_colors">
-<span class="sig-name descname"><span class="pre">vertex_colors</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">npt.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.uint8</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#viser.MeshHandle.vertex_colors" title="Link to this definition">¶</a></dt>
-<dd><p>Optional array of vertex colors. Synchronized automatically when assigned.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1095,17 +1173,17 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 
 <dl class="py method">
 <dt class="sig sig-object py" id="viser.MeshSkinnedHandle.on_click">
-<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TSceneNodeHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TSceneNodeHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.MeshSkinnedHandle.on_click" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Self</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Self</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.MeshSkinnedHandle.on_click" title="Link to this definition">¶</a></dt>
 <dd><p>Attach a callback for when a scene node is clicked.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>self</strong> (<em>TSceneNodeHandle</em>)</p></li>
-<li><p><strong>func</strong> (<em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a><em>[</em><em>TSceneNodeHandle</em><em>]</em><em>]</em><em>, </em><em>None</em><em>]</em>)</p></li>
+<li><p><strong>self</strong> (<em>Self</em>)</p></li>
+<li><p><strong>func</strong> (<em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a><em>[</em><em>Self</em><em>]</em><em>]</em><em>, </em><em>None</em><em>]</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>Callable</em>[[<a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a>[<em>TSceneNodeHandle</em>]], None]</p>
+<dd class="field-even"><p><em>Callable</em>[[<a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a>[<em>Self</em>]], None]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1124,6 +1202,20 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.MeshSkinnedHandle.remove_click_callback">
+<span class="sig-name descname"><span class="pre">remove_click_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">‘all’</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.MeshSkinnedHandle.remove_click_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Remove click callbacks from scene node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> (<em>Literal</em><em>[</em><em>‘all’</em><em>] </em><em>| </em><em>~typing.Callable</em>) – Either “all” to remove all callbacks, or a specific callback function to remove.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1181,12 +1273,6 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 <dt class="sig sig-object py" id="viser.MeshSkinnedHandle.color">
 <span class="sig-name descname"><span class="pre">color</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#viser.MeshSkinnedHandle.color" title="Link to this definition">¶</a></dt>
 <dd><p>Color of the mesh as RGB integers. Synchronized automatically when assigned.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="viser.MeshSkinnedHandle.vertex_colors">
-<span class="sig-name descname"><span class="pre">vertex_colors</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">npt.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.uint8</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#viser.MeshSkinnedHandle.vertex_colors" title="Link to this definition">¶</a></dt>
-<dd><p>Optional array of vertex colors. Synchronized automatically when assigned.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1478,17 +1564,17 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 
 <dl class="py method">
 <dt class="sig sig-object py" id="viser.TransformControlsHandle.on_click">
-<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TSceneNodeHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TSceneNodeHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.TransformControlsHandle.on_click" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Self</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Self</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.TransformControlsHandle.on_click" title="Link to this definition">¶</a></dt>
 <dd><p>Attach a callback for when a scene node is clicked.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>self</strong> (<em>TSceneNodeHandle</em>)</p></li>
-<li><p><strong>func</strong> (<em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a><em>[</em><em>TSceneNodeHandle</em><em>]</em><em>]</em><em>, </em><em>None</em><em>]</em>)</p></li>
+<li><p><strong>self</strong> (<em>Self</em>)</p></li>
+<li><p><strong>func</strong> (<em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a><em>[</em><em>Self</em><em>]</em><em>]</em><em>, </em><em>None</em><em>]</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>Callable</em>[[<a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a>[<em>TSceneNodeHandle</em>]], None]</p>
+<dd class="field-even"><p><em>Callable</em>[[<a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a>[<em>Self</em>]], None]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1507,6 +1593,20 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.TransformControlsHandle.remove_click_callback">
+<span class="sig-name descname"><span class="pre">remove_click_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">‘all’</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.TransformControlsHandle.remove_click_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Remove click callbacks from scene node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> (<em>Literal</em><em>[</em><em>‘all’</em><em>] </em><em>| </em><em>~typing.Callable</em>) – Either “all” to remove all callbacks, or a specific callback function to remove.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1615,6 +1715,20 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.TransformControlsHandle.remove_update_callback">
+<span class="sig-name descname"><span class="pre">remove_update_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">‘all’</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/viser/_scene_handles/#TransformControlsHandle.remove_update_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.TransformControlsHandle.remove_update_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Remove update callbacks from the transform controls.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> (<em>Literal</em><em>[</em><em>‘all’</em><em>] </em><em>| </em><em>~typing.Callable</em>) – Either “all” to remove all callbacks, or a specific callback function to remove.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -1630,17 +1744,17 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 
 <dl class="py method">
 <dt class="sig sig-object py" id="viser.GaussianSplatHandle.on_click">
-<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TSceneNodeHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">TSceneNodeHandle</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.GaussianSplatHandle.on_click" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Self</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><span class="pre">SceneNodePointerEvent</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Self</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#viser.GaussianSplatHandle.on_click" title="Link to this definition">¶</a></dt>
 <dd><p>Attach a callback for when a scene node is clicked.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>self</strong> (<em>TSceneNodeHandle</em>)</p></li>
-<li><p><strong>func</strong> (<em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a><em>[</em><em>TSceneNodeHandle</em><em>]</em><em>]</em><em>, </em><em>None</em><em>]</em>)</p></li>
+<li><p><strong>self</strong> (<em>Self</em>)</p></li>
+<li><p><strong>func</strong> (<em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a><em>[</em><em>Self</em><em>]</em><em>]</em><em>, </em><em>None</em><em>]</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>Callable</em>[[<a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a>[<em>TSceneNodeHandle</em>]], None]</p>
+<dd class="field-even"><p><em>Callable</em>[[<a class="reference internal" href="../events/#viser.SceneNodePointerEvent" title="viser._scene_handles.SceneNodePointerEvent"><em>SceneNodePointerEvent</em></a>[<em>Self</em>]], None]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1659,6 +1773,20 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.GaussianSplatHandle.remove_click_callback">
+<span class="sig-name descname"><span class="pre">remove_click_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">‘all’</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#viser.GaussianSplatHandle.remove_click_callback" title="Link to this definition">¶</a></dt>
+<dd><p>Remove click callbacks from scene node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> (<em>Literal</em><em>[</em><em>‘all’</em><em>] </em><em>| </em><em>~typing.Callable</em>) – Either “all” to remove all callbacks, or a specific callback function to remove.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2158,6 +2286,7 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 <li><a class="reference internal" href="#viser.CameraFrustumHandle.on_click"><code class="docutils literal notranslate"><span class="pre">CameraFrustumHandle.on_click()</span></code></a></li>
 <li><a class="reference internal" href="#viser.CameraFrustumHandle.position"><code class="docutils literal notranslate"><span class="pre">CameraFrustumHandle.position</span></code></a></li>
 <li><a class="reference internal" href="#viser.CameraFrustumHandle.remove"><code class="docutils literal notranslate"><span class="pre">CameraFrustumHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.CameraFrustumHandle.remove_click_callback"><code class="docutils literal notranslate"><span class="pre">CameraFrustumHandle.remove_click_callback()</span></code></a></li>
 <li><a class="reference internal" href="#viser.CameraFrustumHandle.visible"><code class="docutils literal notranslate"><span class="pre">CameraFrustumHandle.visible</span></code></a></li>
 <li><a class="reference internal" href="#viser.CameraFrustumHandle.wxyz"><code class="docutils literal notranslate"><span class="pre">CameraFrustumHandle.wxyz</span></code></a></li>
 <li><a class="reference internal" href="#viser.CameraFrustumHandle.fov"><code class="docutils literal notranslate"><span class="pre">CameraFrustumHandle.fov</span></code></a></li>
@@ -2173,6 +2302,7 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 <li><a class="reference internal" href="#viser.FrameHandle.on_click"><code class="docutils literal notranslate"><span class="pre">FrameHandle.on_click()</span></code></a></li>
 <li><a class="reference internal" href="#viser.FrameHandle.position"><code class="docutils literal notranslate"><span class="pre">FrameHandle.position</span></code></a></li>
 <li><a class="reference internal" href="#viser.FrameHandle.remove"><code class="docutils literal notranslate"><span class="pre">FrameHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.FrameHandle.remove_click_callback"><code class="docutils literal notranslate"><span class="pre">FrameHandle.remove_click_callback()</span></code></a></li>
 <li><a class="reference internal" href="#viser.FrameHandle.visible"><code class="docutils literal notranslate"><span class="pre">FrameHandle.visible</span></code></a></li>
 <li><a class="reference internal" href="#viser.FrameHandle.wxyz"><code class="docutils literal notranslate"><span class="pre">FrameHandle.wxyz</span></code></a></li>
 <li><a class="reference internal" href="#viser.FrameHandle.show_axes"><code class="docutils literal notranslate"><span class="pre">FrameHandle.show_axes</span></code></a></li>
@@ -2186,6 +2316,7 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 <li><a class="reference internal" href="#viser.BatchedAxesHandle.on_click"><code class="docutils literal notranslate"><span class="pre">BatchedAxesHandle.on_click()</span></code></a></li>
 <li><a class="reference internal" href="#viser.BatchedAxesHandle.position"><code class="docutils literal notranslate"><span class="pre">BatchedAxesHandle.position</span></code></a></li>
 <li><a class="reference internal" href="#viser.BatchedAxesHandle.remove"><code class="docutils literal notranslate"><span class="pre">BatchedAxesHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.BatchedAxesHandle.remove_click_callback"><code class="docutils literal notranslate"><span class="pre">BatchedAxesHandle.remove_click_callback()</span></code></a></li>
 <li><a class="reference internal" href="#viser.BatchedAxesHandle.visible"><code class="docutils literal notranslate"><span class="pre">BatchedAxesHandle.visible</span></code></a></li>
 <li><a class="reference internal" href="#viser.BatchedAxesHandle.wxyz"><code class="docutils literal notranslate"><span class="pre">BatchedAxesHandle.wxyz</span></code></a></li>
 <li><a class="reference internal" href="#viser.BatchedAxesHandle.wxyzs_batched"><code class="docutils literal notranslate"><span class="pre">BatchedAxesHandle.wxyzs_batched</span></code></a></li>
@@ -2199,6 +2330,7 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 <li><a class="reference internal" href="#viser.GlbHandle.on_click"><code class="docutils literal notranslate"><span class="pre">GlbHandle.on_click()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GlbHandle.position"><code class="docutils literal notranslate"><span class="pre">GlbHandle.position</span></code></a></li>
 <li><a class="reference internal" href="#viser.GlbHandle.remove"><code class="docutils literal notranslate"><span class="pre">GlbHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.GlbHandle.remove_click_callback"><code class="docutils literal notranslate"><span class="pre">GlbHandle.remove_click_callback()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GlbHandle.visible"><code class="docutils literal notranslate"><span class="pre">GlbHandle.visible</span></code></a></li>
 <li><a class="reference internal" href="#viser.GlbHandle.wxyz"><code class="docutils literal notranslate"><span class="pre">GlbHandle.wxyz</span></code></a></li>
 <li><a class="reference internal" href="#viser.GlbHandle.glb_data"><code class="docutils literal notranslate"><span class="pre">GlbHandle.glb_data</span></code></a></li>
@@ -2220,6 +2352,7 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 <li><a class="reference internal" href="#viser.ImageHandle.on_click"><code class="docutils literal notranslate"><span class="pre">ImageHandle.on_click()</span></code></a></li>
 <li><a class="reference internal" href="#viser.ImageHandle.position"><code class="docutils literal notranslate"><span class="pre">ImageHandle.position</span></code></a></li>
 <li><a class="reference internal" href="#viser.ImageHandle.remove"><code class="docutils literal notranslate"><span class="pre">ImageHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.ImageHandle.remove_click_callback"><code class="docutils literal notranslate"><span class="pre">ImageHandle.remove_click_callback()</span></code></a></li>
 <li><a class="reference internal" href="#viser.ImageHandle.visible"><code class="docutils literal notranslate"><span class="pre">ImageHandle.visible</span></code></a></li>
 <li><a class="reference internal" href="#viser.ImageHandle.wxyz"><code class="docutils literal notranslate"><span class="pre">ImageHandle.wxyz</span></code></a></li>
 <li><a class="reference internal" href="#viser.ImageHandle.media_type"><code class="docutils literal notranslate"><span class="pre">ImageHandle.media_type</span></code></a></li>
@@ -2242,12 +2375,12 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 <li><a class="reference internal" href="#viser.MeshHandle.on_click"><code class="docutils literal notranslate"><span class="pre">MeshHandle.on_click()</span></code></a></li>
 <li><a class="reference internal" href="#viser.MeshHandle.position"><code class="docutils literal notranslate"><span class="pre">MeshHandle.position</span></code></a></li>
 <li><a class="reference internal" href="#viser.MeshHandle.remove"><code class="docutils literal notranslate"><span class="pre">MeshHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.MeshHandle.remove_click_callback"><code class="docutils literal notranslate"><span class="pre">MeshHandle.remove_click_callback()</span></code></a></li>
 <li><a class="reference internal" href="#viser.MeshHandle.visible"><code class="docutils literal notranslate"><span class="pre">MeshHandle.visible</span></code></a></li>
 <li><a class="reference internal" href="#viser.MeshHandle.wxyz"><code class="docutils literal notranslate"><span class="pre">MeshHandle.wxyz</span></code></a></li>
 <li><a class="reference internal" href="#viser.MeshHandle.vertices"><code class="docutils literal notranslate"><span class="pre">MeshHandle.vertices</span></code></a></li>
 <li><a class="reference internal" href="#viser.MeshHandle.faces"><code class="docutils literal notranslate"><span class="pre">MeshHandle.faces</span></code></a></li>
 <li><a class="reference internal" href="#viser.MeshHandle.color"><code class="docutils literal notranslate"><span class="pre">MeshHandle.color</span></code></a></li>
-<li><a class="reference internal" href="#viser.MeshHandle.vertex_colors"><code class="docutils literal notranslate"><span class="pre">MeshHandle.vertex_colors</span></code></a></li>
 <li><a class="reference internal" href="#viser.MeshHandle.wireframe"><code class="docutils literal notranslate"><span class="pre">MeshHandle.wireframe</span></code></a></li>
 <li><a class="reference internal" href="#viser.MeshHandle.opacity"><code class="docutils literal notranslate"><span class="pre">MeshHandle.opacity</span></code></a></li>
 <li><a class="reference internal" href="#viser.MeshHandle.flat_shading"><code class="docutils literal notranslate"><span class="pre">MeshHandle.flat_shading</span></code></a></li>
@@ -2260,6 +2393,7 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 <li><a class="reference internal" href="#viser.MeshSkinnedHandle.on_click"><code class="docutils literal notranslate"><span class="pre">MeshSkinnedHandle.on_click()</span></code></a></li>
 <li><a class="reference internal" href="#viser.MeshSkinnedHandle.position"><code class="docutils literal notranslate"><span class="pre">MeshSkinnedHandle.position</span></code></a></li>
 <li><a class="reference internal" href="#viser.MeshSkinnedHandle.remove"><code class="docutils literal notranslate"><span class="pre">MeshSkinnedHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.MeshSkinnedHandle.remove_click_callback"><code class="docutils literal notranslate"><span class="pre">MeshSkinnedHandle.remove_click_callback()</span></code></a></li>
 <li><a class="reference internal" href="#viser.MeshSkinnedHandle.visible"><code class="docutils literal notranslate"><span class="pre">MeshSkinnedHandle.visible</span></code></a></li>
 <li><a class="reference internal" href="#viser.MeshSkinnedHandle.wxyz"><code class="docutils literal notranslate"><span class="pre">MeshSkinnedHandle.wxyz</span></code></a></li>
 <li><a class="reference internal" href="#viser.MeshSkinnedHandle.bone_wxyzs"><code class="docutils literal notranslate"><span class="pre">MeshSkinnedHandle.bone_wxyzs</span></code></a></li>
@@ -2269,7 +2403,6 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 <li><a class="reference internal" href="#viser.MeshSkinnedHandle.vertices"><code class="docutils literal notranslate"><span class="pre">MeshSkinnedHandle.vertices</span></code></a></li>
 <li><a class="reference internal" href="#viser.MeshSkinnedHandle.faces"><code class="docutils literal notranslate"><span class="pre">MeshSkinnedHandle.faces</span></code></a></li>
 <li><a class="reference internal" href="#viser.MeshSkinnedHandle.color"><code class="docutils literal notranslate"><span class="pre">MeshSkinnedHandle.color</span></code></a></li>
-<li><a class="reference internal" href="#viser.MeshSkinnedHandle.vertex_colors"><code class="docutils literal notranslate"><span class="pre">MeshSkinnedHandle.vertex_colors</span></code></a></li>
 <li><a class="reference internal" href="#viser.MeshSkinnedHandle.wireframe"><code class="docutils literal notranslate"><span class="pre">MeshSkinnedHandle.wireframe</span></code></a></li>
 <li><a class="reference internal" href="#viser.MeshSkinnedHandle.opacity"><code class="docutils literal notranslate"><span class="pre">MeshSkinnedHandle.opacity</span></code></a></li>
 <li><a class="reference internal" href="#viser.MeshSkinnedHandle.flat_shading"><code class="docutils literal notranslate"><span class="pre">MeshSkinnedHandle.flat_shading</span></code></a></li>
@@ -2327,6 +2460,7 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 <li><a class="reference internal" href="#viser.TransformControlsHandle.on_click"><code class="docutils literal notranslate"><span class="pre">TransformControlsHandle.on_click()</span></code></a></li>
 <li><a class="reference internal" href="#viser.TransformControlsHandle.position"><code class="docutils literal notranslate"><span class="pre">TransformControlsHandle.position</span></code></a></li>
 <li><a class="reference internal" href="#viser.TransformControlsHandle.remove"><code class="docutils literal notranslate"><span class="pre">TransformControlsHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.TransformControlsHandle.remove_click_callback"><code class="docutils literal notranslate"><span class="pre">TransformControlsHandle.remove_click_callback()</span></code></a></li>
 <li><a class="reference internal" href="#viser.TransformControlsHandle.visible"><code class="docutils literal notranslate"><span class="pre">TransformControlsHandle.visible</span></code></a></li>
 <li><a class="reference internal" href="#viser.TransformControlsHandle.wxyz"><code class="docutils literal notranslate"><span class="pre">TransformControlsHandle.wxyz</span></code></a></li>
 <li><a class="reference internal" href="#viser.TransformControlsHandle.scale"><code class="docutils literal notranslate"><span class="pre">TransformControlsHandle.scale</span></code></a></li>
@@ -2343,6 +2477,7 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 <li><a class="reference internal" href="#viser.TransformControlsHandle.opacity"><code class="docutils literal notranslate"><span class="pre">TransformControlsHandle.opacity</span></code></a></li>
 <li><a class="reference internal" href="#viser.TransformControlsHandle.update_timestamp"><code class="docutils literal notranslate"><span class="pre">TransformControlsHandle.update_timestamp</span></code></a></li>
 <li><a class="reference internal" href="#viser.TransformControlsHandle.on_update"><code class="docutils literal notranslate"><span class="pre">TransformControlsHandle.on_update()</span></code></a></li>
+<li><a class="reference internal" href="#viser.TransformControlsHandle.remove_update_callback"><code class="docutils literal notranslate"><span class="pre">TransformControlsHandle.remove_update_callback()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#viser.GaussianSplatHandle"><code class="docutils literal notranslate"><span class="pre">GaussianSplatHandle</span></code></a><ul>
@@ -2350,6 +2485,7 @@ in <code class="docutils literal notranslate"><span class="pre">p_parent</span> 
 <li><a class="reference internal" href="#viser.GaussianSplatHandle.on_click"><code class="docutils literal notranslate"><span class="pre">GaussianSplatHandle.on_click()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GaussianSplatHandle.position"><code class="docutils literal notranslate"><span class="pre">GaussianSplatHandle.position</span></code></a></li>
 <li><a class="reference internal" href="#viser.GaussianSplatHandle.remove"><code class="docutils literal notranslate"><span class="pre">GaussianSplatHandle.remove()</span></code></a></li>
+<li><a class="reference internal" href="#viser.GaussianSplatHandle.remove_click_callback"><code class="docutils literal notranslate"><span class="pre">GaussianSplatHandle.remove_click_callback()</span></code></a></li>
 <li><a class="reference internal" href="#viser.GaussianSplatHandle.visible"><code class="docutils literal notranslate"><span class="pre">GaussianSplatHandle.visible</span></code></a></li>
 <li><a class="reference internal" href="#viser.GaussianSplatHandle.wxyz"><code class="docutils literal notranslate"><span class="pre">GaussianSplatHandle.wxyz</span></code></a></li>
 <li><a class="reference internal" href="#viser.GaussianSplatHandle.buffer"><code class="docutils literal notranslate"><span class="pre">GaussianSplatHandle.buffer</span></code></a></li>
