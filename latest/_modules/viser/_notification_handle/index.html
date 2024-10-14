@@ -394,7 +394,7 @@
 <span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">_NotificationHandleState</span><span class="p">:</span>
     <span class="n">websock_interface</span><span class="p">:</span> <span class="n">WebsockClientConnection</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">uuid</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">props</span><span class="p">:</span> <span class="n">NotificationProps</span>
 
 
@@ -425,13 +425,18 @@
                 <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_sync_with_client</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;show&quot;</span><span class="p">,</span> <span class="s2">&quot;update&quot;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="n">NotificationMessage</span><span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">props</span><span class="p">)</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">NotificationMessage</span><span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">uuid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">props</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
 <div class="viewcode-block" id="NotificationHandle.remove">
 <a class="viewcode-back" href="../../../client_handles/#viser.NotificationHandle.remove">[docs]</a>
     <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="n">RemoveNotificationMessage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">websock_interface</span><span class="o">.</span><span class="n">get_message_buffer</span><span class="p">()</span><span class="o">.</span><span class="n">remove_from_buffer</span><span class="p">(</span>
+            <span class="c1"># Don&#39;t send outdated GUI updates to new clients.</span>
+            <span class="c1"># This is brittle...</span>
+            <span class="k">lambda</span> <span class="n">message</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="s2">&quot;uuid&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">uuid</span>
+        <span class="p">)</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">RemoveNotificationMessage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">uuid</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
 </div>
 

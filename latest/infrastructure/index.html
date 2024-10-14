@@ -408,15 +408,12 @@ you’re building a web-based application from scratch.</p>
 <p>Handle for sending messages to and listening to messages from a single
 connected client.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="viser.infra.WebsockClientConnection.unsafe_send_message">
-<span class="sig-name descname"><span class="pre">unsafe_send_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#viser.infra.Message" title="viser.infra._messages.Message"><span class="pre">Message</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/viser/infra/_infra/#WebsockClientConnection.unsafe_send_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.infra.WebsockClientConnection.unsafe_send_message" title="Link to this definition">¶</a></dt>
-<dd><p>Send a message to a specific client.</p>
+<dt class="sig sig-object py" id="viser.infra.WebsockClientConnection.get_message_buffer">
+<span class="sig-name descname"><span class="pre">get_message_buffer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AsyncMessageBuffer</span></span></span><a class="reference internal" href="../_modules/viser/infra/_infra/#WebsockClientConnection.get_message_buffer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.infra.WebsockClientConnection.get_message_buffer" title="Link to this definition">¶</a></dt>
+<dd><p>Get client message buffer.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>message</strong> (<a class="reference internal" href="#viser.infra.Message" title="viser.infra._messages.Message"><em>Message</em></a>)</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>AsyncMessageBuffer</em></p>
 </dd>
 </dl>
 </dd></dl>
@@ -553,14 +550,11 @@ serialized and can be used for playback.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="viser.infra.WebsockMessageHandler.unsafe_send_message">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">unsafe_send_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#viser.infra.Message" title="viser.infra._messages.Message"><span class="pre">Message</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/viser/infra/_infra/#WebsockMessageHandler.unsafe_send_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.infra.WebsockMessageHandler.unsafe_send_message" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="viser.infra.WebsockMessageHandler.get_message_buffer">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_message_buffer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AsyncMessageBuffer</span></span></span><a class="reference internal" href="../_modules/viser/infra/_infra/#WebsockMessageHandler.get_message_buffer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.infra.WebsockMessageHandler.get_message_buffer" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>message</strong> (<a class="reference internal" href="#viser.infra.Message" title="viser.infra._messages.Message"><em>Message</em></a>)</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>AsyncMessageBuffer</em></p>
 </dd>
 </dl>
 </dd></dl>
@@ -674,18 +668,12 @@ messages. 1 sends windowed messages.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="viser.infra.WebsockServer.unsafe_send_message">
-<span class="sig-name descname"><span class="pre">unsafe_send_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#viser.infra.Message" title="viser.infra._messages.Message"><span class="pre">Message</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/viser/infra/_infra/#WebsockServer.unsafe_send_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.infra.WebsockServer.unsafe_send_message" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="viser.infra.WebsockServer.get_message_buffer">
+<span class="sig-name descname"><span class="pre">get_message_buffer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AsyncMessageBuffer</span></span></span><a class="reference internal" href="../_modules/viser/infra/_infra/#WebsockServer.get_message_buffer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.infra.WebsockServer.get_message_buffer" title="Link to this definition">¶</a></dt>
 <dd><p>Pushes a message onto the broadcast queue. Message will be sent to all clients.</p>
-<p>Broadcasted messages are persistent: if a new client connects to the server,
-they will receive a buffered set of previously broadcasted messages. The buffer
-is culled using the value of <code class="docutils literal notranslate"><span class="pre">message.redundancy_key()</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>message</strong> (<a class="reference internal" href="#viser.infra.Message" title="viser.infra._messages.Message"><em>Message</em></a>)</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>AsyncMessageBuffer</em></p>
 </dd>
 </dl>
 </dd></dl>
@@ -954,7 +942,7 @@ TypeScript annotation corresponding to a dataclass field.</p>
             <ul>
 <li><a class="reference internal" href="#">Communication</a><ul>
 <li><a class="reference internal" href="#viser.infra.WebsockClientConnection"><code class="docutils literal notranslate"><span class="pre">WebsockClientConnection</span></code></a><ul>
-<li><a class="reference internal" href="#viser.infra.WebsockClientConnection.unsafe_send_message"><code class="docutils literal notranslate"><span class="pre">WebsockClientConnection.unsafe_send_message()</span></code></a></li>
+<li><a class="reference internal" href="#viser.infra.WebsockClientConnection.get_message_buffer"><code class="docutils literal notranslate"><span class="pre">WebsockClientConnection.get_message_buffer()</span></code></a></li>
 <li><a class="reference internal" href="#viser.infra.WebsockClientConnection.atomic"><code class="docutils literal notranslate"><span class="pre">WebsockClientConnection.atomic()</span></code></a></li>
 <li><a class="reference internal" href="#viser.infra.WebsockClientConnection.queue_message"><code class="docutils literal notranslate"><span class="pre">WebsockClientConnection.queue_message()</span></code></a></li>
 <li><a class="reference internal" href="#viser.infra.WebsockClientConnection.register_handler"><code class="docutils literal notranslate"><span class="pre">WebsockClientConnection.register_handler()</span></code></a></li>
@@ -966,7 +954,7 @@ TypeScript annotation corresponding to a dataclass field.</p>
 <li><a class="reference internal" href="#viser.infra.WebsockMessageHandler.start_recording"><code class="docutils literal notranslate"><span class="pre">WebsockMessageHandler.start_recording()</span></code></a></li>
 <li><a class="reference internal" href="#viser.infra.WebsockMessageHandler.register_handler"><code class="docutils literal notranslate"><span class="pre">WebsockMessageHandler.register_handler()</span></code></a></li>
 <li><a class="reference internal" href="#viser.infra.WebsockMessageHandler.unregister_handler"><code class="docutils literal notranslate"><span class="pre">WebsockMessageHandler.unregister_handler()</span></code></a></li>
-<li><a class="reference internal" href="#viser.infra.WebsockMessageHandler.unsafe_send_message"><code class="docutils literal notranslate"><span class="pre">WebsockMessageHandler.unsafe_send_message()</span></code></a></li>
+<li><a class="reference internal" href="#viser.infra.WebsockMessageHandler.get_message_buffer"><code class="docutils literal notranslate"><span class="pre">WebsockMessageHandler.get_message_buffer()</span></code></a></li>
 <li><a class="reference internal" href="#viser.infra.WebsockMessageHandler.queue_message"><code class="docutils literal notranslate"><span class="pre">WebsockMessageHandler.queue_message()</span></code></a></li>
 <li><a class="reference internal" href="#viser.infra.WebsockMessageHandler.atomic"><code class="docutils literal notranslate"><span class="pre">WebsockMessageHandler.atomic()</span></code></a></li>
 </ul>
@@ -976,7 +964,7 @@ TypeScript annotation corresponding to a dataclass field.</p>
 <li><a class="reference internal" href="#viser.infra.WebsockServer.stop"><code class="docutils literal notranslate"><span class="pre">WebsockServer.stop()</span></code></a></li>
 <li><a class="reference internal" href="#viser.infra.WebsockServer.on_client_connect"><code class="docutils literal notranslate"><span class="pre">WebsockServer.on_client_connect()</span></code></a></li>
 <li><a class="reference internal" href="#viser.infra.WebsockServer.on_client_disconnect"><code class="docutils literal notranslate"><span class="pre">WebsockServer.on_client_disconnect()</span></code></a></li>
-<li><a class="reference internal" href="#viser.infra.WebsockServer.unsafe_send_message"><code class="docutils literal notranslate"><span class="pre">WebsockServer.unsafe_send_message()</span></code></a></li>
+<li><a class="reference internal" href="#viser.infra.WebsockServer.get_message_buffer"><code class="docutils literal notranslate"><span class="pre">WebsockServer.get_message_buffer()</span></code></a></li>
 <li><a class="reference internal" href="#viser.infra.WebsockServer.flush"><code class="docutils literal notranslate"><span class="pre">WebsockServer.flush()</span></code></a></li>
 <li><a class="reference internal" href="#viser.infra.WebsockServer.flush_client"><code class="docutils literal notranslate"><span class="pre">WebsockServer.flush_client()</span></code></a></li>
 <li><a class="reference internal" href="#viser.infra.WebsockServer.atomic"><code class="docutils literal notranslate"><span class="pre">WebsockServer.atomic()</span></code></a></li>

@@ -580,7 +580,10 @@
         <span class="kn">from</span> <span class="nn">._scene_api</span> <span class="kn">import</span> <span class="n">cast_vector</span>
 
         <span class="n">wxyz_cast</span> <span class="o">=</span> <span class="n">cast_vector</span><span class="p">(</span><span class="n">wxyz</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">wxyz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">wxyz</span><span class="p">)</span>
+        <span class="n">wxyz_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">wxyz</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">wxyz_cast</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">wxyz</span><span class="p">):</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">wxyz</span> <span class="o">=</span> <span class="n">wxyz_array</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
             <span class="n">_messages</span><span class="o">.</span><span class="n">SetOrientationMessage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">wxyz_cast</span><span class="p">)</span>
         <span class="p">)</span>
@@ -597,7 +600,10 @@
         <span class="kn">from</span> <span class="nn">._scene_api</span> <span class="kn">import</span> <span class="n">cast_vector</span>
 
         <span class="n">position_cast</span> <span class="o">=</span> <span class="n">cast_vector</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+        <span class="n">position_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">position_array</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">position</span><span class="p">):</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">position_array</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
             <span class="n">_messages</span><span class="o">.</span><span class="n">SetPositionMessage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">position_cast</span><span class="p">)</span>
         <span class="p">)</span>
@@ -626,6 +632,7 @@
             <span class="k">return</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">removed</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">_handle_from_node_name</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
             <span class="n">_messages</span><span class="o">.</span><span class="n">RemoveSceneNodeMessage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
         <span class="p">)</span></div>
@@ -872,7 +879,10 @@
         <span class="kn">from</span> <span class="nn">._scene_api</span> <span class="kn">import</span> <span class="n">cast_vector</span>
 
         <span class="n">wxyz_cast</span> <span class="o">=</span> <span class="n">cast_vector</span><span class="p">(</span><span class="n">wxyz</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">wxyz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">wxyz</span><span class="p">)</span>
+        <span class="n">wxyz_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">wxyz</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">wxyz_cast</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">wxyz</span><span class="p">):</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">wxyz</span> <span class="o">=</span> <span class="n">wxyz_array</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
             <span class="n">_messages</span><span class="o">.</span><span class="n">SetBoneOrientationMessage</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">bone_index</span><span class="p">,</span> <span class="n">wxyz_cast</span>
@@ -891,7 +901,10 @@
         <span class="kn">from</span> <span class="nn">._scene_api</span> <span class="kn">import</span> <span class="n">cast_vector</span>
 
         <span class="n">position_cast</span> <span class="o">=</span> <span class="n">cast_vector</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+        <span class="n">position_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">position_array</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">position</span><span class="p">):</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">position_array</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
             <span class="n">_messages</span><span class="o">.</span><span class="n">SetBonePositionMessage</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">bone_index</span><span class="p">,</span> <span class="n">position_cast</span>
@@ -1032,17 +1045,17 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_container_id</span> <span class="o">=</span> <span class="n">container_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_container_id_restore</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_children</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_gui_api</span><span class="o">.</span><span class="n">_container_handle_from_id</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_container_id</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_gui_api</span><span class="o">.</span><span class="n">_container_handle_from_uuid</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_container_id</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span>
 
     <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Gui3dContainerHandle</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_container_id_restore</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gui_api</span><span class="o">.</span><span class="n">_get_container_id</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_gui_api</span><span class="o">.</span><span class="n">_set_container_id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_container_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_container_id_restore</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gui_api</span><span class="o">.</span><span class="n">_get_container_uuid</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_gui_api</span><span class="o">.</span><span class="n">_set_container_uid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_container_id</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span>
 
     <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">del</span> <span class="n">args</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_container_id_restore</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_gui_api</span><span class="o">.</span><span class="n">_set_container_id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_container_id_restore</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_gui_api</span><span class="o">.</span><span class="n">_set_container_uid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_container_id_restore</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_container_id_restore</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="Gui3dContainerHandle.remove">
@@ -1056,7 +1069,7 @@
         <span class="c1"># Clean up contained GUI elements.</span>
         <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_children</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
             <span class="n">child</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_gui_api</span><span class="o">.</span><span class="n">_container_handle_from_id</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_container_id</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_gui_api</span><span class="o">.</span><span class="n">_container_handle_from_uuid</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_container_id</span><span class="p">)</span></div>
 </div>
 
 </pre></div>

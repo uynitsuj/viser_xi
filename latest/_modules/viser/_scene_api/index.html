@@ -529,8 +529,8 @@
             <span class="n">axes_radius</span><span class="o">=</span><span class="mf">0.0125</span><span class="p">,</span>
         <span class="p">)</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle for the world axes, which are created by default.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">owner</span><span class="p">,</span> <span class="n">ViserServer</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">world_axes</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">world_axes</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">register_handler</span><span class="p">(</span>
             <span class="n">_messages</span><span class="o">.</span><span class="n">TransformControlsUpdateMessage</span><span class="p">,</span>
@@ -2032,10 +2032,9 @@
         <span class="c1"># Update state.</span>
         <span class="n">wxyz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">wxyz</span><span class="p">)</span>
         <span class="n">position</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
-        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_owner</span><span class="o">.</span><span class="n">atomic</span><span class="p">():</span>
-            <span class="n">handle</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">wxyz</span> <span class="o">=</span> <span class="n">wxyz</span>
-            <span class="n">handle</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">position</span>
-            <span class="n">handle</span><span class="o">.</span><span class="n">_impl_aux</span><span class="o">.</span><span class="n">last_updated</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">handle</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">wxyz</span> <span class="o">=</span> <span class="n">wxyz</span>
+        <span class="n">handle</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">position</span>
+        <span class="n">handle</span><span class="o">.</span><span class="n">_impl_aux</span><span class="o">.</span><span class="n">last_updated</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
         <span class="c1"># Trigger callbacks.</span>
         <span class="k">for</span> <span class="n">cb</span> <span class="ow">in</span> <span class="n">handle</span><span class="o">.</span><span class="n">_impl_aux</span><span class="o">.</span><span class="n">update_cb</span><span class="p">:</span>
@@ -2210,7 +2209,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Avoids circular import.</span>
-        <span class="kn">from</span> <span class="nn">._gui_api</span> <span class="kn">import</span> <span class="n">_make_unique_id</span>
+        <span class="kn">from</span> <span class="nn">._gui_api</span> <span class="kn">import</span> <span class="n">_make_uuid</span>
 
         <span class="c1"># New name to make the type checker happy; ViserServer and ClientHandle inherit</span>
         <span class="c1"># from both GuiApi and MessageApi. The pattern below is unideal.</span>
@@ -2221,12 +2220,12 @@
         <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_from_node_name</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_handle_from_node_name</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
 
-        <span class="n">container_id</span> <span class="o">=</span> <span class="n">_make_unique_id</span><span class="p">()</span>
+        <span class="n">container_id</span> <span class="o">=</span> <span class="n">_make_uuid</span><span class="p">()</span>
         <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">Gui3DMessage</span><span class="p">(</span>
             <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
             <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">Gui3DProps</span><span class="p">(</span>
                 <span class="n">order</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span>
-                <span class="n">container_id</span><span class="o">=</span><span class="n">container_id</span><span class="p">,</span>
+                <span class="n">container_uuid</span><span class="o">=</span><span class="n">container_id</span><span class="p">,</span>
             <span class="p">),</span>
         <span class="p">)</span>
         <span class="n">node_handle</span> <span class="o">=</span> <span class="n">SceneNodeHandle</span><span class="o">.</span><span class="n">_make</span><span class="p">(</span>

@@ -441,7 +441,7 @@
     <span class="n">UploadedFile</span><span class="p">,</span>
     <span class="n">_GuiHandleState</span><span class="p">,</span>
     <span class="n">_GuiInputHandle</span><span class="p">,</span>
-    <span class="n">_make_unique_id</span><span class="p">,</span>
+    <span class="n">_make_uuid</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">._icons</span> <span class="kn">import</span> <span class="n">svg_from_icon</span>
 <span class="kn">from</span> <span class="nn">._icons_enum</span> <span class="kn">import</span> <span class="n">IconName</span>
@@ -583,8 +583,8 @@
         <span class="p">)</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Interface for sending and listening to messages.&quot;&quot;&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_gui_input_handle_from_id</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">_GuiInputHandle</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_container_handle_from_id</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">GuiContainerProtocol</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_gui_input_handle_from_uuid</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">_GuiInputHandle</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_container_handle_from_uuid</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">GuiContainerProtocol</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;root&quot;</span><span class="p">:</span> <span class="n">_RootGuiContainer</span><span class="p">({})</span>
         <span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_current_file_upload_states</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">_FileUploadState</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
@@ -607,7 +607,7 @@
         <span class="bp">self</span><span class="p">,</span> <span class="n">client_id</span><span class="p">:</span> <span class="n">ClientId</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">_messages</span><span class="o">.</span><span class="n">GuiUpdateMessage</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Callback for handling GUI messages.&quot;&quot;&quot;</span>
-        <span class="n">handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gui_input_handle_from_id</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gui_input_handle_from_uuid</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">uuid</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">handle</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="n">handle_state</span> <span class="o">=</span> <span class="n">handle</span><span class="o">.</span><span class="n">_impl</span>
@@ -653,7 +653,9 @@
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_owner</span><span class="p">,</span> <span class="n">ClientHandle</span><span class="p">):</span>
                 <span class="n">client</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_owner</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_owner</span><span class="p">,</span> <span class="n">ViserServer</span><span class="p">):</span>
-                <span class="n">client</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_owner</span><span class="o">.</span><span class="n">get_clients</span><span class="p">()[</span><span class="n">client_id</span><span class="p">]</span>
+                <span class="n">client</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_owner</span><span class="o">.</span><span class="n">_connected_clients</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">client</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">return</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">assert</span> <span class="kc">False</span>
 
@@ -665,7 +667,7 @@
     <span class="k">def</span> <span class="nf">_handle_file_transfer_start</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">client_id</span><span class="p">:</span> <span class="n">ClientId</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">_messages</span><span class="o">.</span><span class="n">FileTransferStart</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">message</span><span class="o">.</span><span class="n">source_component_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gui_input_handle_from_id</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">message</span><span class="o">.</span><span class="n">source_component_uuid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gui_input_handle_from_uuid</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_current_file_upload_states</span><span class="p">[</span><span class="n">message</span><span class="o">.</span><span class="n">transfer_uuid</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">message</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
@@ -682,7 +684,7 @@
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">message</span><span class="o">.</span><span class="n">transfer_uuid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_file_upload_states</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="k">assert</span> <span class="n">message</span><span class="o">.</span><span class="n">source_component_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gui_input_handle_from_id</span>
+        <span class="k">assert</span> <span class="n">message</span><span class="o">.</span><span class="n">source_component_uuid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gui_input_handle_from_uuid</span>
 
         <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_file_upload_states</span><span class="p">[</span><span class="n">message</span><span class="o">.</span><span class="n">transfer_uuid</span><span class="p">]</span>
         <span class="n">state</span><span class="p">[</span><span class="s2">&quot;parts&quot;</span><span class="p">][</span><span class="n">message</span><span class="o">.</span><span class="n">part</span><span class="p">]</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">content</span>
@@ -694,7 +696,7 @@
             <span class="c1"># Send ack to the server.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
                 <span class="n">FileTransferPartAck</span><span class="p">(</span>
-                    <span class="n">source_component_id</span><span class="o">=</span><span class="n">message</span><span class="o">.</span><span class="n">source_component_id</span><span class="p">,</span>
+                    <span class="n">source_component_uuid</span><span class="o">=</span><span class="n">message</span><span class="o">.</span><span class="n">source_component_uuid</span><span class="p">,</span>
                     <span class="n">transfer_uuid</span><span class="o">=</span><span class="n">message</span><span class="o">.</span><span class="n">transfer_uuid</span><span class="p">,</span>
                     <span class="n">transferred_bytes</span><span class="o">=</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;transferred_bytes&quot;</span><span class="p">],</span>
                     <span class="n">total_bytes</span><span class="o">=</span><span class="n">total_bytes</span><span class="p">,</span>
@@ -708,7 +710,9 @@
         <span class="k">assert</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;transferred_bytes&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">total_bytes</span>
         <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_file_upload_states</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">transfer_uuid</span><span class="p">)</span>
 
-        <span class="n">handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gui_input_handle_from_id</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">source_component_id</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gui_input_handle_from_uuid</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="n">message</span><span class="o">.</span><span class="n">source_component_uuid</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="n">handle</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
 
@@ -720,9 +724,8 @@
         <span class="p">)</span>
 
         <span class="c1"># Update state.</span>
-        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_owner</span><span class="o">.</span><span class="n">atomic</span><span class="p">():</span>
-            <span class="n">handle_state</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
-            <span class="n">handle_state</span><span class="o">.</span><span class="n">update_timestamp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">handle_state</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">handle_state</span><span class="o">.</span><span class="n">update_timestamp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
         <span class="c1"># Trigger callbacks.</span>
         <span class="k">for</span> <span class="n">cb</span> <span class="ow">in</span> <span class="n">handle_state</span><span class="o">.</span><span class="n">update_cb</span><span class="p">:</span>
@@ -732,19 +735,21 @@
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_owner</span><span class="p">,</span> <span class="n">ClientHandle</span><span class="p">):</span>
                 <span class="n">client</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_owner</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_owner</span><span class="p">,</span> <span class="n">ViserServer</span><span class="p">):</span>
-                <span class="n">client</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_owner</span><span class="o">.</span><span class="n">get_clients</span><span class="p">()[</span><span class="n">client_id</span><span class="p">]</span>
+                <span class="n">client</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_owner</span><span class="o">.</span><span class="n">_connected_clients</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">client</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">return</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">assert</span> <span class="kc">False</span>
 
             <span class="n">cb</span><span class="p">(</span><span class="n">GuiEvent</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">client_id</span><span class="p">,</span> <span class="n">handle</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">_get_container_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_get_container_uuid</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get container ID associated with the current thread.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_target_container_from_thread_id</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">get_ident</span><span class="p">(),</span> <span class="s2">&quot;root&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_set_container_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">container_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_set_container_uid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">container_uuid</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set container ID associated with the current thread.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_target_container_from_thread_id</span><span class="p">[</span><span class="n">threading</span><span class="o">.</span><span class="n">get_ident</span><span class="p">()]</span> <span class="o">=</span> <span class="n">container_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_target_container_from_thread_id</span><span class="p">[</span><span class="n">threading</span><span class="o">.</span><span class="n">get_ident</span><span class="p">()]</span> <span class="o">=</span> <span class="n">container_uuid</span>
 
 <div class="viewcode-block" id="GuiApi.reset">
 <a class="viewcode-back" href="../../../gui_api/#viser.GuiApi.reset">[docs]</a>
@@ -863,7 +868,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            A handle that can be used as a context to populate the folder.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">folder_container_id</span> <span class="o">=</span> <span class="n">_make_unique_id</span><span class="p">()</span>
+        <span class="n">folder_container_id</span> <span class="o">=</span> <span class="n">_make_uuid</span><span class="p">()</span>
         <span class="n">order</span> <span class="o">=</span> <span class="n">_apply_default_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
         <span class="n">props</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">GuiFolderProps</span><span class="p">(</span>
             <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span>
@@ -873,8 +878,8 @@
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
             <span class="n">_messages</span><span class="o">.</span><span class="n">GuiFolderMessage</span><span class="p">(</span>
-                <span class="nb">id</span><span class="o">=</span><span class="n">folder_container_id</span><span class="p">,</span>
-                <span class="n">container_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_id</span><span class="p">(),</span>
+                <span class="n">uuid</span><span class="o">=</span><span class="n">folder_container_id</span><span class="p">,</span>
+                <span class="n">container_uuid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_uuid</span><span class="p">(),</span>
                 <span class="n">props</span><span class="o">=</span><span class="n">props</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="p">)</span>
@@ -884,7 +889,7 @@
                 <span class="bp">self</span><span class="p">,</span>
                 <span class="kc">None</span><span class="p">,</span>
                 <span class="n">props</span><span class="o">=</span><span class="n">props</span><span class="p">,</span>
-                <span class="n">parent_container_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_id</span><span class="p">(),</span>
+                <span class="n">parent_container_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_uuid</span><span class="p">(),</span>
             <span class="p">)</span>
         <span class="p">)</span></div>
 
@@ -906,18 +911,18 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            A handle that can be used as a context to populate the modal.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">modal_container_id</span> <span class="o">=</span> <span class="n">_make_unique_id</span><span class="p">()</span>
+        <span class="n">modal_container_id</span> <span class="o">=</span> <span class="n">_make_uuid</span><span class="p">()</span>
         <span class="n">order</span> <span class="o">=</span> <span class="n">_apply_default_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span>
             <span class="n">_messages</span><span class="o">.</span><span class="n">GuiModalMessage</span><span class="p">(</span>
                 <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span>
-                <span class="nb">id</span><span class="o">=</span><span class="n">modal_container_id</span><span class="p">,</span>
+                <span class="n">uuid</span><span class="o">=</span><span class="n">modal_container_id</span><span class="p">,</span>
                 <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">GuiModalHandle</span><span class="p">(</span>
             <span class="n">_gui_api</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
-            <span class="n">_id</span><span class="o">=</span><span class="n">modal_container_id</span><span class="p">,</span>
+            <span class="n">_uid</span><span class="o">=</span><span class="n">modal_container_id</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 
@@ -937,12 +942,12 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            A handle that can be used as a context to populate the tab group.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">tab_group_id</span> <span class="o">=</span> <span class="n">_make_unique_id</span><span class="p">()</span>
+        <span class="n">tab_group_id</span> <span class="o">=</span> <span class="n">_make_uuid</span><span class="p">()</span>
         <span class="n">order</span> <span class="o">=</span> <span class="n">_apply_default_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
 
         <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">GuiTabGroupMessage</span><span class="p">(</span>
-            <span class="nb">id</span><span class="o">=</span><span class="n">tab_group_id</span><span class="p">,</span>
-            <span class="n">container_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_id</span><span class="p">(),</span>
+            <span class="n">uuid</span><span class="o">=</span><span class="n">tab_group_id</span><span class="p">,</span>
+            <span class="n">container_uuid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_uuid</span><span class="p">(),</span>
             <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiTabGroupProps</span><span class="p">(</span>
                 <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span>
                 <span class="n">_tab_labels</span><span class="o">=</span><span class="p">(),</span>
@@ -954,11 +959,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">GuiTabGroupHandle</span><span class="p">(</span>
             <span class="n">_GuiHandleState</span><span class="p">(</span>
-                <span class="n">message</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="n">message</span><span class="o">.</span><span class="n">uuid</span><span class="p">,</span>
                 <span class="bp">self</span><span class="p">,</span>
                 <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                 <span class="n">props</span><span class="o">=</span><span class="n">message</span><span class="o">.</span><span class="n">props</span><span class="p">,</span>
-                <span class="n">parent_container_id</span><span class="o">=</span><span class="n">message</span><span class="o">.</span><span class="n">container_id</span><span class="p">,</span>
+                <span class="n">parent_container_id</span><span class="o">=</span><span class="n">message</span><span class="o">.</span><span class="n">container_uuid</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="p">)</span></div>
 
@@ -984,8 +989,8 @@
 <span class="sd">            A handle that can be used to interact with the GUI element.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">GuiMarkdownMessage</span><span class="p">(</span>
-            <span class="nb">id</span><span class="o">=</span><span class="n">_make_unique_id</span><span class="p">(),</span>
-            <span class="n">container_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_id</span><span class="p">(),</span>
+            <span class="n">uuid</span><span class="o">=</span><span class="n">_make_uuid</span><span class="p">(),</span>
+            <span class="n">container_uuid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_uuid</span><span class="p">(),</span>
             <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiMarkdownProps</span><span class="p">(</span>
                 <span class="n">order</span><span class="o">=</span><span class="n">_apply_default_order</span><span class="p">(</span><span class="n">order</span><span class="p">),</span>
                 <span class="n">_markdown</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
@@ -996,11 +1001,11 @@
 
         <span class="n">handle</span> <span class="o">=</span> <span class="n">GuiMarkdownHandle</span><span class="p">(</span>
             <span class="n">_GuiHandleState</span><span class="p">(</span>
-                <span class="n">message</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="n">message</span><span class="o">.</span><span class="n">uuid</span><span class="p">,</span>
                 <span class="bp">self</span><span class="p">,</span>
                 <span class="kc">None</span><span class="p">,</span>
                 <span class="n">props</span><span class="o">=</span><span class="n">message</span><span class="o">.</span><span class="n">props</span><span class="p">,</span>
-                <span class="n">parent_container_id</span><span class="o">=</span><span class="n">message</span><span class="o">.</span><span class="n">container_id</span><span class="p">,</span>
+                <span class="n">parent_container_id</span><span class="o">=</span><span class="n">message</span><span class="o">.</span><span class="n">container_uuid</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="n">_content</span><span class="o">=</span><span class="n">content</span><span class="p">,</span>
             <span class="n">_image_root</span><span class="o">=</span><span class="n">image_root</span><span class="p">,</span>
@@ -1065,8 +1070,8 @@
         <span class="c1"># After plotly.min.js has been sent, we can send the plotly figure.</span>
         <span class="c1"># Empty string for `plotly_json_str` is a signal to the client to render nothing.</span>
         <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">GuiPlotlyMessage</span><span class="p">(</span>
-            <span class="nb">id</span><span class="o">=</span><span class="n">_make_unique_id</span><span class="p">(),</span>
-            <span class="n">container_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_id</span><span class="p">(),</span>
+            <span class="n">uuid</span><span class="o">=</span><span class="n">_make_uuid</span><span class="p">(),</span>
+            <span class="n">container_uuid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_uuid</span><span class="p">(),</span>
             <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiPlotlyProps</span><span class="p">(</span>
                 <span class="n">order</span><span class="o">=</span><span class="n">_apply_default_order</span><span class="p">(</span><span class="n">order</span><span class="p">),</span>
                 <span class="n">_plotly_json_str</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
@@ -1078,11 +1083,11 @@
 
         <span class="n">handle</span> <span class="o">=</span> <span class="n">GuiPlotlyHandle</span><span class="p">(</span>
             <span class="n">_GuiHandleState</span><span class="p">(</span>
-                <span class="n">message</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="n">message</span><span class="o">.</span><span class="n">uuid</span><span class="p">,</span>
                 <span class="bp">self</span><span class="p">,</span>
                 <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                 <span class="n">props</span><span class="o">=</span><span class="n">message</span><span class="o">.</span><span class="n">props</span><span class="p">,</span>
-                <span class="n">parent_container_id</span><span class="o">=</span><span class="n">message</span><span class="o">.</span><span class="n">container_id</span><span class="p">,</span>
+                <span class="n">parent_container_id</span><span class="o">=</span><span class="n">message</span><span class="o">.</span><span class="n">container_uuid</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="n">_figure</span><span class="o">=</span><span class="n">figure</span><span class="p">,</span>
         <span class="p">)</span>
@@ -1122,15 +1127,15 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Re-wrap the GUI handle with a button interface.</span>
-        <span class="nb">id</span> <span class="o">=</span> <span class="n">_make_unique_id</span><span class="p">()</span>
+        <span class="n">uuid</span> <span class="o">=</span> <span class="n">_make_uuid</span><span class="p">()</span>
         <span class="n">order</span> <span class="o">=</span> <span class="n">_apply_default_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">GuiButtonHandle</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_create_gui_input</span><span class="p">(</span>
                 <span class="n">value</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                 <span class="n">message</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiButtonMessage</span><span class="p">(</span>
                     <span class="n">value</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                    <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
-                    <span class="n">container_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_id</span><span class="p">(),</span>
+                    <span class="n">uuid</span><span class="o">=</span><span class="n">uuid</span><span class="p">,</span>
+                    <span class="n">container_uuid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_uuid</span><span class="p">(),</span>
                     <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiButtonProps</span><span class="p">(</span>
                         <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span>
                         <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
@@ -1177,14 +1182,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Re-wrap the GUI handle with a button interface.</span>
-        <span class="nb">id</span> <span class="o">=</span> <span class="n">_make_unique_id</span><span class="p">()</span>
+        <span class="n">uuid</span> <span class="o">=</span> <span class="n">_make_uuid</span><span class="p">()</span>
         <span class="n">order</span> <span class="o">=</span> <span class="n">_apply_default_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">GuiUploadButtonHandle</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_create_gui_input</span><span class="p">(</span>
                 <span class="n">value</span><span class="o">=</span><span class="n">UploadedFile</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">),</span>
                 <span class="n">message</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiUploadButtonMessage</span><span class="p">(</span>
-                    <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
-                    <span class="n">container_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_id</span><span class="p">(),</span>
+                    <span class="n">uuid</span><span class="o">=</span><span class="n">uuid</span><span class="p">,</span>
+                    <span class="n">container_uuid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_uuid</span><span class="p">(),</span>
                     <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiUploadButtonProps</span><span class="p">(</span>
                         <span class="n">disabled</span><span class="o">=</span><span class="n">disabled</span><span class="p">,</span>
                         <span class="n">visible</span><span class="o">=</span><span class="n">visible</span><span class="p">,</span>
@@ -1226,15 +1231,15 @@
 <span class="sd">            A handle that can be used to interact with the GUI element.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="nb">id</span> <span class="o">=</span> <span class="n">_make_unique_id</span><span class="p">()</span>
+        <span class="n">uuid</span> <span class="o">=</span> <span class="n">_make_uuid</span><span class="p">()</span>
         <span class="n">order</span> <span class="o">=</span> <span class="n">_apply_default_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">GuiButtonGroupHandle</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_create_gui_input</span><span class="p">(</span>
                 <span class="n">value</span><span class="p">,</span>
                 <span class="n">message</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiButtonGroupMessage</span><span class="p">(</span>
                     <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
-                    <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
-                    <span class="n">container_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_id</span><span class="p">(),</span>
+                    <span class="n">uuid</span><span class="o">=</span><span class="n">uuid</span><span class="p">,</span>
+                    <span class="n">container_uuid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_uuid</span><span class="p">(),</span>
                     <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiButtonGroupProps</span><span class="p">(</span>
                         <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span>
                         <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
@@ -1274,15 +1279,15 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">initial_value</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
-        <span class="nb">id</span> <span class="o">=</span> <span class="n">_make_unique_id</span><span class="p">()</span>
+        <span class="n">uuid</span> <span class="o">=</span> <span class="n">_make_uuid</span><span class="p">()</span>
         <span class="n">order</span> <span class="o">=</span> <span class="n">_apply_default_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">GuiCheckboxHandle</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_create_gui_input</span><span class="p">(</span>
                 <span class="n">value</span><span class="p">,</span>
                 <span class="n">message</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiCheckboxMessage</span><span class="p">(</span>
                     <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
-                    <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
-                    <span class="n">container_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_id</span><span class="p">(),</span>
+                    <span class="n">uuid</span><span class="o">=</span><span class="n">uuid</span><span class="p">,</span>
+                    <span class="n">container_uuid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_uuid</span><span class="p">(),</span>
                     <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiCheckboxProps</span><span class="p">(</span>
                         <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span>
                         <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
@@ -1321,15 +1326,15 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">initial_value</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
-        <span class="nb">id</span> <span class="o">=</span> <span class="n">_make_unique_id</span><span class="p">()</span>
+        <span class="n">uuid</span> <span class="o">=</span> <span class="n">_make_uuid</span><span class="p">()</span>
         <span class="n">order</span> <span class="o">=</span> <span class="n">_apply_default_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">GuiTextHandle</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_create_gui_input</span><span class="p">(</span>
                 <span class="n">value</span><span class="p">,</span>
                 <span class="n">message</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiTextMessage</span><span class="p">(</span>
                     <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
-                    <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
-                    <span class="n">container_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_id</span><span class="p">(),</span>
+                    <span class="n">uuid</span><span class="o">=</span><span class="n">uuid</span><span class="p">,</span>
+                    <span class="n">container_uuid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_uuid</span><span class="p">(),</span>
                     <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiTextProps</span><span class="p">(</span>
                         <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span>
                         <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
@@ -1392,15 +1397,15 @@
 
         <span class="k">assert</span> <span class="n">step</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
 
-        <span class="nb">id</span> <span class="o">=</span> <span class="n">_make_unique_id</span><span class="p">()</span>
+        <span class="n">uuid</span> <span class="o">=</span> <span class="n">_make_uuid</span><span class="p">()</span>
         <span class="n">order</span> <span class="o">=</span> <span class="n">_apply_default_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">GuiNumberHandle</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_create_gui_input</span><span class="p">(</span>
                 <span class="n">value</span><span class="p">,</span>
                 <span class="n">message</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiNumberMessage</span><span class="p">(</span>
                     <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
-                    <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
-                    <span class="n">container_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_id</span><span class="p">(),</span>
+                    <span class="n">uuid</span><span class="o">=</span><span class="n">uuid</span><span class="p">,</span>
+                    <span class="n">container_uuid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_uuid</span><span class="p">(),</span>
                     <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiNumberProps</span><span class="p">(</span>
                         <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span>
                         <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
@@ -1452,7 +1457,7 @@
         <span class="n">value</span> <span class="o">=</span> <span class="n">cast_vector</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
         <span class="nb">min</span> <span class="o">=</span> <span class="n">cast_vector</span><span class="p">(</span><span class="nb">min</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">if</span> <span class="nb">min</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="nb">max</span> <span class="o">=</span> <span class="n">cast_vector</span><span class="p">(</span><span class="nb">max</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">if</span> <span class="nb">max</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="nb">id</span> <span class="o">=</span> <span class="n">_make_unique_id</span><span class="p">()</span>
+        <span class="n">uuid</span> <span class="o">=</span> <span class="n">_make_uuid</span><span class="p">()</span>
         <span class="n">order</span> <span class="o">=</span> <span class="n">_apply_default_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">step</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -1469,8 +1474,8 @@
                 <span class="n">value</span><span class="p">,</span>
                 <span class="n">message</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiVector2Message</span><span class="p">(</span>
                     <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
-                    <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
-                    <span class="n">container_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_id</span><span class="p">(),</span>
+                    <span class="n">uuid</span><span class="o">=</span><span class="n">uuid</span><span class="p">,</span>
+                    <span class="n">container_uuid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_uuid</span><span class="p">(),</span>
                     <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiVector2Props</span><span class="p">(</span>
                         <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span>
                         <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
@@ -1521,7 +1526,7 @@
         <span class="n">value</span> <span class="o">=</span> <span class="n">cast_vector</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="nb">min</span> <span class="o">=</span> <span class="n">cast_vector</span><span class="p">(</span><span class="nb">min</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="k">if</span> <span class="nb">min</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="nb">max</span> <span class="o">=</span> <span class="n">cast_vector</span><span class="p">(</span><span class="nb">max</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="k">if</span> <span class="nb">max</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="nb">id</span> <span class="o">=</span> <span class="n">_make_unique_id</span><span class="p">()</span>
+        <span class="n">uuid</span> <span class="o">=</span> <span class="n">_make_uuid</span><span class="p">()</span>
         <span class="n">order</span> <span class="o">=</span> <span class="n">_apply_default_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">step</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -1538,8 +1543,8 @@
                 <span class="n">value</span><span class="p">,</span>
                 <span class="n">message</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiVector3Message</span><span class="p">(</span>
                     <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
-                    <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
-                    <span class="n">container_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_id</span><span class="p">(),</span>
+                    <span class="n">uuid</span><span class="o">=</span><span class="n">uuid</span><span class="p">,</span>
+                    <span class="n">container_uuid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_uuid</span><span class="p">(),</span>
                     <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiVector3Props</span><span class="p">(</span>
                         <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span>
                         <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
@@ -1610,15 +1615,15 @@
         <span class="n">value</span> <span class="o">=</span> <span class="n">initial_value</span>
         <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">value</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="nb">id</span> <span class="o">=</span> <span class="n">_make_unique_id</span><span class="p">()</span>
+        <span class="n">uuid</span> <span class="o">=</span> <span class="n">_make_uuid</span><span class="p">()</span>
         <span class="n">order</span> <span class="o">=</span> <span class="n">_apply_default_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">GuiDropdownHandle</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_create_gui_input</span><span class="p">(</span>
                 <span class="n">value</span><span class="p">,</span>
                 <span class="n">message</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiDropdownMessage</span><span class="p">(</span>
                     <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
-                    <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
-                    <span class="n">container_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_id</span><span class="p">(),</span>
+                    <span class="n">uuid</span><span class="o">=</span><span class="n">uuid</span><span class="p">,</span>
+                    <span class="n">container_uuid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_uuid</span><span class="p">(),</span>
                     <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiDropdownProps</span><span class="p">(</span>
                         <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span>
                         <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
@@ -1657,8 +1662,8 @@
         <span class="k">assert</span> <span class="n">value</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">value</span> <span class="o">&lt;=</span> <span class="mi">100</span>
         <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">GuiProgressBarMessage</span><span class="p">(</span>
             <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
-            <span class="nb">id</span><span class="o">=</span><span class="n">_make_unique_id</span><span class="p">(),</span>
-            <span class="n">container_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_id</span><span class="p">(),</span>
+            <span class="n">uuid</span><span class="o">=</span><span class="n">_make_uuid</span><span class="p">(),</span>
+            <span class="n">container_uuid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_uuid</span><span class="p">(),</span>
             <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiProgressBarProps</span><span class="p">(</span>
                 <span class="n">order</span><span class="o">=</span><span class="n">_apply_default_order</span><span class="p">(</span><span class="n">order</span><span class="p">),</span>
                 <span class="n">animated</span><span class="o">=</span><span class="n">animated</span><span class="p">,</span>
@@ -1669,11 +1674,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
         <span class="n">handle</span> <span class="o">=</span> <span class="n">GuiProgressBarHandle</span><span class="p">(</span>
             <span class="n">_GuiHandleState</span><span class="p">(</span>
-                <span class="n">message</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="n">message</span><span class="o">.</span><span class="n">uuid</span><span class="p">,</span>
                 <span class="bp">self</span><span class="p">,</span>
                 <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
                 <span class="n">props</span><span class="o">=</span><span class="n">message</span><span class="o">.</span><span class="n">props</span><span class="p">,</span>
-                <span class="n">parent_container_id</span><span class="o">=</span><span class="n">message</span><span class="o">.</span><span class="n">container_id</span><span class="p">,</span>
+                <span class="n">parent_container_id</span><span class="o">=</span><span class="n">message</span><span class="o">.</span><span class="n">container_uuid</span><span class="p">,</span>
             <span class="p">),</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">handle</span></div>
@@ -1732,15 +1737,15 @@
         <span class="c1">#</span>
         <span class="c1"># assert type(min) == type(max) == type(step) == type(value)</span>
 
-        <span class="nb">id</span> <span class="o">=</span> <span class="n">_make_unique_id</span><span class="p">()</span>
+        <span class="n">uuid</span> <span class="o">=</span> <span class="n">_make_uuid</span><span class="p">()</span>
         <span class="n">order</span> <span class="o">=</span> <span class="n">_apply_default_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">GuiSliderHandle</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_create_gui_input</span><span class="p">(</span>
                 <span class="n">value</span><span class="p">,</span>
                 <span class="n">message</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiSliderMessage</span><span class="p">(</span>
                     <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
-                    <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
-                    <span class="n">container_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_id</span><span class="p">(),</span>
+                    <span class="n">uuid</span><span class="o">=</span><span class="n">uuid</span><span class="p">,</span>
+                    <span class="n">container_uuid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_uuid</span><span class="p">(),</span>
                     <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiSliderProps</span><span class="p">(</span>
                         <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span>
                         <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
@@ -1820,15 +1825,15 @@
         <span class="p">):</span>
             <span class="n">initial_value</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">initial_value</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
 
-        <span class="nb">id</span> <span class="o">=</span> <span class="n">_make_unique_id</span><span class="p">()</span>
+        <span class="n">uuid</span> <span class="o">=</span> <span class="n">_make_uuid</span><span class="p">()</span>
         <span class="n">order</span> <span class="o">=</span> <span class="n">_apply_default_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">GuiMultiSliderHandle</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_create_gui_input</span><span class="p">(</span>
                 <span class="n">value</span><span class="o">=</span><span class="n">initial_value</span><span class="p">,</span>
                 <span class="n">message</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiMultiSliderMessage</span><span class="p">(</span>
                     <span class="n">value</span><span class="o">=</span><span class="n">initial_value</span><span class="p">,</span>
-                    <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
-                    <span class="n">container_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_id</span><span class="p">(),</span>
+                    <span class="n">uuid</span><span class="o">=</span><span class="n">uuid</span><span class="p">,</span>
+                    <span class="n">container_uuid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_uuid</span><span class="p">(),</span>
                     <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiMultiSliderProps</span><span class="p">(</span>
                         <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span>
                         <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
@@ -1882,15 +1887,15 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">value</span> <span class="o">=</span> <span class="n">initial_value</span>
-        <span class="nb">id</span> <span class="o">=</span> <span class="n">_make_unique_id</span><span class="p">()</span>
+        <span class="n">uuid</span> <span class="o">=</span> <span class="n">_make_uuid</span><span class="p">()</span>
         <span class="n">order</span> <span class="o">=</span> <span class="n">_apply_default_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">GuiRgbHandle</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_create_gui_input</span><span class="p">(</span>
                 <span class="n">value</span><span class="p">,</span>
                 <span class="n">message</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiRgbMessage</span><span class="p">(</span>
                     <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
-                    <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
-                    <span class="n">container_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_id</span><span class="p">(),</span>
+                    <span class="n">uuid</span><span class="o">=</span><span class="n">uuid</span><span class="p">,</span>
+                    <span class="n">container_uuid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_uuid</span><span class="p">(),</span>
                     <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiRgbProps</span><span class="p">(</span>
                         <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span>
                         <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
@@ -1928,15 +1933,15 @@
 <span class="sd">            A handle that can be used to interact with the GUI element.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">initial_value</span>
-        <span class="nb">id</span> <span class="o">=</span> <span class="n">_make_unique_id</span><span class="p">()</span>
+        <span class="n">uuid</span> <span class="o">=</span> <span class="n">_make_uuid</span><span class="p">()</span>
         <span class="n">order</span> <span class="o">=</span> <span class="n">_apply_default_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">GuiRgbaHandle</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_create_gui_input</span><span class="p">(</span>
                 <span class="n">value</span><span class="p">,</span>
                 <span class="n">message</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiRgbaMessage</span><span class="p">(</span>
                     <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
-                    <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
-                    <span class="n">container_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_id</span><span class="p">(),</span>
+                    <span class="n">uuid</span><span class="o">=</span><span class="n">uuid</span><span class="p">,</span>
+                    <span class="n">container_uuid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_uuid</span><span class="p">(),</span>
                     <span class="n">props</span><span class="o">=</span><span class="n">_messages</span><span class="o">.</span><span class="n">GuiRgbaProps</span><span class="p">(</span>
                         <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span>
                         <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
@@ -1952,7 +1957,7 @@
 <div class="viewcode-block" id="GuiApi.GuiMessage">
 <a class="viewcode-back" href="../../../gui_api/#viser.GuiApi.GuiMessage">[docs]</a>
     <span class="k">class</span> <span class="nc">GuiMessage</span><span class="p">(</span><span class="n">Protocol</span><span class="p">[</span><span class="n">GuiInputPropsType</span><span class="p">]):</span>
-        <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
+        <span class="n">uuid</span><span class="p">:</span> <span class="nb">str</span>
         <span class="n">props</span><span class="p">:</span> <span class="n">GuiInputPropsType</span></div>
 
 
@@ -1974,11 +1979,11 @@
             <span class="n">gui_api</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
             <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
             <span class="n">update_timestamp</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span>
-            <span class="n">parent_container_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_id</span><span class="p">(),</span>
+            <span class="n">parent_container_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_container_uuid</span><span class="p">(),</span>
             <span class="n">update_cb</span><span class="o">=</span><span class="p">[],</span>
             <span class="n">is_button</span><span class="o">=</span><span class="n">is_button</span><span class="p">,</span>
             <span class="n">sync_cb</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-            <span class="nb">id</span><span class="o">=</span><span class="n">message</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="n">uuid</span><span class="o">=</span><span class="n">message</span><span class="o">.</span><span class="n">uuid</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="c1"># For broadcasted GUI handles, we should synchronize all clients.</span>
@@ -1988,7 +1993,7 @@
             <span class="k">def</span> <span class="nf">sync_other_clients</span><span class="p">(</span>
                 <span class="n">client_id</span><span class="p">:</span> <span class="n">ClientId</span><span class="p">,</span> <span class="n">updates</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
             <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">GuiUpdateMessage</span><span class="p">(</span><span class="n">handle_state</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">updates</span><span class="p">)</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="n">_messages</span><span class="o">.</span><span class="n">GuiUpdateMessage</span><span class="p">(</span><span class="n">handle_state</span><span class="o">.</span><span class="n">uuid</span><span class="p">,</span> <span class="n">updates</span><span class="p">)</span>
                 <span class="n">message</span><span class="o">.</span><span class="n">excluded_self_client</span> <span class="o">=</span> <span class="n">client_id</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_websock_interface</span><span class="o">.</span><span class="n">queue_message</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
 
