@@ -384,12 +384,14 @@
           <h1>Source code for viser._gui_handles</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
+<span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">import</span> <span class="nn">base64</span>
 <span class="kn">import</span> <span class="nn">dataclasses</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">uuid</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Coroutine</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
@@ -447,6 +449,7 @@
 
 <span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span>
 <span class="n">TGuiHandle</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;TGuiHandle&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;_GuiInputHandle&quot;</span><span class="p">)</span>
+<span class="n">NoneOrCoroutine</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;NoneOrCoroutine&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Coroutine</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">_make_uuid</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -480,7 +483,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Container that this GUI input was placed into.&quot;&quot;&quot;</span>
 
     <span class="n">update_timestamp</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
-    <span class="n">update_cb</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">GuiEvent</span><span class="p">],</span> <span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">field</span><span class="p">(</span>
+    <span class="n">update_cb</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">GuiEvent</span><span class="p">],</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">Coroutine</span><span class="p">]]</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">field</span><span class="p">(</span>
         <span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span>
     <span class="p">)</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Registered functions to call when this input is updated.&quot;&quot;&quot;</span>
@@ -604,17 +607,19 @@
 
         <span class="c1"># Call update callbacks.</span>
         <span class="k">for</span> <span class="n">cb</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">update_cb</span><span class="p">:</span>
-            <span class="c1"># Pushing callbacks into separate threads helps prevent deadlocks when we</span>
-            <span class="c1"># have a lock in a callback. TODO: revisit other callbacks.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">gui_api</span><span class="o">.</span><span class="n">_thread_executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
-                <span class="k">lambda</span><span class="p">:</span> <span class="n">cb</span><span class="p">(</span>
+            <span class="k">if</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">iscoroutinefunction</span><span class="p">(</span><span class="n">cb</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">gui_api</span><span class="o">.</span><span class="n">_event_loop</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span>
+                    <span class="n">cb</span><span class="p">(</span><span class="n">GuiEvent</span><span class="p">(</span><span class="n">client_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">client</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="p">))</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">gui_api</span><span class="o">.</span><span class="n">_thread_executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
+                    <span class="n">cb</span><span class="p">,</span>
                     <span class="n">GuiEvent</span><span class="p">(</span>
                         <span class="n">client_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                         <span class="n">client</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                         <span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
-                    <span class="p">)</span>
+                    <span class="p">),</span>
                 <span class="p">)</span>
-            <span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">update_timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
@@ -643,11 +648,16 @@
 <div class="viewcode-block" id="GuiInputHandle.on_update">
 <a class="viewcode-back" href="../../../gui_handles/#viser.GuiInputHandle.on_update">[docs]</a>
     <span class="k">def</span> <span class="nf">on_update</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">:</span> <span class="n">TGuiHandle</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">GuiEvent</span><span class="p">[</span><span class="n">TGuiHandle</span><span class="p">]],</span> <span class="n">Any</span><span class="p">]</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">GuiEvent</span><span class="p">[</span><span class="n">TGuiHandle</span><span class="p">]],</span> <span class="kc">None</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Attach a function to call when a GUI input is updated. Callbacks stack (need</span>
-<span class="sd">        to be manually removed via :meth:`remove_update_callback()`) and will be called</span>
-<span class="sd">        from a thread.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="p">:</span> <span class="n">TGuiHandle</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">GuiEvent</span><span class="p">[</span><span class="n">TGuiHandle</span><span class="p">]],</span> <span class="n">NoneOrCoroutine</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">GuiEvent</span><span class="p">[</span><span class="n">TGuiHandle</span><span class="p">]],</span> <span class="n">NoneOrCoroutine</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Attach a function to call when a GUI input is updated.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">        - If `func` is a regular function (defined with `def`), it will be executed in a thread pool.</span>
+<span class="sd">        - If `func` is an async function (defined with `async def`), it will be executed in the event loop.</span>
+
+<span class="sd">        Using async functions can be useful for reducing race conditions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">update_cb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">func</span></div>
 
@@ -823,9 +833,16 @@
 <div class="viewcode-block" id="GuiButtonHandle.on_click">
 <a class="viewcode-back" href="../../../gui_handles/#viser.GuiButtonHandle.on_click">[docs]</a>
     <span class="k">def</span> <span class="nf">on_click</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">:</span> <span class="n">TGuiHandle</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">GuiEvent</span><span class="p">[</span><span class="n">TGuiHandle</span><span class="p">]],</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">GuiEvent</span><span class="p">[</span><span class="n">TGuiHandle</span><span class="p">]],</span> <span class="kc">None</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Attach a function to call when a button is pressed. Happens in a thread.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="p">:</span> <span class="n">TGuiHandle</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">GuiEvent</span><span class="p">[</span><span class="n">TGuiHandle</span><span class="p">]],</span> <span class="n">NoneOrCoroutine</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">GuiEvent</span><span class="p">[</span><span class="n">TGuiHandle</span><span class="p">]],</span> <span class="n">NoneOrCoroutine</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Attach a function to call when a button is pressed.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">        - If `func` is a regular function (defined with `def`), it will be executed in a thread pool.</span>
+<span class="sd">        - If `func` is an async function (defined with `async def`), it will be executed in the event loop.</span>
+
+<span class="sd">        Using async functions can be useful for reducing race conditions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">update_cb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">func</span></div>
 </div>
@@ -861,9 +878,16 @@
 <div class="viewcode-block" id="GuiUploadButtonHandle.on_upload">
 <a class="viewcode-back" href="../../../gui_handles/#viser.GuiUploadButtonHandle.on_upload">[docs]</a>
     <span class="k">def</span> <span class="nf">on_upload</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">:</span> <span class="n">TGuiHandle</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">GuiEvent</span><span class="p">[</span><span class="n">TGuiHandle</span><span class="p">]],</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">GuiEvent</span><span class="p">[</span><span class="n">TGuiHandle</span><span class="p">]],</span> <span class="kc">None</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Attach a function to call when a button is pressed. Happens in a thread.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="p">:</span> <span class="n">TGuiHandle</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">GuiEvent</span><span class="p">[</span><span class="n">TGuiHandle</span><span class="p">]],</span> <span class="n">NoneOrCoroutine</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">GuiEvent</span><span class="p">[</span><span class="n">TGuiHandle</span><span class="p">]],</span> <span class="n">NoneOrCoroutine</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Attach a function to call when a file is uploaded.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">        - If `func` is a regular function (defined with `def`), it will be executed in a thread pool.</span>
+<span class="sd">        - If `func` is an async function (defined with `async def`), it will be executed in the event loop.</span>
+
+<span class="sd">        Using async functions can be useful for reducing race conditions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">update_cb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">func</span></div>
 </div>
@@ -884,9 +908,16 @@
 <div class="viewcode-block" id="GuiButtonGroupHandle.on_click">
 <a class="viewcode-back" href="../../../gui_handles/#viser.GuiButtonGroupHandle.on_click">[docs]</a>
     <span class="k">def</span> <span class="nf">on_click</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">:</span> <span class="n">TGuiHandle</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">GuiEvent</span><span class="p">[</span><span class="n">TGuiHandle</span><span class="p">]],</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">GuiEvent</span><span class="p">[</span><span class="n">TGuiHandle</span><span class="p">]],</span> <span class="kc">None</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Attach a function to call when a button is pressed. Happens in a thread.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="p">:</span> <span class="n">TGuiHandle</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">GuiEvent</span><span class="p">[</span><span class="n">TGuiHandle</span><span class="p">]],</span> <span class="n">NoneOrCoroutine</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">GuiEvent</span><span class="p">[</span><span class="n">TGuiHandle</span><span class="p">]],</span> <span class="n">NoneOrCoroutine</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Attach a function to call when a button in the group is clicked.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">        - If `func` is a regular function (defined with `def`), it will be executed in a thread pool.</span>
+<span class="sd">        - If `func` is an async function (defined with `async def`), it will be executed in the event loop.</span>
+
+<span class="sd">        Using async functions can be useful for reducing race conditions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">update_cb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">func</span></div>
 

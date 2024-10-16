@@ -394,7 +394,7 @@
 <span class="kn">import</span> <span class="nn">queue</span>
 <span class="kn">import</span> <span class="nn">threading</span>
 <span class="kn">from</span> <span class="nn">asyncio.events</span> <span class="kn">import</span> <span class="n">AbstractEventLoop</span>
-<span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ThreadPoolExecutor</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Coroutine</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">NewType</span><span class="p">,</span> <span class="n">TypeVar</span>
 
@@ -475,12 +475,10 @@
 <span class="k">class</span> <span class="nc">WebsockMessageHandler</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Mix-in for adding message handling to a class.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">thread_executor</span><span class="p">:</span> <span class="n">ThreadPoolExecutor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_thread_executor</span> <span class="o">=</span> <span class="n">thread_executor</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_incoming_handlers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span>
-            <span class="nb">type</span><span class="p">[</span><span class="n">Message</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">ClientId</span><span class="p">,</span> <span class="n">Message</span><span class="p">],</span> <span class="kc">None</span><span class="p">]]</span>
+            <span class="nb">type</span><span class="p">[</span><span class="n">Message</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">ClientId</span><span class="p">,</span> <span class="n">Message</span><span class="p">],</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">Coroutine</span><span class="p">]]</span>
         <span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_atomic_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_queued_messages</span><span class="p">:</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_locked_thread_id</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
@@ -502,7 +500,7 @@
     <span class="k">def</span> <span class="nf">register_handler</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">message_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">TMessage</span><span class="p">],</span>
-        <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">ClientId</span><span class="p">,</span> <span class="n">TMessage</span><span class="p">],</span> <span class="n">Any</span><span class="p">],</span>
+        <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">ClientId</span><span class="p">,</span> <span class="n">TMessage</span><span class="p">],</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">Coroutine</span><span class="p">],</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Register a handler for a particular message type.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">message_cls</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_incoming_handlers</span><span class="p">:</span>
@@ -515,7 +513,7 @@
     <span class="k">def</span> <span class="nf">unregister_handler</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">message_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">TMessage</span><span class="p">],</span>
-        <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">ClientId</span><span class="p">,</span> <span class="n">TMessage</span><span class="p">],</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">ClientId</span><span class="p">,</span> <span class="n">TMessage</span><span class="p">],</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">Coroutine</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Unregister a handler for a particular message type.&quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="p">(</span>
@@ -527,11 +525,16 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_incoming_handlers</span><span class="p">[</span><span class="n">message_cls</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>  <span class="c1"># type: ignore</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_handle_incoming_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client_id</span><span class="p">:</span> <span class="n">ClientId</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Message</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_handle_incoming_message</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">client_id</span><span class="p">:</span> <span class="n">ClientId</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Message</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle incoming messages.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">message</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_incoming_handlers</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">cb</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_incoming_handlers</span><span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">message</span><span class="p">)]:</span>
-                <span class="n">cb</span><span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">iscoroutinefunction</span><span class="p">(</span><span class="n">cb</span><span class="p">):</span>
+                    <span class="k">await</span> <span class="n">cb</span><span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">cb</span><span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
 
 <div class="viewcode-block" id="WebsockMessageHandler.get_message_buffer">
 <a class="viewcode-back" href="../../../../infrastructure/#viser.infra.WebsockMessageHandler.get_message_buffer">[docs]</a>
@@ -542,24 +545,11 @@
 <div class="viewcode-block" id="WebsockMessageHandler.queue_message">
 <a class="viewcode-back" href="../../../../infrastructure/#viser.infra.WebsockMessageHandler.queue_message">[docs]</a>
     <span class="k">def</span> <span class="nf">queue_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Message</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Wrapped method for sending messages safely.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Wrapped method for sending messages.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_record_handle</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_record_handle</span><span class="o">.</span><span class="n">_insert_message</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
 
-        <span class="n">got_lock</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_atomic_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">(</span><span class="n">blocking</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">got_lock</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">get_message_buffer</span><span class="p">()</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_atomic_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># Send when lock is acquirable, while retaining message order.</span>
-            <span class="c1"># This could be optimized!</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_queued_messages</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-
-            <span class="k">def</span> <span class="nf">try_again</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_atomic_lock</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">get_message_buffer</span><span class="p">()</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_queued_messages</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
-
-            <span class="bp">self</span><span class="o">.</span><span class="n">_thread_executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">try_again</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_message_buffer</span><span class="p">()</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="WebsockMessageHandler.atomic">
@@ -577,19 +567,9 @@
 <span class="sd">            Context manager.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># If called multiple times in the same thread, we ignore inner calls.</span>
-        <span class="n">thread_id</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">get_ident</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">thread_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_locked_thread_id</span><span class="p">:</span>
-            <span class="n">got_lock</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_atomic_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_locked_thread_id</span> <span class="o">=</span> <span class="n">thread_id</span>
-            <span class="n">got_lock</span> <span class="o">=</span> <span class="kc">True</span>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_message_buffer</span><span class="p">()</span><span class="o">.</span><span class="n">atomic_start</span><span class="p">()</span>
         <span class="k">yield</span>
-
-        <span class="k">if</span> <span class="n">got_lock</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_atomic_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_locked_thread_id</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_message_buffer</span><span class="p">()</span><span class="o">.</span><span class="n">atomic_end</span><span class="p">()</span></div>
 </div>
 
 
@@ -603,12 +583,11 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">client_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-        <span class="n">thread_executor</span><span class="p">:</span> <span class="n">ThreadPoolExecutor</span><span class="p">,</span>
         <span class="n">client_state</span><span class="p">:</span> <span class="n">_ClientHandleState</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client_id</span> <span class="o">=</span> <span class="n">client_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">client_state</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">thread_executor</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
 <div class="viewcode-block" id="WebsockClientConnection.get_message_buffer">
 <a class="viewcode-back" href="../../../../infrastructure/#viser.infra.WebsockClientConnection.get_message_buffer">[docs]</a>
@@ -652,11 +631,15 @@
         <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">client_api_version</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">thread_executor</span><span class="o">=</span><span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="mi">32</span><span class="p">))</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="c1"># Track connected clients.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_client_connect_cb</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">WebsockClientConnection</span><span class="p">],</span> <span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_client_disconnect_cb</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">WebsockClientConnection</span><span class="p">],</span> <span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client_connect_cb</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span>
+            <span class="n">Callable</span><span class="p">[[</span><span class="n">WebsockClientConnection</span><span class="p">],</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">Coroutine</span><span class="p">]</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client_disconnect_cb</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span>
+            <span class="n">Callable</span><span class="p">[[</span><span class="n">WebsockClientConnection</span><span class="p">],</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">Coroutine</span><span class="p">]</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_host</span> <span class="o">=</span> <span class="n">host</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_port</span> <span class="o">=</span> <span class="n">port</span>
@@ -695,13 +678,14 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Stop the server.&quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ws_server</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ws_server</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_ws_server</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_thread_executor</span><span class="o">.</span><span class="n">shutdown</span><span class="p">(</span><span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ws_server</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
 <div class="viewcode-block" id="WebsockServer.on_client_connect">
 <a class="viewcode-back" href="../../../../infrastructure/#viser.infra.WebsockServer.on_client_connect">[docs]</a>
-    <span class="k">def</span> <span class="nf">on_client_connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cb</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">WebsockClientConnection</span><span class="p">],</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">on_client_connect</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">cb</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">WebsockClientConnection</span><span class="p">],</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">Coroutine</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Attach a callback to run for newly connected clients.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_client_connect_cb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cb</span><span class="p">)</span></div>
 
@@ -709,7 +693,7 @@
 <div class="viewcode-block" id="WebsockServer.on_client_disconnect">
 <a class="viewcode-back" href="../../../../infrastructure/#viser.infra.WebsockServer.on_client_disconnect">[docs]</a>
     <span class="k">def</span> <span class="nf">on_client_disconnect</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">cb</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">WebsockClientConnection</span><span class="p">],</span> <span class="n">Any</span><span class="p">]</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">cb</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">WebsockClientConnection</span><span class="p">],</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">Coroutine</span><span class="p">]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Attach a callback to run when clients disconnect.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_client_disconnect_cb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cb</span><span class="p">)</span></div>
@@ -728,7 +712,6 @@
     <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Flush the outgoing message buffer for broadcasted messages. Any buffered</span>
 <span class="sd">        messages will immediately be sent. (by default they are windowed)&quot;&quot;&quot;</span>
-        <span class="c1"># TODO: we should add a flush event.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_broadcast_buffer</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span></div>
 
 
@@ -780,28 +763,23 @@
                 <span class="n">AsyncMessageBuffer</span><span class="p">(</span><span class="n">event_loop</span><span class="p">,</span> <span class="n">persistent_messages</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
                 <span class="n">event_loop</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="n">client_connection</span> <span class="o">=</span> <span class="n">WebsockClientConnection</span><span class="p">(</span>
-                <span class="n">client_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thread_executor</span><span class="p">,</span> <span class="n">client_state</span>
-            <span class="p">)</span>
+            <span class="n">client_connection</span> <span class="o">=</span> <span class="n">WebsockClientConnection</span><span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="n">client_state</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_client_state_from_id</span><span class="p">[</span><span class="n">client_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">client_state</span>
 
             <span class="k">def</span> <span class="nf">handle_incoming</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">Message</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_thread_executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
-                    <span class="n">error_print_wrapper</span><span class="p">(</span>
-                        <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_incoming_message</span><span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
-                    <span class="p">)</span>
+                <span class="n">event_loop</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_handle_incoming_message</span><span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
                 <span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_thread_executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
-                    <span class="n">error_print_wrapper</span><span class="p">(</span>
-                        <span class="k">lambda</span><span class="p">:</span> <span class="n">client_connection</span><span class="o">.</span><span class="n">_handle_incoming_message</span><span class="p">(</span>
-                            <span class="n">client_id</span><span class="p">,</span> <span class="n">message</span>
-                        <span class="p">)</span>
-                    <span class="p">)</span>
+                <span class="n">event_loop</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span>
+                    <span class="n">client_connection</span><span class="o">.</span><span class="n">_handle_incoming_message</span><span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
                 <span class="p">)</span>
 
             <span class="c1"># New connection callbacks.</span>
             <span class="k">for</span> <span class="n">cb</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client_connect_cb</span><span class="p">:</span>
-                <span class="n">cb</span><span class="p">(</span><span class="n">client_connection</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">iscoroutinefunction</span><span class="p">(</span><span class="n">cb</span><span class="p">):</span>
+                    <span class="k">await</span> <span class="n">cb</span><span class="p">(</span><span class="n">client_connection</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">cb</span><span class="p">(</span><span class="n">client_connection</span><span class="p">)</span>
 
             <span class="k">try</span><span class="p">:</span>
                 <span class="c1"># For each client: infinite loop over producers (which send messages)</span>
@@ -835,7 +813,10 @@
 
                 <span class="c1"># Disconnection callbacks.</span>
                 <span class="k">for</span> <span class="n">cb</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client_disconnect_cb</span><span class="p">:</span>
-                    <span class="n">cb</span><span class="p">(</span><span class="n">client_connection</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">iscoroutinefunction</span><span class="p">(</span><span class="n">cb</span><span class="p">):</span>
+                        <span class="k">await</span> <span class="n">cb</span><span class="p">(</span><span class="n">client_connection</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">cb</span><span class="p">(</span><span class="n">client_connection</span><span class="p">)</span>
 
                 <span class="c1"># Cleanup.</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_client_state_from_id</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">client_id</span><span class="p">)</span>

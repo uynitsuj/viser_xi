@@ -516,28 +516,40 @@ handles.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="viser.ViserServer.on_client_connect">
-<span class="sig-name descname"><span class="pre">on_client_connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../client_handles/#viser.ClientHandle" title="viser._viser.ClientHandle"><span class="pre">ClientHandle</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../client_handles/#viser.ClientHandle" title="viser._viser.ClientHandle"><span class="pre">ClientHandle</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/viser/_viser/#ViserServer.on_client_connect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.ViserServer.on_client_connect" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_client_connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../client_handles/#viser.ClientHandle" title="viser._viser.ClientHandle"><span class="pre">ClientHandle</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">NoneOrCoroutine</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../client_handles/#viser.ClientHandle" title="viser._viser.ClientHandle"><span class="pre">ClientHandle</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">NoneOrCoroutine</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/viser/_viser/#ViserServer.on_client_connect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.ViserServer.on_client_connect" title="Link to this definition">¶</a></dt>
 <dd><p>Attach a callback to run for newly connected clients.</p>
+<p>The callback can be either a standard function or an async function:</p>
+<ul class="simple">
+<li><p>Standard functions (def) will be executed in a threadpool.</p></li>
+<li><p>Async functions (async def) will be executed in the event loop.</p></li>
+</ul>
+<p>Using async functions can be useful for reducing race conditions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>cb</strong> (<em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="../client_handles/#viser.ClientHandle" title="viser._viser.ClientHandle"><em>ClientHandle</em></a><em>]</em><em>, </em><em>None</em><em>]</em>)</p>
+<dd class="field-odd"><p><strong>cb</strong> (<em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="../client_handles/#viser.ClientHandle" title="viser._viser.ClientHandle"><em>ClientHandle</em></a><em>]</em><em>, </em><em>NoneOrCoroutine</em><em>]</em>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>Callable</em>[[<a class="reference internal" href="../client_handles/#viser.ClientHandle" title="viser._viser.ClientHandle"><em>ClientHandle</em></a>], None]</p>
+<dd class="field-even"><p><em>Callable</em>[[<a class="reference internal" href="../client_handles/#viser.ClientHandle" title="viser._viser.ClientHandle"><em>ClientHandle</em></a>], <em>NoneOrCoroutine</em>]</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="viser.ViserServer.on_client_disconnect">
-<span class="sig-name descname"><span class="pre">on_client_disconnect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../client_handles/#viser.ClientHandle" title="viser._viser.ClientHandle"><span class="pre">ClientHandle</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../client_handles/#viser.ClientHandle" title="viser._viser.ClientHandle"><span class="pre">ClientHandle</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/viser/_viser/#ViserServer.on_client_disconnect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.ViserServer.on_client_disconnect" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_client_disconnect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../client_handles/#viser.ClientHandle" title="viser._viser.ClientHandle"><span class="pre">ClientHandle</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">NoneOrCoroutine</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../client_handles/#viser.ClientHandle" title="viser._viser.ClientHandle"><span class="pre">ClientHandle</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">NoneOrCoroutine</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/viser/_viser/#ViserServer.on_client_disconnect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.ViserServer.on_client_disconnect" title="Link to this definition">¶</a></dt>
 <dd><p>Attach a callback to run when clients disconnect.</p>
+<p>The callback can be either a standard function or an async function:</p>
+<ul class="simple">
+<li><p>Standard functions (def) will be executed in a threadpool.</p></li>
+<li><p>Async functions (async def) will be executed in the event loop.</p></li>
+</ul>
+<p>Using async functions can be useful for reducing race conditions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>cb</strong> (<em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="../client_handles/#viser.ClientHandle" title="viser._viser.ClientHandle"><em>ClientHandle</em></a><em>]</em><em>, </em><em>None</em><em>]</em>)</p>
+<dd class="field-odd"><p><strong>cb</strong> (<em>Callable</em><em>[</em><em>[</em><a class="reference internal" href="../client_handles/#viser.ClientHandle" title="viser._viser.ClientHandle"><em>ClientHandle</em></a><em>]</em><em>, </em><em>NoneOrCoroutine</em><em>]</em>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>Callable</em>[[<a class="reference internal" href="../client_handles/#viser.ClientHandle" title="viser._viser.ClientHandle"><em>ClientHandle</em></a>], None]</p>
+<dd class="field-even"><p><em>Callable</em>[[<a class="reference internal" href="../client_handles/#viser.ClientHandle" title="viser._viser.ClientHandle"><em>ClientHandle</em></a>], <em>NoneOrCoroutine</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -586,6 +598,18 @@ happen synchronously.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="viser.ViserServer.get_event_loop">
+<span class="sig-name descname"><span class="pre">get_event_loop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AbstractEventLoop</span></span></span><a class="reference internal" href="../_modules/viser/_viser/#ViserServer.get_event_loop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viser.ViserServer.get_event_loop" title="Link to this definition">¶</a></dt>
+<dd><p>Get the asyncio event loop used by the Viser background thread. This
+can be useful for safe concurrent operations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>AbstractEventLoop</em></p>
 </dd>
 </dl>
 </dd></dl>
@@ -671,6 +695,7 @@ happen synchronously.</p>
 <li><a class="reference internal" href="#viser.ViserServer.flush"><code class="docutils literal notranslate"><span class="pre">ViserServer.flush()</span></code></a></li>
 <li><a class="reference internal" href="#viser.ViserServer.atomic"><code class="docutils literal notranslate"><span class="pre">ViserServer.atomic()</span></code></a></li>
 <li><a class="reference internal" href="#viser.ViserServer.send_file_download"><code class="docutils literal notranslate"><span class="pre">ViserServer.send_file_download()</span></code></a></li>
+<li><a class="reference internal" href="#viser.ViserServer.get_event_loop"><code class="docutils literal notranslate"><span class="pre">ViserServer.get_event_loop()</span></code></a></li>
 </ul>
 </li>
 </ul>
