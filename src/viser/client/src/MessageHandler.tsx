@@ -656,7 +656,7 @@ function renderVirtualCamera(
   const camera = new THREE.PerspectiveCamera(
     THREE.MathUtils.radToDeg(fov),
     width / height,
-    0.1,
+    0.01,
     1000,
   );
 
